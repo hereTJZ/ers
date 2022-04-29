@@ -1,0 +1,76 @@
+/* 个人设置 */
+
+.setting-content {
+    width: 1200px;
+    height: 750px;
+    overflow-y: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 60px 30px 100px;
+}
+
+.settingleft {
+    width: 550px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+}
+
+.settingleft .setlogo p a {
+    display: inline-block;
+    color: #333;
+    font-size: 12px;
+}
+
+.setting-tab {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.setting-tab button {
+    margin-top: 20px;
+    padding: 10px 35px;
+    background: #f95656;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+}
+
+.setting-tab table tr td {
+    padding: 20px;
+}
+
+.setting-tab table tr td input[type="text"] {
+    height: 35px;
+    border-radius: 5px;
+    outline: none;
+    padding-left: 8px;
+    width: 350px;
+    border: #ccc 1px solid;
+}
+
+.setting-tab table tr td:nth-of-type(1) {
+    text-align: end;
+}
+
+.setting-tab table tr td:nth-of-type(2) {
+    text-align: start;
+}
+
+/* 右侧联系反馈文字 */
+.contact-help {
+    margin-top: 20px;
+    width: 200px;
+    margin-left: 20px;
+}
+
+.contact-help p {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 50px;
+}
+
+.contact-email {
+    color: #f95656;
+}

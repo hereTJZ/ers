@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>实验标题：网络攻防—木马实验</title>
+        <link rel="stylesheet" href="css/font.css" />
+        <link rel="stylesheet" href="css/index.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/booking.css" />
+    </head>
+
+    <body>
+        <!--  头部 -->
+        <header>
+            <div class="head">
+                <div class="logo-img">
+                    <img src="img/logo.png" alt="" width="139" height="70" />
+                </div>
+                <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
+                <!-- 简介弹窗 -->
+                <div class="user" id="user" onclick="show('usertab');">
+                    <img class="userlogo" src="img/userlogo.png" alt="" />
+                    <span>张三</span>
+                    <span>老师</span>
+                    <div class="usertab" id="usertab">
+                        <div class="usernane">
+                            <i style="font-size: 18px; font-weight: 600"> 教师（软件学院）</i>
+                            <i>张三1212312345</i>
+                            <i>12123123@mail.com</i>
+                        </div>
+                        <ul>
+                            <li class="bgccc">个人信息维护</li>
+                            <li>修改密码</li>
+                            <li>帮助</li>
+                            <li>退出登录</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主体页面 -->
+        <main>
+            <!-- 左边导航 -->
+            <nav>
+                <ul>
+                    <li>
+                        <a href="home.html">首 &nbsp; 页 <i class="iconfont icon-zhuye"></i> </a>
+                    </li>
+                    <li>
+                        <a href="news.html">新闻公告 <i class="iconfont icon-gonggao"></i> </a>
+                    </li>
+                    <li class="active">
+                        <a href="booking.html"
+                            >预约实验
+                            <i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="resource.html">资源站点 <i class="iconfont icon-ziyuan"></i> </a>
+                    </li>
+                    <li>
+                        <a href="experiment.html">实验管理 <i class="iconfont icon-bianji"></i> </a>
+                    </li>
+                    <li>
+                        <a href="user.html">用户管理 <i class="iconfont icon-yonghu1"></i> </a>
+                    </li>
+                    <li>
+                        <a href="notice.html">公告管理 <i class="iconfont icon-gonggao"></i> </a>
+                    </li>
+                    <li>
+                        <a href="setting.html">个人设置 <i class="iconfont icon-shezhi"></i> </a>
+                    </li>
+                    <li>
+                        <a href="contact.html"
+                            >联系我们
+                            <i class="iconfont icon-lianxishouhou"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- 右边实验管理 -->
+            <div class="news-content detail-content">
+                <h1>实验标题：网络攻防—木马实验</h1>
+                <h3><i class="iconfont icon-gonggao"></i> 实验状态</h3>
+                <div class="detail-box">
+                    <p>当前状态： <button>进行中</button></p>
+                    <p>开始时间：2022.03.12 10:30</p>
+                    <p>结束时间：2022.03.12 12:00</p>
+                    <p>进行中是否延时：否</p>
+                </div>
+                <h3><i class="iconfont icon-bianji"></i> 实验人员</h3>
+                <div class="detail-box">
+                    <p>组长： 刘子墨</p>
+                    <p>成员：陈恺歌、吕子昂、丁俊语、余浩气、武玉萍、谢璇子、余欣然</p>
+                    <p>指导老师：张三</p>
+                </div>
+                <h3><i class="iconfont icon-yonghu1"> </i>实验内容</h3>
+                <div class="detail-box">
+                    <p>编写一个针对Windows的木马程序，该木马可以作为各种入侵程序的伪装外壳，保证信息窃探工作的顺利完成，基本程序功能如下：</p>
+                    <p>1、在主程序中要求将程序拷贝到系统盘\windows\目录下并更名为taskmgr.exe，同时复制第二份到系统盘\windows\system32目录下并更名为explorer.exe。用以混淆用户对木马的第一判断。</p>
+                    <p>2、程序建立两个windows进程，每个进程每一个时钟周期检查另外一个进程是否正在运行。如果存在弹出对话框“I’m still here!”,如果不存在启动另一个进程并弹出对话框“I’m still here!”。</p>
+                    <p>3、将拷贝好的两个病毒程序添加到注册表起动项中。（software \\microsoft\\windows\\currentversion\\run）。每个时钟程序在运行的时 候都要向注册表中添加此信息。</p>
+                </div>
+                <h3><i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i>相关知识</h3>
+                <div class="detail-box">
+                    <p>会话劫持：</p>
+                    <p>
+                        攻击分为两种类型： 1）中间人攻击(Man In The
+                        Middle，简称MITM)，2）注射式攻击（Injection）；并且还可以把会话劫持攻击分为两种形式：1）被动劫持，2）主动劫持；被动劫持实际上就是在后台监视双方会话的数据流，从中获得敏感数据；而主动劫持则是将会话当中的某一台主机“踢”下线，然后由攻击者取代并接管会话，这种攻击方法危害非常大
+                    </p>
+                    <p>SYN Flood攻击：</p>
+                    <p></p>
+                    <p>
+                        SYN
+                        Flood是当前最流行的DoS（拒绝服务攻击）与DdoS（分布式拒绝服务攻击）的方式之一，这是一种利用TCP协议缺陷，发送大量伪造的TCP连接请求，从而使得被攻击方资源耗尽（CPU满负荷或内存不足）的攻击方式。
+                    </p>
+                    <p>UDP攻击：</p>
+                    <p></p>
+                    <p>
+                        UDP攻击,又称UDP洪水攻击或UDP淹没攻击（英文：UDP Flood Attack）是导致基於主机的服务拒绝攻击的一种。UDP
+                        是一种无连接的协议，而且它不需要用任何程序建立连接来传输数据。当攻击者随机地向受害系统的端口发送 UDP 数据包的时候，就可能发生了 UDP 淹没攻击。
+                    </p>
+                    <p>ARP协议攻击：</p>
+                    <p>
+                        ARP攻击就是通过伪造IP地址和MAC地址实现ARP欺骗，能够在网络中产生大量的ARP通信量使网络阻塞，攻击者只要持续不断的发出伪造的ARP响应包就能更改目标主机ARP缓存中的IP-MAC条目，造成网络中断或中间人攻击。ARP攻击主要是存在于局域网网络中，局域网中若有一台计算机感染ARP木马，则感染该ARP木马的系统将会试图通过“ARP欺骗”手段截获所在网络内其它计算机的通信信息，并因此造成网内其它计算机的通信故障。
+                    </p>
+                </div>
+
+                <h3><i class="iconfont icon-ziyuan"></i>资源下载</h3>
+                <div class="upload">
+                    <a href="">网络安全协议书.pdf</a>
+                    <a href="">视频讲解.mp4</a>
+                    <a href="">实验教程.ppt</a>
+                </div>
+            </div>
+
+            <!-- 弹窗 -->
+        </main>
+
+        <!-- 底部 -->
+        <footer></footer>
+        <script src="js/newsModal.js"></script>
+    </body>
+    <script>
+        var i = 1;
+
+        function show(id) {
+            if (i % 2 != 0) {
+                document.getElementById(id).style.display = "block";
+            } else {
+                document.getElementById(id).style.display = "none";
+            }
+            i++;
+        }
+    </script>
+</html>
