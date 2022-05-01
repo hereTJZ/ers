@@ -46,9 +46,9 @@
     </select>
 
     <resultMap id="UserMap" type="User">
-        <result column="work_order_id" property="workOrderId"></result>
-        <result column="" property=""></result>
-        <result column="" property=""></result>
+        <result column="work_order_id" property="workOrderId"/>
+        <result column="" property=""/>
+        <result column="" property=""/>
     </resultMap>
 
 </mapper>
