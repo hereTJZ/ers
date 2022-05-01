@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Thymeleaf局部刷新</title>
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+</head>
+<body>
+<button id="btn1">局部刷新1</button>
+<button id="btn2">局部刷新2</button>
+<button id="btn3" onclick="">局部刷新3</button>
+
+<div th:fragment="visit" id="visit">  <!--① -->
+    后台返回数据：<p th:text="${msg}"></p>
+</div>
+<script type="text/javascript">
+    $("#btn1").click(function () {
+        $.ajax({
+            url: "pr",
+            type: "post",
+            success: function (data) {
+                $("#visit").html(data);
+            }
+        })
+    });
+    $("#btn2").click(function () {
+        $("#visit").load("pr");
+    });
+</script>
+</body>
+</html>

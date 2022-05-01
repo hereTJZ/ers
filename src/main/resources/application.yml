@@ -26,6 +26,7 @@ server:
   servlet:
     context-path: "/"
 
+
 #mybatis优化配置
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
@@ -34,6 +35,7 @@ mybatis:
     map-underscore-to-camel-case: true  #驼峰命名法自动转换
 
 
+#控制台看到执行的SQL语句
 logging:
   level:
     com:

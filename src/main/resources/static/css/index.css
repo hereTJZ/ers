@@ -1,0 +1,191 @@
+/* 公共样式 */
+
+/* 重置样式 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+i,
+em {
+    font-style: normal;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+table {
+    /* 表格的两边框合并为一条 */
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+body {
+    background: #e2f2fa;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* 头部样式 */
+header {
+    width: 1400px;
+    background: #dccfcf;
+    height: 90px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-img {
+    width: 136px;
+}
+
+.logo-title {
+    font-size: 26px;
+    font-family: Arial;
+    text-align: left;
+    color: rgb(0, 0, 0);
+    flex: 1;
+    margin-left: 20px;
+    margin-top: -5px;
+}
+
+/* 简介弹窗 */
+.user {
+    width: 155px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    height: 90px;
+    box-sizing: border-box;
+}
+.user:hover .usertab {
+    display: block;
+}
+.usertab {
+    position: absolute;
+    top: 80px;
+    left: -22px;
+    font-size: 12px;
+    z-index: 88;
+    background: #fff;
+    text-align: center;
+    border: rgba(0, 0, 0, 0.248) 1px solid;
+
+    width: 195px;
+    height: 233px;
+    display: none;
+}
+
+.user .userlogo {
+    width: 45px;
+    height: 45px;
+}
+
+.usertab .usernane {
+    width: 100%;
+    background: #e5c6c6;
+    padding: 20px 20px 5px;
+    box-sizing: border-box;
+}
+
+.user .usertab .usernane i {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.user .usertab ul li {
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.user .usertab ul .bgccc {
+    background: #e4e4e4;
+}
+
+.user .usertab ul li:hover {
+    color: #e5c6c6;
+}
+
+.user span:nth-of-type(1) {
+    font-size: 20px;
+}
+
+.user span:nth-of-type(2) {
+    font-size: 18px;
+    color: #c4c4c4;
+}
+
+/* 主体样式 */
+main {
+    width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    background: #fff;
+}
+
+/* 导航条样式 */
+nav {
+    width: 188px;
+    height: 800px;
+    border-right: 2px solid #ccc;
+}
+
+nav ul li {
+    width: 188px;
+    box-sizing: border-box;
+    height: 52px;
+    line-height: 52px;
+    font-size: 16px;
+    font-family: "Microsoft YaHei";
+    text-align: center;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    padding-left: 40px;
+    padding-right: 16px;
+    opacity: 1;
+    border-bottom: 1px solid rgba(119, 119, 119, 0.36);
+}
+
+nav ul li a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    color: #333;
+}
+
+nav ul li a:hover {
+    color: #000;
+}
+
+nav ul .active {
+    background: #e0e0e0;
+}
+
+nav ul .active a {
+    font-weight: 600;
+}
+
+nav ul li a i {
+    float: right;
+    margin-right: 20px;
+    font-size: 20px !important;
+}

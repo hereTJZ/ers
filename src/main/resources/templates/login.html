@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>实验预约系统-登录</title>
+        <!-- 引入字体图标 -->
+        <link href="../static/css/font-awesome-4.7.0/css/font-awesome.min.css" th:href="@{css/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet" />
+        <script src="../static/js/jquery-3.6.0.min.js" th:src="@{js/jquery-3.6.0.min.js}"></script>
+        <style type="text/css">
+            body {
+                margin: 0;
+                /* 100%窗口高度 */
+                height: 100vh;
+                /* 弹性布局 居中 */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                /* 渐变背景 */
+                background: linear-gradient(200deg, #72afd3, #96fbc4);
+            }
+
+            .login-box {
+                /* 相对定位 */
+                position: relative;
+                height: 360px;
+                width: 360px;
+                background-color: rgb(255, 255, 255);
+                border-radius: 8px;
+            }
+
+            .account {
+                position: absolute;
+                top: 120px;
+                left: 46px;
+                background-color: rgb(238, 238, 238);
+                width: 265px;
+                height: 36px;
+                border-radius: 20px;
+            }
+
+            .password {
+                position: absolute;
+                top: 180px;
+                left: 46px;
+                background-color: rgb(238, 238, 238);
+                width: 265px;
+                height: 36px;
+                border-radius: 20px;
+            }
+
+            #account:focus,
+            #password:focus,
+            button:focus {
+                outline: 0;
+            }
+
+            .conceal{
+            position: absolute;
+            top: 6px;
+            right: 13px;
+            width: 23px;
+            height: 23px;
+            background-image: url("img/yincang.png");
+            background-size: 100% 100%;
+            cursor: pointer;
+            }
+             .conceal.xianshi{
+            background-image: url("img/xianshi.png");
+            background-size: 100% 100%;
+            }
+
+            button {
+                cursor: pointer;
+                /* filter: blur(1px); */
+            }
+
+            .submit-button {
+                position: absolute;
+                bottom: 60px;
+                left: 58px;
+            }
+
+            /* 猫头鹰的样式 */
+            .owl {
+                width: 211px;
+                height: 108px;
+                /* 背景图片 */
+                background: url("img/owl.png") no-repeat;
+                /* 绝对定位 */
+                position: absolute;
+                top: -100px;
+                /* 水平居中 */
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .owl .hand {
+                width: 34px;
+                height: 34px;
+                border-radius: 40px;
+                background-color: #472d20;
+                /* 绝对定位 */
+                position: absolute;
+                left: 12px;
+                bottom: -8px;
+                /* 沿Y轴缩放0.6倍（压扁） */
+                transform: scaleY(0.6);
+                /* 动画过渡 */
+                transition: 0.3s ease-out;
+            }
+            .owl .hand.hand-r {
+                left: 170px;
+            }
+            .owl.password .hand {
+                transform: translateX(42px) translateY(-15px) scale(0.7);
+            }
+            .owl.password .hand.hand-r {
+                transform: translateX(-42px) translateY(-15px) scale(0.7);
+            }
+            .owl .arms {
+                position: absolute;
+                top: 58px;
+                width: 100%;
+                height: 41px;
+                overflow: hidden;
+            }
+            .owl .arms .arm {
+                width: 40px;
+                height: 65px;
+                position: absolute;
+                left: 20px;
+                top: 40px;
+                background: url("img/owl-arm.png") no-repeat;
+                transform: rotate(-20deg);
+                transition: 0.3s ease-out;
+            }
+            .owl .arms .arm.arm-r {
+                transform: rotate(20deg) scaleX(-1);
+                left: 158px;
+            }
+            .owl.password .arms .arm {
+                transform: translateY(-40px) translateX(40px);
+            }
+            .owl.password .arms .arm.arm-r {
+                transform: translateY(-40px) translateX(-40px) scaleX(-1);
+            }
+
+            /* 跟踪纸飞机 */
+            #plane {
+                color: #fff;
+                font-size: 60px;
+                /* 绝对定位 */
+                position: absolute;
+                /* 弹性布局 水平+垂直居中 */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- 纸飞机 -->
+        <div id="plane">
+            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        </div>
+
+        <!-- 登录窗体 -->
+        <div class="login-box">
+            <div class="owl" id="owl">
+                <div class="hand"></div>
+                <div class="hand hand-r"></div>
+                <div class="arms">
+                    <div class="arm"></div>
+                    <div class="arm arm-r"></div>
+                </div>
+            </div>
+            <!-- 登录表单 -->
+            <form action="/loginCheck" method="post">
+                <div style="position: absolute; right: 120px; top: 35px; font-size: 36px; color: rgb(214, 97, 97)">
+                    <b>Sign in</b>
+                </div>
+                <!-- 账号 -->
+                <div class="account">
+                    <label style="position: absolute; left: 13px; top: 8px; font-size: 14px">账号</label>
+                    <input
+                        type="text"
+                        name="account"
+                        id="account"
+                        th:value="${account}"
+                        placeholder="邮箱或手机号码"
+                        style="height: 34px; width: 200px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
+                    />
+                </div>
+                <!-- 密码 -->
+                <div class="password">
+                    <label style="position: absolute; left: 13px; top: 8px; font-size: 14px">密码</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        th:value="${password}"
+                        placeholder="请输入密码"
+                        style="height: 34px; width: 200px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
+                    />
+                    <div class="conceal" id='conceal'></div>
+                </div>
+                <!-- 忘记密码提示 -->
+                <div style="position: absolute; right: 53px; top: 230px; font-size: 11px; color: rgb(243,26,26)">忘记密码请联系管理员</div>
+                <!-- 确认按钮 -->
+                <div class="submit-button">
+                    <button id="login" type="button" style="background: linear-gradient(200deg, #72afd3, #96fbc4); border: transparent; color: #ffffff; height: 36px; width: 240px; border-radius: 20px">
+                        登 录
+                    </button>
+                </div>
+                <!-- 跳转注册 -->
+                <div style="position: absolute; right: 128px; bottom: 36px">
+                    <a style="font-size: 11px; color: rgb(104, 25, 25)" th:href="@{/regist}">没有账号，现在去注册</a>
+                </div>
+            </form>
+        </div>
+    </body>
+        <script src="../static/js/login.js" th:src="@{js/login.js}"></script>
+</html>
