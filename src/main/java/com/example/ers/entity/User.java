@@ -50,6 +50,25 @@ public class User {
             return false;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", realName='" + realName + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", role=" + role +
+                ", school='" + school + '\'' +
+                ", faculty='" + faculty + '\'' +
+                ", grade=" + grade +
+                ", classNum=" + classNum +
+                ", subject='" + subject + '\'' +
+                ", imageAddress='" + imageAddress + '\'' +
+                '}';
+    }
+
     /**
      * getter and setter
      */

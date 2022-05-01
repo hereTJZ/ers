@@ -74,14 +74,16 @@ $(document).ready(function () {
             success: function (result) {    //result是服务器返回的封装数据
                 console.log(result);//打印服务端返回的数据(调试用)
                 if (result.code === 200) {
-                    alert(result.msg + "\n" + result.data.account + "\n" + result.data["password"]);
+                    alert(result.msg + "\n" + result.data["id"] + "\n" + result.data["realName"]);
                     // 数据请求成功后跳转首页面
-                    window.location.href="/home"
+                    // window.location.href="/home"
+                }else if (result.code === 404){
+                    alert(result.msg + "\n" + result.data);
+                    // 数据请求成功后跳转首页面
                 }
-                ;
             },
             error: function () {
-                alert("异常！");
+                alert("登录请求异常！");
             }
         });
         // $("#div1").load("demo_test.txt", function (responseTxt, statusTxt, xhr) {

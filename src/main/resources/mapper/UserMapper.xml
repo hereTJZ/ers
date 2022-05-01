@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ers.dao.UserMapper">
+
+    <sql id="sql1">
+        <if test="nickName != null and nickName != ''">
+            and customer_service.nick_name = #{nickName}
+        </if>
+        <if test="realName != null and realName != ''">
+            and customer_service.real_name = #{realName}
+        </if>
+    </sql>
+
+<!--    <insert id="create" parameterType="User">-->
+<!--        insert-->
+<!--        work_order(work_order_id,type,title,order_desc,cclist,priority,state,customer_service_id,customer_id)-->
+<!--        values (-->
+<!--        #{workOrderId},-->
+<!--        #{type},-->
+<!--        #{title},-->
+<!--        #{orderDesc},-->
+<!--        #{cclist},-->
+<!--        #{priority},-->
+<!--        #{state},-->
+<!--        #{customerServiceId},-->
+<!--        #{customerId}-->
+<!--        )-->
+<!--    </insert>-->
+
+    <select id="login" resultType="User">
+        select id,
+               real_name,
+               phone,
+               email,
+               role,
+               school,
+               faculty,
+               grade,
+               class,
+               subject,
+               gender,
+               image_address
+        from user
+        where (phone = "${account}" and password = "${password}")
+        or (email = "${account}" and password = "${password}")
+    </select>
+
+    <resultMap id="UserMap" type="User">
+        <result column="work_order_id" property="workOrderId"></result>
+        <result column="" property=""></result>
+        <result column="" property=""></result>
+    </resultMap>
+
+</mapper>
