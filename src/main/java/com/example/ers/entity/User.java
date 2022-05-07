@@ -15,6 +15,22 @@ public class User {
     private String subject;
     private String imageAddress;
 
+    // 初始化用户
+    public User() {
+        this.id = 0;
+        this.role=0;
+        this.realName="未知";
+        this.phone="null";
+        this.email="null";
+        this.gender="未知";
+        this.school="null";
+        this.faculty="null";
+        this.grade=0;
+        this.classNum=0;
+        this.subject="null";
+        this.imageAddress="null";
+    }
+
     /**
      * 身份判断
      */

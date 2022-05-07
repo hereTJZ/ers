@@ -11,6 +11,10 @@ em {
     font-style: normal;
 }
 
+textarea {
+    font-family: "微软雅黑";
+}
+
 ul {
     list-style: none;
 }
@@ -37,9 +41,9 @@ button {
 
 /* 头部样式 */
 header {
-    width: 1400px;
+    width: 1600px;
     background: #dccfcf;
-    height: 90px;
+    height: 80px;
     box-sizing: border-box;
     margin: 0 auto;
     padding: 10px 20px;
@@ -53,6 +57,7 @@ header {
 
 .logo-img {
     width: 136px;
+    height: 60px;
 }
 
 .logo-title {
@@ -62,7 +67,7 @@ header {
     color: rgb(0, 0, 0);
     flex: 1;
     margin-left: 20px;
-    margin-top: -5px;
+    margin-top: 0px;
 }
 
 /* 简介弹窗 */
@@ -72,7 +77,7 @@ header {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    height: 90px;
+    height: 60px;
     box-sizing: border-box;
 }
 .user:hover .usertab {
@@ -80,7 +85,7 @@ header {
 }
 .usertab {
     position: absolute;
-    top: 80px;
+    top: 67px;
     left: -22px;
     font-size: 12px;
     z-index: 88;
@@ -98,17 +103,21 @@ header {
     height: 45px;
 }
 
-.usertab .usernane {
+.usertab .username {
     width: 100%;
     background: #e5c6c6;
-    padding: 20px 20px 5px;
+    padding: 5px 20px;
     box-sizing: border-box;
 }
 
-.user .usertab .usernane i {
+.user .usertab .username i {
     display: block;
     font-size: 12px;
     margin-bottom: 10px;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /*内容超出宽度时隐藏超出部分的内容*/
+    text-overflow: ellipsis; /*当对象内文本溢出时显示省略标记()；需与overflow:hidden;一起使用。*/
 }
 
 .user .usertab ul li {
@@ -125,18 +134,27 @@ header {
     color: #e5c6c6;
 }
 
-.user span:nth-of-type(1) {
-    font-size: 20px;
+/* 文字超出部分隐藏效果 */
+.user span {
+    display: block; /*内联对象需加*/
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /*内容超出宽度时隐藏超出部分的内容*/
+    text-overflow: ellipsis; /*当对象内文本溢出时显示省略标记()；需与overflow:hidden;一起使用。*/
 }
 
-.user span:nth-of-type(2) {
-    font-size: 18px;
-    color: #c4c4c4;
+.user span:nth-of-type(1) {
+    font-size: 16px;
+}
+
+.user span:nth-of-type(3) {
+    font-size: 16px;
+    color: #a43a3a;
 }
 
 /* 主体样式 */
 main {
-    width: 1400px;
+    width: 1600px;
     margin: 0 auto;
     display: flex;
     background: #fff;

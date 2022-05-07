@@ -1,0 +1,42 @@
+/* 实验详情页面 */
+
+.detail-content {
+    box-sizing: border-box;
+    padding: 20px 60px 10px 50px;
+    flex: 1;
+    padding: 50px;
+    height: 750px;
+    overflow-y: auto;
+}
+
+.detail-content h3 {
+    margin: 50px 10px 20px;
+}
+
+.detail-content h3 i {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.detail-box {
+    border: 1px solid #ccc;
+    padding: 15px 30px;
+    width: 80%;
+    margin-left: 20px;
+}
+
+.detail-box p {
+    margin-top: 10px;
+}
+
+.detail-box button {
+    padding: 5px 25px;
+    border: 1px #000000 dashed;
+    border-radius: 5px;
+    background: #c4ffc4;
+}
+
+.upload a {
+    margin-left: 50px;
+    color: #0f6d9c;
+}

@@ -1,254 +1,261 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>首页</title>
-        <link rel="stylesheet" href="../static/css/font.css" th:href="@{css/font.css}"/>
-        <link rel="stylesheet" href="../static/css/index.css" th:href="@{css/index.css}"/>
-        <link rel="stylesheet" href="../static/css/home.css" th:href="@{css/home.css}"/>
-        <style></style>
-    </head>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>首页</title>
+    <link rel="stylesheet" href="../static/css/font.css" th:href="@{css/font.css}"/>
+    <link rel="stylesheet" href="../static/css/index.css" th:href="@{css/index.css}"/>
+    <link rel="stylesheet" href="../static/css/home.css" th:href="@{css/home.css}"/>
+    <script src="../static/js/jquery-3.6.0.min.js" th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <!--  首先进行登录状态核验   -->
+    <script src="../static/js/check-login.js" th:src="@{js/check-login.js}"></script>
+</head>
 
-    <body>
-        <!--  头部 -->
-        <header>
-            <div class="head">
-                <div class="logo-img">
-                    <img th:src="@{img/logo.png}" alt="" width="139" height="70" />
+<body>
+<!--  头部 -->
+<header>
+    <div class="head">
+        <div class="logo-img">
+            <img th:src="@{img/logo.png}" alt="" width="139" height="70"/>
+        </div>
+        <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
+        <!-- 简介弹窗 -->
+        <div class="user" id="user">
+            <img class="userlogo" th:src="@{img/userlogo.png}" alt=""/>
+            <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
+            <span th:text="${user?.getRealName()}">张三</span>
+            <span>&nbsp;</span>
+            <span th:text="${identity}">老师</span>
+            <div class="usertab" id="usertab">
+                <div class="username">
+                    <i style="font-size: 18px; font-weight: 600">
+                        <span th:text="${identity}">老师</span>
+                        <span th:text="'(' + ${user?.getFaculty()} + ')'">(软件学院)</span>
+                    </i>
+                    <i th:text="${user?.getRealName()} + ${user?.getPhone()}">张三1212312345</i>
+                    <i th:text="${user?.getEmail()}">12123123@mail.com</i>
                 </div>
-                <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
-                <!-- 简介弹窗 -->
-                <div class="user" id="user">
-                    <img class="userlogo" th:src="@{img/userlogo.png}" alt="" />
-                    <span>张三</span>
-                    <span>老师</span>
-                    <div class="usertab" id="usertab">
-                        <div class="usernane">
-                            <i style="font-size: 18px; font-weight: 600">教师（软件学院）</i>
-                            <i>张三1212312345</i>
-                            <i>12123123@mail.com</i>
-                        </div>
-                        <ul>
-                            <li class="bgccc">个人信息维护</li>
-                            <li>修改密码</li>
-                            <li>帮助</li>
-                            <li>退出登录</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- 主体页面 -->
-        <main>
-            <!-- 左边导航 -->
-            <nav>
                 <ul>
-                    <li class="active">
-                        <a href="home.html">首 &nbsp; 页 <i class="iconfont icon-zhuye"></i> </a>
-                    </li>
-                    <li>
-                        <a href="news.html">新闻公告 <i class="iconfont icon-gonggao"></i> </a>
-                    </li>
-                    <li>
-                        <a href="booking.html"
-                            >预约实验
-                            <i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="resource.html">资源站点 <i class="iconfont icon-ziyuan"></i> </a>
-                    </li>
-                    <li>
-                        <a href="experiment.html">实验管理 <i class="iconfont icon-bianji"></i> </a>
-                    </li>
-                    <li>
-                        <a href="user.html">用户管理 <i class="iconfont icon-yonghu1"></i> </a>
-                    </li>
-                    <li>
-                        <a href="notice.html">公告管理 <i class="iconfont icon-gonggao"></i> </a>
-                    </li>
-                    <li>
-                        <a href="setting.html">个人设置 <i class="iconfont icon-shezhi"></i> </a>
-                    </li>
-                    <li>
-                        <a href="contact.html"
-                            >联系我们
-                            <i class="iconfont icon-lianxishouhou"></i>
-                        </a>
-                    </li>
+                    <li class="bgccc" th:href="">个人信息维护</li>
+                    <li>修改密码</li>
+                    <li>帮助</li>
+                    <li id="logout">退出登录</li>
                 </ul>
-            </nav>
-
-            <!-- 右边内容 -->
-            <div class="content">
-                <!-- 轮播图 -->
-                <div class="slide-inner">
-                    <div class="slideshow-container">
-                        <div class="mySlides fade">
-                            <img th:src="@{img/banner/banner.png}" alt="" style="width: 100%" />
-                        </div>
-                        <div class="mySlides fade">
-                            <img th:src="@{img/banner/banner2.png}" alt="" style="width: 100%" />
-                        </div>
-                        <div class="mySlides fade">
-                            <img th:src="@{img/banner/banner3.png}" alt="" style="width: 100%" />
-                        </div>
-                        <div class="mySlides fade">
-                            <img th:src="@{img/banner/banner4.png}" alt="" style="width: 100%" />
-                        </div>
-                        <div class="mySlides fade">
-                            <img th:src="@{img/banner/banner5.png}" alt="" style="width: 100%" />
-                        </div>
-                    </div>
-
-                    <div class="dot-wrapper">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                </div>
-
-                <!-- 新闻公告 -->
-                <div class="content-inner">
-                    <div class="content-title">
-                        <span>新闻公告</span>
-                        <a href="news.html">more</a>
-                    </div>
-                    <div class="content-list">
-                        <ul>
-                            <li>
-                                <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第一条通知公告标题！</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第二条通知公告标题！！</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第三条通知公告标题！！！</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第四条通知公告标题！！！！</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第五条通知公告标题！！！！！</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- 近期实验 -->
-                <div class="content-inner">
-                    <div class="content-title">
-                        <span>近期实验</span>
-                        <a href="experiment.html">more</a>
-                    </div>
-                    <div class="content-list">
-                        <ul>
-                            <li>
-                                <a href="detail.html">这里是第一条近期实验标题！</a>
-                            </li>
-                            <li>
-                                <a href="detail.html">这里是第二条近期实验标题！！</a>
-                            </li>
-                            <li>
-                                <a href="detail.html">这里是第三条近期实验标题！！！</a>
-                            </li>
-                            <li>
-                                <a href="detail.html">这里是第四条近期实验标题！！！！</a>
-                            </li>
-                            <li>
-                                <a href="detail.html">这里是第五条近期实验标题！！！！！</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- 资源网站 -->
-                <div class="content-inner">
-                    <div class="content-title">
-                        <span>资源网站</span>
-                        <a href="resource.html">more</a>
-                    </div>
-                    <div class="content-list">
-                        <ul>
-                            <li>
-                                <a href="">这里是第一条资源网站标题！</a>
-                            </li>
-                            <li>
-                                <a href="">这里是第二条资源网站标题！！</a>
-                            </li>
-                            <li>
-                                <a href="">这里是第三条资源网站标题！！！</a>
-                            </li>
-                            <li>
-                                <a href="">这里是第四条资源网站标题！！！！</a>
-                            </li>
-                            <li>
-                                <a href="">这里是第五条资源网站标题！！！！！</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- 底部 -->
-        <footer></footer>
-
-        <!-- 公告弹窗 -->
-        <div class="notice-modal">
-            <!-- 弹窗内容 -->
-            <div class="notice-modal-content">
-                <!-- <span class="close">&times;</span> -->
-                <p><b>*公告标题</b></p>
-                <p id="notice-title">试验系统开放预约啦</p>
-                <p><b>*公告内容</b></p>
-                <p id="notice-content">
-                    3月31日，教育部召开2022年第5次全国教育系统疫情防控工作视频调度会议，深入贯彻习近平总书记关于新冠肺炎疫情防控重要指示批示精神，落实党中央、国务院决策部署，统筹推进教育系统疫情防控和教育改革发展，部署从严从实从细做好当前教育系统疫情防控工作，提高科学精准防控水平。<br /><br />
-                    会议强调，教育系统疫情防控工作要坚定不移坚持“外防输入、内防反弹”总策略，落实落细常态化疫情防控各项措施，确保校园一方净土，确保师生生命安全。要坚定不移坚持“动态清零”总方针，主动融入属地疫情防控全局，加快完善疫情防控应急预案，一旦出现疫情即刻启动应急机制，果断采取有效措施，确保尽早实现“动态清零”，确保教育教学平稳有序。
-                </p>
-
-                <div><img src="../static/img/noimg.png" th:src="@{img/noimg.png}" alt="" /></div>
-
-                <button class="close-notice-modal">返回</button>
             </div>
         </div>
-    </body>
+    </div>
+</header>
 
-    <script src="../static/js/home.js" th:src="@{js/home.js}"></script>
+<!-- 主体页面 -->
+<main>
+    <!-- 左边导航 -->
+    <nav>
+        <ul>
+            <li class="active">
+                <a href="home.html">首 &nbsp; 页 <i class="iconfont icon-zhuye"></i> </a>
+            </li>
+            <li>
+                <a href="news.html">新闻公告 <i class="iconfont icon-gonggao"></i> </a>
+            </li>
+            <li>
+                <a href="booking.html"
+                >预约实验
+                    <i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i>
+                </a>
+            </li>
+            <li>
+                <a href="resource.html">资源站点 <i class="iconfont icon-ziyuan"></i> </a>
+            </li>
+            <li>
+                <a href="experiment.html">实验管理 <i class="iconfont icon-bianji"></i> </a>
+            </li>
+            <li>
+                <a href="user.html">用户管理 <i class="iconfont icon-yonghu1"></i> </a>
+            </li>
+            <li>
+                <a href="notice.html">公告管理 <i class="iconfont icon-gonggao"></i> </a>
+            </li>
+            <li>
+                <a href="setting.html">个人设置 <i class="iconfont icon-shezhi"></i> </a>
+            </li>
+            <li>
+                <a href="contact.html"
+                >联系我们
+                    <i class="iconfont icon-lianxishouhou"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
-    <script>
-        // var i = 1;
-        // function show(id) {
-        //     if (i % 2 != 0) {
-        //         document.getElementById(id).style.display = "block";
-        //     } else {
-        //         document.getElementById(id).style.display = "none";
-        //     }
-        //     i++;
-        // }
+    <!-- 右边内容 -->
+    <div class="content">
+        <!-- 轮播图 -->
+        <div class="slide-inner">
+            <div class="slideshow-container">
+                <div class="mySlides fade">
+                    <img th:src="@{img/banner/banner.png}" alt="" style="width: 100%"/>
+                </div>
+                <div class="mySlides fade">
+                    <img th:src="@{img/banner/banner2.png}" alt="" style="width: 100%"/>
+                </div>
+                <div class="mySlides fade">
+                    <img th:src="@{img/banner/banner3.png}" alt="" style="width: 100%"/>
+                </div>
+                <div class="mySlides fade">
+                    <img th:src="@{img/banner/banner4.png}" alt="" style="width: 100%"/>
+                </div>
+                <div class="mySlides fade">
+                    <img th:src="@{img/banner/banner5.png}" alt="" style="width: 100%"/>
+                </div>
+            </div>
 
-        //显示通知弹窗
-        function showNotice(className) {
-            document.getElementsByClassName(className)[0].style.display = "block";
-        }
+            <div class="dot-wrapper">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
 
-        // 在用户点击按钮，关闭弹窗
-        var noticeModal = document.getElementsByClassName("notice-modal")[0];
-        var spanIndex = document.querySelector(".close-notice-modal");
-        spanIndex.onclick = function () {
+        <!-- 新闻公告 -->
+        <div class="content-inner">
+            <div class="content-title">
+                <span>新闻公告</span>
+                <a href="news.html">more</a>
+            </div>
+            <div class="content-list">
+                <ul>
+                    <li>
+                        <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第一条通知公告标题！</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第二条通知公告标题！！</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第三条通知公告标题！！！</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第四条通知公告标题！！！！</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" onclick="showNotice('notice-modal')">这里是第五条通知公告标题！！！！！</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 近期实验 -->
+        <div class="content-inner">
+            <div class="content-title">
+                <span>近期实验</span>
+                <a href="experiment.html">more</a>
+            </div>
+            <div class="content-list">
+                <ul>
+                    <li>
+                        <a href="detail.html">这里是第一条近期实验标题！</a>
+                    </li>
+                    <li>
+                        <a href="detail.html">这里是第二条近期实验标题！！</a>
+                    </li>
+                    <li>
+                        <a href="detail.html">这里是第三条近期实验标题！！！</a>
+                    </li>
+                    <li>
+                        <a href="detail.html">这里是第四条近期实验标题！！！！</a>
+                    </li>
+                    <li>
+                        <a href="detail.html">这里是第五条近期实验标题！！！！！</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 资源网站 -->
+        <div class="content-inner">
+            <div class="content-title">
+                <span>资源网站</span>
+                <a href="resource.html">more</a>
+            </div>
+            <div class="content-list">
+                <ul>
+                    <li>
+                        <a href="">这里是第一条资源网站标题！</a>
+                    </li>
+                    <li>
+                        <a href="">这里是第二条资源网站标题！！</a>
+                    </li>
+                    <li>
+                        <a href="">这里是第三条资源网站标题！！！</a>
+                    </li>
+                    <li>
+                        <a href="">这里是第四条资源网站标题！！！！</a>
+                    </li>
+                    <li>
+                        <a href="">这里是第五条资源网站标题！！！！！</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- 底部 -->
+<footer></footer>
+
+<!-- 公告弹窗 -->
+<div class="notice-modal">
+    <!-- 弹窗内容 -->
+    <div class="notice-modal-content">
+        <!-- <span class="close">&times;</span> -->
+        <p><b>*公告标题</b></p>
+        <p id="notice-title">试验系统开放预约啦</p>
+        <p><b>*公告内容</b></p>
+        <p id="notice-content">
+            3月31日，教育部召开2022年第5次全国教育系统疫情防控工作视频调度会议，深入贯彻习近平总书记关于新冠肺炎疫情防控重要指示批示精神，落实党中央、国务院决策部署，统筹推进教育系统疫情防控和教育改革发展，部署从严从实从细做好当前教育系统疫情防控工作，提高科学精准防控水平。<br/><br/>
+            会议强调，教育系统疫情防控工作要坚定不移坚持“外防输入、内防反弹”总策略，落实落细常态化疫情防控各项措施，确保校园一方净土，确保师生生命安全。要坚定不移坚持“动态清零”总方针，主动融入属地疫情防控全局，加快完善疫情防控应急预案，一旦出现疫情即刻启动应急机制，果断采取有效措施，确保尽早实现“动态清零”，确保教育教学平稳有序。
+        </p>
+
+        <div><img src="../static/img/noimg.png" th:src="@{img/noimg.png}" alt=""/></div>
+
+        <button class="close-notice-modal">返回</button>
+    </div>
+</div>
+</body>
+
+<script src="../static/js/home.js" th:src="@{js/home.js}"></script>
+
+<script>
+    // var i = 1;
+    // function show(id) {
+    //     if (i % 2 != 0) {
+    //         document.getElementById(id).style.display = "block";
+    //     } else {
+    //         document.getElementById(id).style.display = "none";
+    //     }
+    //     i++;
+    // }
+
+    //显示通知弹窗
+    function showNotice(className) {
+        document.getElementsByClassName(className)[0].style.display = "block";
+    }
+
+    // 在用户点击按钮，关闭弹窗
+    var noticeModal = document.getElementsByClassName("notice-modal")[0];
+    var spanIndex = document.querySelector(".close-notice-modal");
+    spanIndex.onclick = function () {
+        noticeModal.style.display = "none";
+    };
+
+    // 在用户点击其他地方时，关闭弹窗
+    window.onclick = function (event) {
+        if (event.target == noticeModal) {
             noticeModal.style.display = "none";
-        };
-
-        // 在用户点击其他地方时，关闭弹窗
-        window.onclick = function (event) {
-            if (event.target == noticeModal) {
-                noticeModal.style.display = "none";
-            }
-        };
-    </script>
+        }
+    };
+</script>
 </html>

@@ -7,12 +7,15 @@
         <title>实验管理</title>
         <link rel="stylesheet" href="css/font.css" />
         <link rel="stylesheet" href="css/index.css" />
-        <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/notice.css" />
     </head>
 
+    <script src="../static/js/jquery-3.6.0.min.js" th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <!--  首先进行登录状态核验   -->
+    <script src="../static/js/check-login.js" th:src="@{js/check-login.js}"></script>
+
     <body>
-        <!--  头部 -->
+        <!-- 头部 -->
         <header>
             <div class="head">
                 <div class="logo-img">
@@ -23,9 +26,10 @@
                 <div class="user" id="user" onclick="show('usertab');">
                     <img class="userlogo" src="img/userlogo.png" alt="" />
                     <span>张三</span>
+                    <span>&nbsp;</span>
                     <span>老师</span>
                     <div class="usertab" id="usertab">
-                        <div class="usernane">
+                        <div class="username">
                             <i style="font-size: 18px; font-weight: 600"> 教师（软件学院）</i>
                             <i>张三1212312345</i>
                             <i>12123123@mail.com</i>
@@ -83,7 +87,7 @@
             </nav>
 
             <!-- 右边实验管理 -->
-            <div class="news-content">
+            <div class="notice-content">
                 <div class="notice-top">
                     <button class="addBtn">+新增公告</button>
                     <div class="news-time">
@@ -225,7 +229,7 @@
 
                     <div><img src="img/noimg.png" alt="" /></div>
 
-                    <button class="close">返回</button>
+                    <button class="close show-close">返回</button>
                 </div>
             </div>
 
@@ -236,12 +240,12 @@
                     <!-- <span class="close">&times;</span> -->
                     <p><b>*公告标题</b></p>
                     <p>
-                        <textarea type="text" style="width: 100%; height: 36px" placeholder="请填写公告标题"></textarea>
+                        <textarea type="text" style="width: 100%; height: 40px" placeholder="请填写公告标题"></textarea>
                     </p>
 
                     <p><b>*公告内容</b></p>
                     <p>
-                        <textarea type="text" style="width: 100%; height: 400px; line-height: 1.2" placeholder="请填写公告内容"></textarea>
+                        <textarea type="text" style="width: 100%; height: 360px; line-height: 1.2" placeholder="请填写公告内容"></textarea>
                     </p>
 
                     <div class="upload">
@@ -249,8 +253,8 @@
                         <a href="">网络安全协议书.png</a>
                     </div>
                     <div class="notice-btn">
-                        <button class="close22">发布</button>
-                        <button class="close2 close22">返回</button>
+                        <button class="close">发布</button>
+                        <button class="close2 close">返回</button>
                     </div>
                 </div>
             </div>

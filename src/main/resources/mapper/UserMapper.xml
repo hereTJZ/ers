@@ -41,8 +41,8 @@
                gender,
                image_address
         from user
-        where (phone = "${account}" and password = "${password}")
-        or (email = "${account}" and password = "${password}")
+        where (phone = #{account} and password = #{password})
+        or (email = #{account} and password = #{password})
     </select>
 
     <resultMap id="UserMap" type="User">

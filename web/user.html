@@ -7,9 +7,12 @@
         <title>用户管理</title>
         <link rel="stylesheet" href="css/font.css" />
         <link rel="stylesheet" href="css/index.css" />
-        <link rel="stylesheet" href="css/style.css" />
-        <link rel="stylesheet" href="css/booking.css" />
+        <link rel="stylesheet" href="css/user.css" />
     </head>
+
+    <script src="../static/js/jquery-3.6.0.min.js" th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <!--  首先进行登录状态核验   -->
+    <script src="../static/js/check-login.js" th:src="@{js/check-login.js}"></script>
 
     <body>
         <!--  头部 -->
@@ -23,9 +26,10 @@
                 <div class="user" id="user" onclick="show('usertab');">
                     <img class="userlogo" src="img/userlogo.png" alt="" />
                     <span>张三</span>
+                    <span>&nbsp;</span>
                     <span>老师</span>
                     <div class="usertab" id="usertab">
-                        <div class="usernane">
+                        <div class="username">
                             <i style="font-size: 18px; font-weight: 600"> 教师（软件学院）</i>
                             <i>张三1212312345</i>
                             <i>12123123@mail.com</i>
@@ -83,11 +87,10 @@
             </nav>
 
             <!-- 右边实验管理 -->
-            <div class="news-content user-content">
+            <div class="user-content">
                 <div class="booking-top">
                     <div class="booking-top-left">
                         <button class="myBtn">+单个添加</button>
-
                         <button class="myBtn">+批量导入</button>
                         <button class="myBtn" style="background-color: #ed4141">删 除</button>
                     </div>
@@ -97,6 +100,7 @@
                     </div>
                     <button class="newsSearch">搜索</button>
                 </div>
+                <!-- 表格 -->
                 <div class="tab">
                     <div class="tab-top">
                         <span>教师</span>
@@ -297,7 +301,7 @@
                 </div>
                 <div class="news-page">
                     <button class="allselect">全选</button>
-                    <span>第1页</span>
+                    <span>第1/6页</span>
                     <span> <button>上一页</button> <button>下一页</button></span>
                     <span>
                         前往<input type="text" name="" id="" value="1" />页
@@ -316,9 +320,12 @@
                         <input type="text" name="" id="" placeholder=" 请填写用户真实姓名" />
                     </p>
                     <p>
-                        *用户身份 <br /><input class="UserID" type="radio" name="UserID" value="教师" /> 教师<input name="UserID" class="UserID" type="radio" value="学生" />
+                        *用户身份 <br />
+                        <input class="UserID" name="UserID" type="radio" value="教师" />
+                        教师
+                        <input class="UserID" name="UserID" type="radio" value="学生" />
                         学生
-                        <input class="UserID" type="radio" name="UserID" value="社会人员" />
+                        <input class="UserID" name="UserID" type="radio" value="社会人员" />
                         社会人员
                     </p>
                     <p>
@@ -352,7 +359,7 @@
 
         <!-- 底部 -->
         <footer></footer>
-        <script src="js/newsModal.js"></script>
+        <script src="js/user.js"></script>
     </body>
     <script>
         // var i = 1;
@@ -365,9 +372,5 @@
         //     }
         //     i++;
         // }
-
-        function show2(id) {
-            document.getElementById(id).style.display = "block";
-        }
     </script>
 </html>

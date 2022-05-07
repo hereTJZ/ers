@@ -19,7 +19,7 @@ public class RefreshController {
 
     @RequestMapping("/pr")
     public String partialRefresh(Model model) {
-        model.addAttribute("msg", "异步请求刷新后的内容");
+        model.addAttribute("msg", UUID.randomUUID().toString());
         return "partialRefreshTest::visit";
     }
 

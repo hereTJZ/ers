@@ -10,21 +10,26 @@
         <link rel="stylesheet" href="css/news.css" />
     </head>
 
+    <script src="../static/js/jquery-3.6.0.min.js" th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <!--  首先进行登录状态核验   -->
+    <script src="../static/js/check-login.js" th:src="@{js/check-login.js}"></script>
+
     <body>
         <!--  头部 -->
         <header>
             <div class="head">
                 <div class="logo-img">
-                    <img src="img/logo.png" alt="" width="139" height="70" />
+                    <img src="img/logo.png" alt="" width="129" height="60" />
                 </div>
                 <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
                 <!-- 简介弹窗 -->
                 <div class="user" id="user" onclick="show('usertab');">
                     <img class="userlogo" src="img/userlogo.png" alt="" />
                     <span>张三</span>
+                    <span>&nbsp;</span>
                     <span>老师</span>
                     <div class="usertab" id="usertab">
-                        <div class="usernane">
+                        <div class="username">
                             <i style="font-size: 18px; font-weight: 600"> 教师（软件学院）</i>
                             <i>张三1212312345</i>
                             <i>12123123@mail.com</i>
