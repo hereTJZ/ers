@@ -103,6 +103,7 @@ function date_time(date) {
     var day = date.getDate();
     // 获得一周中的天数 (0 ~ 6)。其中0为周日，1~6为对应周数
     var weekday = date.getDay();
+    console.log("刷新时间：" + date);
 
     // 更新标题日期
     $("#year").text(formatstr(year));
@@ -169,7 +170,18 @@ $(document).ready(function () {
         // time变为此刻的上一周
         time.setDate(time.getDate() - 7);
         date_time(time);
-        clickNum = 0;
+
+        // 还有一种情况，当切换上下周刚好回到本周时，要回归时间轴的更新（动态）
+        if (isThisWeek(time, new Date())) {
+            if (clickNum === 0) {
+                myVar = setInterval(function () {
+                    date_time(new Date());
+                }, 1000);
+            }
+            clickNum++;
+        } else {
+            clickNum = 0;
+        }
     });
 });
 
@@ -181,17 +193,29 @@ $(document).ready(function () {
         // time变为此刻的下一周
         time.setDate(time.getDate() + 7);
         date_time(time);
-        clickNum = 0;
+
+        // 还有一种情况，当切换上下周刚好回到本周时，要回归时间轴的更新（动态）
+        if (isThisWeek(time, new Date())) {
+            if (clickNum === 0) {
+                myVar = setInterval(function () {
+                    date_time(new Date());
+                }, 1000);
+            }
+            clickNum++;
+        } else {
+            clickNum = 0;
+        }
     });
 });
 
 // 回到本周
-var clickNum = 0;
+var clickNum = 1;
 $(document).ready(function () {
     $("#this-week").click(function () {
         // 回到本周重新开始更新时间（动态）
         time = new Date();
         date_time(time);
+
         // 这里要防止多次点击“回到本周”而导致setInterval多次重复执行
         if (clickNum === 0) {
             myVar = setInterval(function () {

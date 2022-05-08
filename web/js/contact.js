@@ -69,3 +69,26 @@ document.querySelector("button.btn2").onclick = function () {
         600
     );
 };
+
+// 提交反馈信息
+$(document).ready(function () {
+    $("#bui~").click(function () {
+        // $.ajax({
+        //     type: "POST", //方法类型
+        //     dataType: "json", //预期服务器返回的数据类型
+        //     url: "https://formspree.io/f/xzbyvdyo", //执行的url请求
+        //     //data不是json对象，是json字符串
+        //     data: {
+        //         userName: "",
+        //     },
+        //     // 提交成功
+        //     success: function () {
+        //         alert("提交成功！");
+        //     },
+        //     // 提交失败
+        //     error: function () {
+        //         alert("提交失败！");
+        //     },
+        // });
+    });
+});

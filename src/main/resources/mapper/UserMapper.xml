@@ -39,7 +39,8 @@
                class,
                subject,
                gender,
-               image_address
+               image_address,
+               register_time
         from user
         where (phone = #{account} and password = #{password})
         or (email = #{account} and password = #{password})

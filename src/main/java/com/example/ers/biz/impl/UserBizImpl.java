@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserBizImpl implements IUserBiz {
-
+    //依赖持久层接口
     @Autowired
     private UserMapper userMapper;
 

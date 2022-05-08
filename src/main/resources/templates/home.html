@@ -33,11 +33,12 @@
                         <span th:text="${identity}">老师</span>
                         <span th:text="'(' + ${user?.getFaculty()} + ')'">(软件学院)</span>
                     </i>
-                    <i th:text="${user?.getRealName()} + ${user?.getPhone()}">张三1212312345</i>
+                    <i th:utext="'<b>' + ${user?.getRealName()} + '</b>&nbsp;&nbsp;ID:' + ${user?.getId()}">张三
+                        1212312345</i>
                     <i th:text="${user?.getEmail()}">12123123@mail.com</i>
                 </div>
                 <ul>
-                    <li class="bgccc" th:href="">个人信息维护</li>
+                    <li class="bgccc">个人信息维护</li>
                     <li>修改密码</li>
                     <li>帮助</li>
                     <li id="logout">退出登录</li>
@@ -53,34 +54,31 @@
     <nav>
         <ul>
             <li class="active">
-                <a href="home.html">首 &nbsp; 页 <i class="iconfont icon-zhuye"></i> </a>
+                <a href="home">首&nbsp;页 <i class="iconfont icon-zhuye"></i> </a>
             </li>
             <li>
-                <a href="news.html">新闻公告 <i class="iconfont icon-gonggao"></i> </a>
+                <a href="news">新闻公告 <i class="iconfont icon-gonggao"></i> </a>
             </li>
             <li>
-                <a href="booking.html"
-                >预约实验
-                    <i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i>
-                </a>
+                <a href="booking">预约实验<i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i></a>
             </li>
             <li>
-                <a href="resource.html">资源站点 <i class="iconfont icon-ziyuan"></i> </a>
+                <a href="resource">资源站点 <i class="iconfont icon-ziyuan"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="experiment">实验管理 <i class="iconfont icon-bianji"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="user">用户管理 <i class="iconfont icon-yonghu1"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="notice">公告管理 <i class="iconfont icon-gonggao"></i> </a>
             </li>
             <li>
-                <a href="experiment.html">实验管理 <i class="iconfont icon-bianji"></i> </a>
+                <a href="setting">个人设置 <i class="iconfont icon-shezhi"></i> </a>
             </li>
             <li>
-                <a href="user.html">用户管理 <i class="iconfont icon-yonghu1"></i> </a>
-            </li>
-            <li>
-                <a href="notice.html">公告管理 <i class="iconfont icon-gonggao"></i> </a>
-            </li>
-            <li>
-                <a href="setting.html">个人设置 <i class="iconfont icon-shezhi"></i> </a>
-            </li>
-            <li>
-                <a href="contact.html"
+                <a href="contact"
                 >联系我们
                     <i class="iconfont icon-lianxishouhou"></i>
                 </a>
@@ -124,7 +122,7 @@
         <div class="content-inner">
             <div class="content-title">
                 <span>新闻公告</span>
-                <a href="news.html">more</a>
+                <a href="news">more</a>
             </div>
             <div class="content-list">
                 <ul>
@@ -151,24 +149,24 @@
         <div class="content-inner">
             <div class="content-title">
                 <span>近期实验</span>
-                <a href="experiment.html">more</a>
+                <a href="experiment">more</a>
             </div>
             <div class="content-list">
                 <ul>
                     <li>
-                        <a href="detail.html">这里是第一条近期实验标题！</a>
+                        <a href="detail">这里是第一条近期实验标题！</a>
                     </li>
                     <li>
-                        <a href="detail.html">这里是第二条近期实验标题！！</a>
+                        <a href="detail">这里是第二条近期实验标题！！</a>
                     </li>
                     <li>
-                        <a href="detail.html">这里是第三条近期实验标题！！！</a>
+                        <a href="detail">这里是第三条近期实验标题！！！</a>
                     </li>
                     <li>
-                        <a href="detail.html">这里是第四条近期实验标题！！！！</a>
+                        <a href="detail">这里是第四条近期实验标题！！！！</a>
                     </li>
                     <li>
-                        <a href="detail.html">这里是第五条近期实验标题！！！！！</a>
+                        <a href="detail">这里是第五条近期实验标题！！！！！</a>
                     </li>
                 </ul>
             </div>
@@ -178,7 +176,7 @@
         <div class="content-inner">
             <div class="content-title">
                 <span>资源网站</span>
-                <a href="resource.html">more</a>
+                <a href="resource">more</a>
             </div>
             <div class="content-list">
                 <ul>

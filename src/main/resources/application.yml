@@ -25,6 +25,12 @@ server:
   port: 8080
   servlet:
     context-path: "/"
+  #禁用空白（错误）页面，同时添加发生错误时要调用的自定义路径
+  error:
+    path: "/error"
+    whitelabel:
+      enabled: false
+
 
 
 #mybatis优化配置

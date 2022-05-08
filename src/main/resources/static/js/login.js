@@ -62,7 +62,7 @@ function send_SMS() {
     alert("短信已发送，请注意查收😄")
 }
 
-// button onclick="login()"
+// 执行登录
 $(document).ready(function () {
     $("#login").click(function () {
         $.ajax({
@@ -70,12 +70,16 @@ $(document).ready(function () {
             type: "POST",   //方法类型
             dataType: "json",   //预期服务器返回的数据类型
             url: "/executeLogin",    //执行登录的url请求
-            data: $("form").serialize(),
+            data: $("form").serialize(),    //序列化表单元素集为字符串以便提交
             success: function (result) {    //result是服务器返回的封装数据
                 console.log(result);//打印服务端返回的数据(调试用)
                 if (result.code === 200) {
-                    alert(result.msg + "\n" + result.data["id"] + "\n" + result.data["realName"]);
+                    alert(result.msg + "\nID:" + result.data["id"] + "\n" + result.data["realName"]);
                     // 登录请求验证成功后跳转首页面
+                    window.location.href="/home"
+                }else if (result.code === 400){
+                    // 当前已登录，防止重登陆
+                    alert(result.msg + "\n" + result.data);
                     window.location.href="/home"
                 }else if (result.code === 500){
                     // 登录请求验证失败后提示信息

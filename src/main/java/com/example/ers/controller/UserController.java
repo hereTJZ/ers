@@ -24,32 +24,18 @@ public class UserController {
      * 登录界面
      */
     @RequestMapping(value = {"/", "/login"})
-    public String loginPage() {
+    public String loginPage(Model model, HttpSession session) {
         return "login";
     }
 
     /**
      * 注册界面
      */
-    @RequestMapping(value = {"/regist"})
+    @RequestMapping(value = {"/register"})
     public String registPage() {
-        return "regist";
+        return "register";
     }
 
-    /**
-     * 首页界面
-     */
-    @RequestMapping(value = {"/home"})
-    public String homePage(HttpSession session, Model model) {
-        // Object 类向下强制转型
-        User user = (User) session.getAttribute("user");
-        // 已登录的情况下
-        if (user != null) {
-            model.addAttribute("user", user);
-            model.addAttribute("identity", Util.userIdentity(user.getRole()));
-        }
-        return "home";
-    }
 
     /**
      * 登录账户密码验证
@@ -60,6 +46,11 @@ public class UserController {
                                 HttpSession session,
                                 @RequestParam("account") String account,
                                 @RequestParam("password") String password) {
+        User userTemp = (User) session.getAttribute("user");
+        // 首先核验当前是否已经登录
+        if (userTemp != null) {
+            return new ErsResult(400, "error", "当前用户已经登录");
+        }
         User user = userBiz.login(account, password);
         // 用户登录成功
         if (user != null) {
@@ -102,18 +93,11 @@ public class UserController {
     @RequestMapping(value = {"/executeLogout"}, method = RequestMethod.GET)
     @ResponseBody
     public ErsResult logout(Model model,
-                                HttpSession session) {
+                            HttpSession session) {
         // 手动注销session，移除session中的用户信息
         session.removeAttribute("user");
-        // 用户登录成功
-        if (user != null) {
-            System.out.println(user.toString());
-            // 将用户信息放入session
-            session.setAttribute("user", user);
-            return new ErsResult(200, "success", user);
-            // 用户登录失败
-        } else {
-            return new ErsResult(500, "error", "账号或密码错误");
-        }
+        return new ErsResult(200, "success", "成功登出");
     }
+
+
 }

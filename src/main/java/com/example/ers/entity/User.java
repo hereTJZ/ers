@@ -1,34 +1,45 @@
 package com.example.ers.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+import java.util.Objects;
+
 public class User {
     private int id;
+    // 真实姓名
     private String realName;
     private String password;
     private String phone;
     private String email;
     private String gender;
+    // 用户角色
     private int role;
     private String school;
     private String faculty;
     private int grade;
     private int classNum;
     private String subject;
+    // 头像地址
     private String imageAddress;
+    // 注册时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date registerTime;
 
     // 初始化用户
     public User() {
         this.id = 0;
-        this.role=0;
-        this.realName="未知";
-        this.phone="null";
-        this.email="null";
-        this.gender="未知";
-        this.school="null";
-        this.faculty="null";
-        this.grade=0;
-        this.classNum=0;
-        this.subject="null";
-        this.imageAddress="null";
+        this.role = 0;
+        this.realName = "未知";
+        this.phone = "null";
+        this.email = "null";
+        this.gender = "未知";
+        this.school = "null";
+        this.faculty = "null";
+        this.grade = 0;
+        this.classNum = 0;
+        this.subject = "null";
+        this.imageAddress = "null";
     }
 
     /**
@@ -66,6 +77,20 @@ public class User {
             return false;
     }
 
+    // equals()方法
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId() == user.getId() && getPhone().equals(user.getPhone()) && Objects.equals(getEmail(), user.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getPhone(), getEmail());
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -82,6 +107,7 @@ public class User {
                 ", classNum=" + classNum +
                 ", subject='" + subject + '\'' +
                 ", imageAddress='" + imageAddress + '\'' +
+                ", registerTime='" + registerTime + '\'' +
                 '}';
     }
 
@@ -190,5 +216,13 @@ public class User {
 
     public void setImageAddress(String imageAddress) {
         this.imageAddress = imageAddress;
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 }

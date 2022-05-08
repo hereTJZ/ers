@@ -16,6 +16,9 @@
     <script src="../static/js/check-login.js" th:src="@{js/check-login.js}"></script>
     <script charset="utf-8" src="https://map.qq.com/api/gljs?v=1.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77"></script>
 
+    <!-- 可删除 -->
+    <script src="js/jquery-3.6.0.min.js" th:src="@{js/jquery-3.6.0.min.js}"></script>
+
     <body>
         <!--  头部 -->
         <header>
@@ -120,13 +123,13 @@
 
                 <!-- 信息反馈 -->
                 <div class="contact-bottom">
-                    <div class="contact-form">
-                        <input name="" id="" type="text" placeholder="怎么称呼" />
-                        <input name="" id="" type="text" placeholder="邮箱或联系方式" />
-                        <textarea name="" id="" type="text" placeholder="有什么想对我们说的呢"></textarea>
+                    <form class="contact-form" action="https://formspree.io/f/xoqryqqw" method="post">
+                        <input name="userName" id="" type="text" placeholder="怎么称呼" />
+                        <input name="phoneOrEmail" id="" type="text" placeholder="邮箱或联系方式" />
+                        <textarea name="content" id="" type="text" placeholder="有什么想对我们说的呢"></textarea>
 
-                        <button>BUI~</button>
-                    </div>
+                        <button id="bui~">BUI~</button>
+                    </form>
                     <div class="contact-help">
                         <h4>需要帮忙，或者意见反馈？</h4>
                         <p>
