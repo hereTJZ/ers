@@ -24,6 +24,7 @@
     box-sizing: border-box;
     padding: 20px 30px;
     transition: all 0.3s;
+    background: rgba(3, 59, 70, 0.01);
 }
 
 .content-inner:hover {
@@ -128,11 +129,17 @@
 }
 
 .content-list ul li a {
+    display: block;
     color: #000;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /*内容超出宽度时隐藏超出部分的内容*/
+    text-overflow: ellipsis; /*当对象内文本溢出时显示省略标记()；需与overflow:hidden;一起使用。*/
 }
 
 .content-list li a:hover {
     color: #019901;
+    text-decoration:underline;
 }
 
 /* ---------------------- */
@@ -166,6 +173,8 @@
 .notice-modal-content p {
     margin-bottom: 20px;
     font-size: 14px;
+    /*保留换行符*/
+    white-space: pre-line;
 }
 
 /* 公告弹窗 关闭按钮 */

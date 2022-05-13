@@ -46,11 +46,16 @@ button:focus {
 /* 头部样式 */
 header {
     width: 1600px;
-    background: #dccfcf;
+    background: linear-gradient(200deg, #d3dde4, #1f2b34);
     height: 80px;
     box-sizing: border-box;
     margin: 0 auto;
     padding: 10px 20px;
+}
+
+.ifuhk {
+    background-color: linear-gradient(100deg, #ccfbff, #ead6ee);
+    background: linear-gradient(200deg, #b2b9be, #2f4052);
 }
 
 .head {
@@ -64,11 +69,19 @@ header {
     height: 60px;
 }
 
+.logo-img img {
+    position: absolute;
+    top: 0px;
+    margin-left: 20px;
+    width: 100px;
+    height: 75px;
+}
+
 .logo-title {
     font-size: 26px;
     font-family: Arial;
     text-align: left;
-    color: rgb(0, 0, 0);
+    color: rgb(254, 252, 252);
     flex: 1;
     margin-left: 20px;
     margin-top: 0px;
@@ -105,11 +118,12 @@ header {
 .user .userlogo {
     width: 45px;
     height: 45px;
+    border-radius: 50%;
 }
 
 .usertab .username {
     width: 100%;
-    background: #e5c6c6;
+    background: linear-gradient(200deg, #f2ddf8, #aceef5);
     padding: 20px 20px 5px;
     box-sizing: border-box;
 }
@@ -124,14 +138,16 @@ header {
     height: 30px;
     line-height: 30px;
     cursor: pointer;
+    background: #f5fbfd;
 }
 
 .user .usertab ul .bgccc {
-    background: #e4e4e4;
+    border-top: 1px solid rgb(230, 227, 227);
 }
 
 .user .usertab ul li:hover {
-    color: #e5c6c6;
+    color: #e09b9b;
+    background: #dbf4fc;
 }
 
 /* 文字超出部分隐藏效果 */

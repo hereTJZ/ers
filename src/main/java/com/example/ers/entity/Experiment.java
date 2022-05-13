@@ -13,6 +13,8 @@ public class Experiment {
     private int state;
     // 预约者id
     private int userId;
+    // 组长
+    private User groupLeader;
     // 实验参与人员
     private String participant;
     // 指导老师
@@ -33,6 +35,14 @@ public class Experiment {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creatTime;
 
+    public Experiment() {
+    }
+
+    // 是否延时
+    public boolean isDelay(){
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Experiment{" +
@@ -40,6 +50,7 @@ public class Experiment {
                 ", name='" + name + '\'' +
                 ", state=" + state +
                 ", userId=" + userId +
+                ", groupLeader='" + groupLeader + '\'' +
                 ", participant='" + participant + '\'' +
                 ", instructor='" + instructor + '\'' +
                 ", content='" + content + '\'' +
@@ -161,5 +172,13 @@ public class Experiment {
 
     public void setCreatTime(Date creatTime) {
         this.creatTime = creatTime;
+    }
+
+    public User getGroupLeader() {
+        return groupLeader;
+    }
+
+    public void setGroupLeader(User groupLeader) {
+        this.groupLeader = groupLeader;
     }
 }

@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.ers.dao.ExperimentMapper">
+    <select id="getFiveExperiments" resultType="Experiment">
+        select *
+        from experiment
+        where (state = 2 or state = 3) -- 2：进行中  3：已完成
+        order by start_time desc -- asc相反为升序
+        limit 5 -- 查询数量为5条
+    </select>
 
+    <select id="getExperimentById" resultType="Experiment">
+        select *
+        from experiment
+        where id = #{id}
+    </select>
 </mapper>

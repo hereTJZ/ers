@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${experiment?.getName()}">网络攻防—木马实验</title>
+    <link rel="stylesheet" href="../static/css/font.css" th:href="@{../css/font.css}"/>
+    <link rel="stylesheet" href="../static/css/index.css" th:href="@{../css/index.css}"/>
+    <link rel="stylesheet" href="../static/css/detail.css" th:href="@{../css/detail.css}"/>
+</head>
+
+<script src="../static/js/jquery-3.6.0.min.js" th:src="@{../js/jquery-3.6.0.min.js}"></script>
+<!--  首先进行登录状态核验   -->
+<script src="../static/js/check-login.js" th:src="@{../js/check-login.js}"></script>
+
+<body>
+<!--  头部 -->
+<header>
+    <div class="head">
+        <div class="logo-img" onclick="window.location.href = '/home'">
+            <img id="logo-img" src="../img/logo.png" alt="" width="139" height="70"/>
+        </div>
+        <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
+        <!-- 个人头像信息 -->
+        <div class="user" id="user">
+            <img class="userlogo" th:src="@{../img/userlogo.png}" alt=""/>
+            <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
+            <span th:text="${user?.getRealName()}">张三</span>
+            <span>&nbsp;</span>
+            <span th:text="${identity}">老师</span>
+            <!-- 简介弹窗 -->
+            <div class="usertab" id="usertab">
+                <!-- 信息 -->
+                <div class="username">
+                    <i style="font-size: 18px; font-weight: 600">
+                        <span th:text="${identity}">老师</span>
+                        <span th:text="'(' + ${user?.getFaculty()} + ')'">(软件学院)</span>
+                    </i>
+                    <i th:utext="'<b>' + ${user?.getRealName()} + '</b>&nbsp;&nbsp;ID:' + ${user?.getId()}">张三
+                        1212312345</i>
+                    <i th:text="${user?.getEmail()}">12123123@mail.com</i>
+                </div>
+                <!-- 功能表 -->
+                <ul>
+                    <li class="bgccc" onclick="window.location.href = '/setting'">
+                        个人信息维护
+                    </li>
+                    <li onclick="window.location.href = '/resetPassword'">
+                        修改密码
+                    </li>
+                    <li onclick="window.location.href = '/help'">
+                        帮助
+                    </li>
+                    <li id="logout">
+                        退出登录
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 主体页面 -->
+<main>
+    <!-- 左边导航 -->
+    <nav>
+        <ul>
+            <li>
+                <a href="../home">首&nbsp;页 <i class="iconfont icon-zhuye"></i> </a>
+            </li>
+            <li>
+                <a href="../news">新闻公告 <i class="iconfont icon-gonggao"></i> </a>
+            </li>
+            <li class="active">
+                <a href="../booking">预约实验<i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i></a>
+            </li>
+            <li>
+                <a href="../resource">资源站点 <i class="iconfont icon-ziyuan"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="../experiment">实验管理 <i class="iconfont icon-bianji"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="../user">用户管理 <i class="iconfont icon-yonghu1"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="../notice">公告管理 <i class="iconfont icon-gonggao"></i> </a>
+            </li>
+            <li>
+                <a href="../setting">个人设置 <i class="iconfont icon-shezhi"></i> </a>
+            </li>
+            <li>
+                <a href="../contact"
+                >联系我们
+                    <i class="iconfont icon-lianxishouhou"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 右边实验管理 -->
+    <div class="detail-content">
+        <a style="text-decoration: underline;
+                  color: rgb(21, 186, 227);
+                  position: relative;
+                  top: -30px;
+                  left: -70px"
+           href="javascript:window.history.back()">返回</a>
+
+        <h1 th:utext="'实验标题：' + ${experiment?.getName()}">
+            实验标题：网络攻防—木马实验
+        </h1>
+        <h3>
+            <i class="iconfont icon-gonggao"></i>
+            实验状态
+        </h3>
+        <div class="detail-box">
+            <p>
+                当前状态：
+                <button th:text="${state}">进行中</button>
+            </p>
+            <p th:utext="'<b>开始时间：</b>' + ${experiment?.getStartTime()}">开始时间：2022.03.12 10:30</p>
+            <p th:utext="'<b>结束时间：</b>' + ${experiment?.getEndTime()}">结束时间：2022.03.12 12:00</p>
+            <p th:utext="'<b>是否延时：</b>' + (${experiment?.isDelay()}?'是':'否')">是否延时：否</p>
+        </div>
+        <h3>
+            <i class="iconfont icon-bianji"></i>
+            实验人员
+        </h3>
+        <div class="detail-box">
+            <p th:utext="'<b>组长：</b>' + ${experiment?.getGroupLeader()?.getRealName()}">组长： 刘子墨</p>
+            <p th:utext="'<b>成员：</b>' + ${experiment?.getParticipant()}">成员：陈恺歌、吕子昂、丁俊语、余浩气、武玉萍、谢璇子、余欣然</p>
+            <p th:utext="'<b>指导老师：</b>' + ${experiment?.getInstructor()}">指导老师：张三</p>
+        </div>
+        <h3>
+            <i class="iconfont icon-yonghu1"></i>
+            实验内容
+        </h3>
+        <div class="detail-box">
+            <p th:utext="${experiment?.getContent()}" style="white-space: pre-line;">
+                实验内容balabala.....................
+            </p>
+        </div>
+        <h3>
+            <i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i>
+            相关知识
+        </h3>
+        <div class="detail-box">
+            <p th:utext="${experiment?.getRelatedKnowledge()}" style="white-space: pre-line;">
+                相关知识balabala.....................
+            </p>
+        </div>
+
+        <h3>
+            <i class="iconfont icon-ziyuan"></i>
+            资源下载
+        </h3>
+        <div class="upload">
+            <a href="">网络安全协议书.pdf</a>
+            <a href="">视频讲解.mp4</a>
+            <a href="">实验教程.ppt</a>
+        </div>
+    </div>
+
+    <!-- 弹窗 -->
+</main>
+
+<!-- 底部 -->
+<footer></footer>
+</body>
+<script>
+    // var i = 1;
+    var date = new Date();
+    if (date.getDate() % 2 === 0) {
+        $("#logo-img").prop("src", "../img/logo.png");
+    } else {
+        $("#logo-img").prop("src", "../img/earth.png");
+    }
+    // function show(id) {
+    //     if (i % 2 != 0) {
+    //         document.getElementById(id).style.display = "block";
+    //     } else {
+    //         document.getElementById(id).style.display = "none";
+    //     }
+    //     i++;
+    // }
+</script>
+</html>

@@ -39,10 +39,14 @@ button {
     cursor: pointer;
 }
 
+button:focus {
+    outline: 0;
+}
+
 /* 头部样式 */
 header {
     width: 1600px;
-    background: #dccfcf;
+    background: linear-gradient(200deg, #d3dde4, #2f4052);
     height: 80px;
     box-sizing: border-box;
     margin: 0 auto;
@@ -50,6 +54,7 @@ header {
 }
 
 .head {
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -60,11 +65,23 @@ header {
     height: 60px;
 }
 
+.logo-img img {
+    position: absolute;
+    top: 0px;
+    margin-left: 20px;
+    width: 100px;
+    height: 75px;
+}
+
+.logo-img:hover {
+    cursor: pointer;
+}
+
 .logo-title {
     font-size: 26px;
     font-family: Arial;
     text-align: left;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     flex: 1;
     margin-left: 20px;
     margin-top: 0px;
@@ -73,11 +90,11 @@ header {
 /* 简介弹窗 */
 .user {
     width: 155px;
+    height: 78px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
-    height: 60px;
     box-sizing: border-box;
 }
 .user:hover .usertab {
@@ -85,14 +102,13 @@ header {
 }
 .usertab {
     position: absolute;
-    top: 67px;
+    top: 78px;
     left: -22px;
     font-size: 12px;
     z-index: 88;
     background: #fff;
     text-align: center;
     border: rgba(0, 0, 0, 0.248) 1px solid;
-
     width: 195px;
     height: 233px;
     display: none;
@@ -101,11 +117,12 @@ header {
 .user .userlogo {
     width: 45px;
     height: 45px;
+    border-radius: 50%;
 }
 
 .usertab .username {
     width: 100%;
-    background: #e5c6c6;
+    background: linear-gradient(200deg, #f2ddf8, #aceef5);
     padding: 5px 20px;
     box-sizing: border-box;
 }
@@ -124,14 +141,16 @@ header {
     height: 30px;
     line-height: 30px;
     cursor: pointer;
+    background: #f5fbfd;
 }
 
 .user .usertab ul .bgccc {
-    background: #e4e4e4;
+    border-top: 1px solid rgb(230, 227, 227);
 }
 
 .user .usertab ul li:hover {
-    color: #e5c6c6;
+    color: #e09b9b;
+    background: #dbf4fc;
 }
 
 /* 文字超出部分隐藏效果 */

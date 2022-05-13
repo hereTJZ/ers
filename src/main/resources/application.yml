@@ -19,6 +19,12 @@ spring:
     servlet:
       content-type: text/html
 
+  #发送邮件配置
+  mail:
+    host: smtp.163.com
+    username: smart_ERS@163.com
+    password: HJWMULRPJKPGMASF
+
 
 #配置tomcat服务器
 server:
@@ -32,14 +38,19 @@ server:
       enabled: false
 
 
-
-#mybatis优化配置
+#Mybatis优化配置
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.example.ers.entity
   configuration:
     map-underscore-to-camel-case: true  #驼峰命名法自动转换
 
+#Mybatis分页工具
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  page-size-zero: true
 
 #控制台看到执行的SQL语句
 logging:

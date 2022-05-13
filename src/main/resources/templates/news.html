@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>新闻公告</title>
+    <link rel="stylesheet" href="../static/css/font.css" th:href="@{css/font.css}"/>
+    <link rel="stylesheet" href="../static/css/index.css" th:href="@{css/index.css}"/>
+    <link rel="stylesheet" href="../static/css/home.css" th:href="@{css/news.css}"/>
+    <script src="../static/js/jquery-3.6.0.min.js" th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <!--  首先进行登录状态核验   -->
+    <script src="../static/js/check-login.js" th:src="@{js/check-login.js}"></script>
+</head>
+
+
+<body>
+<!--  头部 -->
+<header>
+    <div class="head">
+        <div class="logo-img" onclick="window.location.href = '/home'">
+            <img id="logo-img" src="img/logo.png" alt="" width="139" height="70"/>
+        </div>
+        <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
+        <!-- 个人头像信息 -->
+        <div class="user" id="user">
+            <img class="userlogo" th:src="@{img/userlogo.png}" alt=""/>
+            <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
+            <span th:text="${user?.getRealName()}">张三</span>
+            <span>&nbsp;</span>
+            <span th:text="${identity}">老师</span>
+            <!-- 简介弹窗 -->
+            <div class="usertab" id="usertab">
+                <!-- 信息 -->
+                <div class="username">
+                    <i style="font-size: 18px; font-weight: 600">
+                        <span th:text="${identity}">老师</span>
+                        <span th:text="'(' + ${user?.getFaculty()} + ')'">(软件学院)</span>
+                    </i>
+                    <i th:utext="'<b>' + ${user?.getRealName()} + '</b>&nbsp;&nbsp;ID:' + ${user?.getId()}">张三
+                        1212312345</i>
+                    <i th:text="${user?.getEmail()}">12123123@mail.com</i>
+                </div>
+                <!-- 功能表 -->
+                <ul>
+                    <li class="bgccc" onclick="window.location.href = '/setting'">
+                        个人信息维护
+                    </li>
+                    <li onclick="window.location.href = '/resetPassword'">
+                        修改密码
+                    </li>
+                    <li onclick="window.location.href = '/help'">
+                        帮助
+                    </li>
+                    <li id="logout">
+                        退出登录
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 主体页面 -->
+<main>
+    <!-- 左边导航 -->
+    <nav>
+        <ul>
+            <li>
+                <a href="home">首&nbsp;页 <i class="iconfont icon-zhuye"></i> </a>
+            </li>
+            <li class="active">
+                <a href="news">新闻公告 <i class="iconfont icon-gonggao"></i> </a>
+            </li>
+            <li>
+                <a href="booking">预约实验<i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i></a>
+            </li>
+            <li>
+                <a href="resource">资源站点 <i class="iconfont icon-ziyuan"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="experiment">实验管理 <i class="iconfont icon-bianji"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="user">用户管理 <i class="iconfont icon-yonghu1"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="notice">公告管理 <i class="iconfont icon-gonggao"></i> </a>
+            </li>
+            <li>
+                <a href="setting">个人设置 <i class="iconfont icon-shezhi"></i> </a>
+            </li>
+            <li>
+                <a href="contact"
+                >联系我们
+                    <i class="iconfont icon-lianxishouhou"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 右边新闻列表 -->
+    <div class="news-content">
+        <div class="news-h1">新闻公告</div>
+        <div class="news-top">
+            <div class="news-time">
+                <span>从</span>
+                <input type="datetime-local" name="" id="begin-time"/>
+                <span>到</span>
+                <input type="datetime-local" name="" id="end-time"/>
+            </div>
+            <div class="news-search">
+                <input id="search-content" type="text" placeholder="模糊搜索"/>
+                <i class="iconfont icon-sousuo"></i>
+            </div>
+            <button id="newsSearch">搜索</button>
+        </div>
+        <div class="news-list">
+            <ul>
+                <li th:each="notice:${noticeList}">
+                    <a
+                            href="javascript:;"
+                            onclick="showNotice()"
+                            th:onclick="showNotice([[${notice.getId()}]]);"
+                            th:utext="${notice.getTitle()}">这里是第一条通知公告标题！
+                    </a>
+                    <span th:text="${#dates.format(notice.getReleaseTime(),'yyyy-MM-dd')}">2022.03.10</span>
+                </li>
+                <!--                <li>-->
+                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第2条通知公告标题！！ </a>-->
+                <!--                    <span>2022.03.10</span>-->
+                <!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第3条通知公告标题！！！ </a>-->
+                <!--                    <span>2022.03.10</span>-->
+                <!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第4条通知公告标题！！！！ </a>-->
+                <!--                    <span>2022.03.10</span>-->
+                <!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第5条通知公告标题！！！！！</a>-->
+                <!--                    <span>2022.03.10</span>-->
+                <!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第6条通知公告标题！！！！！！ </a>-->
+                <!--                    <span>2022.03.10</span>-->
+                <!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第6条通知公告标题！！！！！！ </a>-->
+                <!--                    <span>2022.03.10</span>-->
+                <!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第6条通知公告标题！！！！！！ </a>-->
+                <!--                    <span>2022.03.10</span>-->
+                <!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第6条通知公告标题！！！！！！ </a>-->
+                <!--                    <span>2022.03.10</span>-->
+                <!--                </li>-->
+                <!--                <li>-->
+                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第10条通知公告标题！！！！！！ </a>-->
+                <!--                    <span>2022.03.10</span>-->
+                <!--                </li>-->
+            </ul>
+        </div>
+        <div class="news-page">
+            <span th:text="'第 ' + ${currentPage} + '/' + ${totalPages} + ' 页'">第1/6页</span>
+            <span>
+                <button th:if="(${currentPage}!=null) ? (${currentPage}>1) : false"
+                        th:onclick="'window.location.href =' + '\'/news?pageNum='+ ${currentPage - 1} + '\''">
+                    上一页
+                </button>
+                <button th:if="(${currentPage}!=null) ? (${currentPage}<${totalPages}) : false"
+                        th:onclick="'window.location.href =' + '\'/news?pageNum='+ ${currentPage + 1} + '\''">
+                    下一页
+                </button>
+            </span>
+            <span>
+                前往<input id="page-input" type="text" name="page-input" value="1" th:data="" />页
+                <button class="news-page-go">确定</button>
+            </span>
+        </div>
+    </div>
+
+    <!-- 公告弹窗 -->
+    <div class="notice-modal">
+        <!-- 弹窗内容 -->
+        <div class="notice-modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <p><b>*公告标题</b></p>
+            <p id="notice-title">试验系统开放预约啦</p>
+            <p><b>*公告内容</b></p>
+            <p id="notice-content">
+                3月31日，教育部召开2022年第5次全国教育系统疫情防控工作视频调度会议，深入贯彻习近平总书记关于新冠肺炎疫情防控重要指示批示精神，落实党中央、国务院决策部署，统筹推进教育系统疫情防控和教育改革发展，部署从严从实从细做好当前教育系统疫情防控工作，提高科学精准防控水平。<br/><br/>
+                会议强调，教育系统疫情防控工作要坚定不移坚持“外防输入、内防反弹”总策略，落实落细常态化疫情防控各项措施，确保校园一方净土，确保师生生命安全。要坚定不移坚持“动态清零”总方针，主动融入属地疫情防控全局，加快完善疫情防控应急预案，一旦出现疫情即刻启动应急机制，果断采取有效措施，确保尽早实现“动态清零”，确保教育教学平稳有序。
+            </p>
+
+            <div><img src="../static/img/noimg.png" th:src="@{img/noimg.png}" alt=""/></div>
+            <p id="release-Time" style="color: #a5a5a5"></p>
+
+            <button class="close-notice-modal">返回</button>
+        </div>
+    </div>
+</main>
+
+<!-- 底部 -->
+<footer></footer>
+<script src="js/news.js"></script>
+</body>
+<script>
+    // var i = 1;
+
+    // function show(id) {
+    //     if (i % 2 != 0) {
+    //         document.getElementById(id).style.display = "block";
+    //     } else {
+    //         document.getElementById(id).style.display = "none";
+    //     }
+    //     i++;
+    // }
+</script>
+</html>

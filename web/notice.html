@@ -89,7 +89,7 @@
             <!-- 右边实验管理 -->
             <div class="notice-content">
                 <div class="notice-top">
-                    <button class="addBtn">+新增公告</button>
+                    <button id="addNotice" class="addBtn">+新增公告</button>
                     <div class="news-time">
                         <span>从</span>
                         <input type="datetime-local" name="" id="" />
@@ -100,7 +100,7 @@
                         <input type="text" placeholder="模糊搜索" />
                         <i class="iconfont icon-sousuo"></i>
                     </div>
-                    <button class="newsSearch">搜索</button>
+                    <button id="newsSearch">搜索</button>
                 </div>
                 <div class="ex-list">
                     <table class="table-notice">
@@ -228,6 +228,7 @@
                     </p>
 
                     <div><img src="img/noimg.png" alt="" /></div>
+                    <p id="release-Time" style="color: #a5a5a5"></p>
 
                     <button class="close show-close">返回</button>
                 </div>
@@ -249,7 +250,7 @@
                     </p>
 
                     <div class="upload">
-                        <button>上传附件</button>
+                        <button>上传图片</button>
                         <a href="">网络安全协议书.png</a>
                     </div>
                     <div class="notice-btn">

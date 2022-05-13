@@ -39,22 +39,22 @@
                 border-radius: 20px;
             }
 
-            .verification {
+            .email {
                 position: absolute;
                 top: 150px;
                 left: 46px;
                 background-color: rgb(238, 238, 238);
-                width: 180px;
+                width: 265px;
                 height: 36px;
                 border-radius: 20px;
             }
 
-            .password {
+            .verification {
                 position: absolute;
                 top: 200px;
                 left: 46px;
                 background-color: rgb(238, 238, 238);
-                width: 265px;
+                width: 160px;
                 height: 36px;
                 border-radius: 20px;
             }
@@ -74,7 +74,7 @@
             background-size: 100% 100%;
             }
 
-            .realname {
+            .password {
                 position: absolute;
                 top: 250px;
                 left: 46px;
@@ -84,7 +84,7 @@
                 border-radius: 20px;
             }
 
-            .email {
+            .realname {
                 position: absolute;
                 top: 300px;
                 left: 46px;
@@ -188,10 +188,22 @@
                 justify-content: center;
                 align-items: center;
             }
+
+            /* 背景地球 */
+            #background-img{
+                /* left: 100px; */
+                opacity: 0.9;
+                width: 950px;
+                height: 700px;
+                filter: brightness(115%);
+                position: absolute;
+            }
         </style>
     </head>
 
     <body>
+        <!-- 地球 -->
+        <img id="background-img" src="img/earth.png" >
         <!-- 纸飞机 -->
         <div id="plane">
             <i class="fa fa-paper-plane" aria-hidden="true"></i>
@@ -199,6 +211,7 @@
 
         <!-- 注册窗体 -->
         <div class="regist-box">
+            <!-- 老鹰 -->
             <div class="owl" id="owl">
                 <div class="hand"></div>
                 <div class="hand hand-r"></div>
@@ -207,8 +220,9 @@
                     <div class="arm arm-r"></div>
                 </div>
             </div>
+
             <!-- 注册表单 -->
-            <form action="" method="post">
+            <form  target="no-refresh">
                 <div style="position: absolute; right: 120px; top: 35px; font-size: 36px; color: rgb(214, 97, 97)">
                     <b>Sign up</b>
                 </div>
@@ -217,36 +231,48 @@
                     <label style="position: absolute; left: 13px; top: 8px; font-size: 14px">账号</label>
                     <input
                         type="text"
-                        name="account"
+                        name="phone"
                         id="account"
                         value=""
-                        placeholder="手机号码"
-                        style="height: 34px; width: 200px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
+                        placeholder="手机号码（可用于登陆）"
+                        style="height: 34px; width: 180px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
                     />
                 </div>
-                <!-- 手机验证码 -->
+                <!-- 邮箱 -->
+                <div class="email">
+                    <label style="position: absolute; left: 13px; top: 8px; font-size: 14px">邮箱</label>
+                    <input
+                        type="text"
+                        name="email"
+                        id="email"
+                        value=""
+                        placeholder="邮箱（可用于登录）"
+                        style="height: 34px; width: 180px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
+                    />
+                </div>
+                <!-- 邮箱证码 -->
                 <div class="verification">
                     <label style="position: absolute; left: 13px; top: 8px; font-size: 14px">验证码</label>
                     <input
                         type="text"
-                        name="verification-code"
+                        name="verifyCode"
                         id="verification-code"
                         value=""
-                        placeholder="验证码"
-                        style="height: 34px; width: 210px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
+                        placeholder="邮箱验证码"
+                        style="height: 34px; width: 80px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
                     />
-                    <button
+                    <button id="send_button"
                         type="button"
                         onclick="send_SMS()"
                         style="
                             position: absolute;
                             background: linear-gradient(200deg, #72afd3, #96fbc4);
                             border: transparent;
-                            left: 195px;
+                            left: 175px;
                             top: 3px;
                             color: white;
                             height: 30px;
-                            width: 70px;
+                            width: 90px;
                             border-radius: 20px;
                         "
                     >
@@ -262,7 +288,7 @@
                         id="password"
                         value=""
                         placeholder="请输入密码"
-                        style="height: 34px; width: 200px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
+                        style="height: 34px; width: 180px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
                     />
                     <div class="conceal" id='conceal'></div>
                 </div>
@@ -271,30 +297,18 @@
                     <label style="position: absolute; left: 13px; top: 8px; font-size: 14px">姓名</label>
                     <input
                         type="text"
-                        name="realname"
+                        name="realName"
                         id="realname"
                         value=""
                         placeholder="真实姓名"
-                        style="height: 34px; width: 200px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
-                    />
-                </div>
-                <!-- 邮箱 -->
-                <div class="email">
-                    <label style="position: absolute; left: 13px; top: 8px; font-size: 14px">邮箱</label>
-                    <input
-                        type="text"
-                        name="email"
-                        id="email"
-                        value=""
-                        placeholder="邮箱"
-                        style="height: 34px; width: 200px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
+                        style="height: 34px; width: 180px; position: absolute; left: 65px; border: transparent; background-color: rgba(0, 0, 0, 0)"
                     />
                 </div>
                 <!-- 注册提示 -->
                 <div style="position: absolute; right: 53px; bottom: 120px; font-size: 11px; color: rgb(243, 26, 26)">仅支持社会人员自主注册</div>
                 <!-- 确认按钮 -->
                 <div class="submit-button">
-                    <button type="submit" style="background: linear-gradient(200deg, #72afd3, #96fbc4); border: transparent; color: white; height: 36px; width: 240px; border-radius: 20px">
+                    <button id="doRegister" type="submit" style="background: linear-gradient(200deg, #72afd3, #96fbc4); border: transparent; color: white; height: 36px; width: 240px; border-radius: 20px">
                         注 册
                     </button>
                 </div>
@@ -303,6 +317,8 @@
                     <a style="font-size: 12px; color: rgb(104, 25, 25)" href="/login">已有账号，现在去登录</a>
                 </div>
             </form>
+            <!-- form 表单无刷新提交 -->
+            <iframe name="no-refresh" style="height: 0px; width: 0px"></iframe>
         </div>
     </body>
 

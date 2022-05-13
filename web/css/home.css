@@ -24,6 +24,7 @@
     box-sizing: border-box;
     padding: 20px 30px;
     transition: all 0.3s;
+    background: rgba(3, 59, 70, 0.01);
 }
 
 .content-inner:hover {
@@ -133,6 +134,15 @@
 
 .content-list li a:hover {
     color: #019901;
+}
+
+.new-img {
+    position: absolute;
+    top: 188px;
+    margin-left: -20px;
+    width: 35px;
+    height: 30px;
+    transform: rotate(-30deg);
 }
 
 /* ---------------------- */

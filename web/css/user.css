@@ -44,6 +44,34 @@
     margin-right: 30px;
 }
 
+.booking-top #newsSearch {
+    background: #62d6d6;
+    border: 0;
+    padding: 8px 16px;
+    border-radius: 18px;
+    width: 70px;
+    color: #fff;
+    margin-right: 50px;
+}
+
+#addOne:hover,
+#addByFile:hover,
+#newsSearch:hover {
+    /*有色按钮变色*/
+    background: #46cbcb;
+    cursor: pointer;
+}
+
+#deleteUser {
+    background: #ee4040;
+}
+
+#deleteUser:hover {
+    /*有色按钮变色*/
+    background: #d82a2a;
+    cursor: pointer;
+}
+
 /* 用户表格 */
 
 .table-user {
