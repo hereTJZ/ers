@@ -14,6 +14,8 @@
     <!--  首先进行登录状态核验   -->
     <script src="../static/js/check-login.js" th:src="@{js/check-login.js}"></script>
 
+    <script src="js/jquery-3.6.0.min.js"></script>
+
     <body>
         <!--  头部 -->
         <header>
@@ -92,9 +94,9 @@
                 <div class="news-top">
                     <div class="news-time">
                         <span>从</span>
-                        <input type="datetime-local" name="" id="begin-time" />
+                        <input type="date" name="" id="start-time" value="2000-01-01" />
                         <span>到</span>
-                        <input type="datetime-local" name="" id="end-time" />
+                        <input type="date" name="" id="end-time" />
                     </div>
                     <div class="news-search">
                         <input id="search-content" type="text" placeholder="模糊搜索" />

@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,18 @@ public class test {
     IExperimentBiz experimentBiz;
     @Autowired
     IUserBiz userBiz;
+
+    @Test
+    void main(){
+        Date date = new Date();
+        System.out.println(date);
+        Calendar calendar = Calendar.getInstance();
+        System.out.println(calendar);
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR,1);
+        date = calendar.getTime();
+        System.out.println(date);
+    }
 
     @Test
     void getFiveNews() {
@@ -60,13 +73,28 @@ public class test {
     @Test
     void insertUser() {
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        System.out.println("Date:" + date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp time = Timestamp.valueOf(dateFormat.format(date));//获取当前时间
-        userBiz.register("1232","kjfahsdk", "fsad", "rewao",1, time);
+        System.out.println("Timestamp:" + time);
+        userBiz.register("1232", "kjfahsdk", "fsad", "rewao", 1, date);
     }
 
     @Test
-    void PageHelper(){
-        PageInfo pageInfo = noticeBiz.getNewsPage(1,10);
+    void PageHelper() {
+        PageInfo pageInfo = noticeBiz.getNewsPage(1, 10);
+        System.out.println(pageInfo.getTotal());
+    }
+
+    @Test
+    void fuzzyQuery() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //用于格式化和解析日期
+        Timestamp time1 = Timestamp.valueOf("2022-04-12 00:00:00");
+        Timestamp time2 = Timestamp.valueOf("2022-05-02 00:00:00");
+        PageInfo<Notice> pageInfo = noticeBiz.fuzzySearchNotice("21", time1, time2, 1, 10);
+        for (Notice notice:pageInfo.getList()) {
+            System.out.println(notice);
+        }
     }
 }

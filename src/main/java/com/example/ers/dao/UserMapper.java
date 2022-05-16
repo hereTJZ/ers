@@ -40,4 +40,18 @@ public interface UserMapper {
      * @return
      */
     int register(String phone, String email, String password, String realName, int role, Date registerTime);
+
+    /**
+     * 用户修改个人信息
+     * @param user
+     * @return
+     */
+    int resetUserInfo(User user);
+
+    /**
+     * 通过id删除用户
+     * @param id
+     * @return
+     */
+    int deleteUserById(int id);
 }

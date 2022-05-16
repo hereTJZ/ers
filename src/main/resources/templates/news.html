@@ -35,7 +35,14 @@
                 <div class="username">
                     <i style="font-size: 18px; font-weight: 600">
                         <span th:text="${identity}">老师</span>
-                        <span th:text="'(' + ${user?.getFaculty()} + ')'">(软件学院)</span>
+                        <span th:if="!${user?.isSocial()}"
+                              th:text="'(' + ${user?.getSchool()} + ${user?.getFaculty()} + ')'">
+                            (北京大学软件学院)
+                        </span>
+                        <span th:if="${user?.isSocial()}"
+                              th:text="'Welcome'">
+                            (welcome)
+                        </span>
                     </i>
                     <i th:utext="'<b>' + ${user?.getRealName()} + '</b>&nbsp;&nbsp;ID:' + ${user?.getId()}">张三
                         1212312345</i>
@@ -102,23 +109,26 @@
     <!-- 右边新闻列表 -->
     <div class="news-content">
         <div class="news-h1">新闻公告</div>
+        <!-- 模糊搜索 -->
         <div class="news-top">
             <div class="news-time">
                 <span>从</span>
-                <input type="datetime-local" name="" id="begin-time"/>
+                <input type="date" name="" id="start-time" th:value="${startTime}"/>
                 <span>到</span>
-                <input type="datetime-local" name="" id="end-time"/>
+                <input type="date" name="" id="end-time" th:value="${endTime}"/>
             </div>
             <div class="news-search">
-                <input id="search-content" type="text" placeholder="模糊搜索"/>
+                <input id="search-content" type="text" placeholder="模糊搜索" th:value="${searchContent}"/>
                 <i class="iconfont icon-sousuo"></i>
             </div>
             <button id="newsSearch">搜索</button>
         </div>
+        <!-- 新闻内容列表 -->
         <div class="news-list">
             <ul>
                 <li th:each="notice:${noticeList}">
                     <a
+                            title="点击查看详情"
                             href="javascript:;"
                             onclick="showNotice()"
                             th:onclick="showNotice([[${notice.getId()}]]);"
@@ -126,6 +136,8 @@
                     </a>
                     <span th:text="${#dates.format(notice.getReleaseTime(),'yyyy-MM-dd')}">2022.03.10</span>
                 </li>
+
+
                 <!--                <li>-->
                 <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第2条通知公告标题！！ </a>-->
                 <!--                    <span>2022.03.10</span>-->
@@ -163,21 +175,31 @@
                 <!--                    <span>2022.03.10</span>-->
                 <!--                </li>-->
             </ul>
+            <div class="cannot-find" th:if="${noticeList?.size()==0}">
+                <img
+                        style="display: block; height: 360px; width: auto"
+                        th:src="@{img/why.png}">
+                <p style="color: #8b8b8b; margin-top: 180px; font-size: 16px">很抱歉，没有找到你想要的内容</p>
+            </div>
         </div>
+        <!-- 页面控制 -->
         <div class="news-page">
             <span th:text="'第 ' + ${currentPage} + '/' + ${totalPages} + ' 页'">第1/6页</span>
+            <span th:text="'共' + ${total} + '条'"></span>
             <span>
-                <button th:if="(${currentPage}!=null) ? (${currentPage}>1) : false"
-                        th:onclick="'window.location.href =' + '\'/news?pageNum='+ ${currentPage - 1} + '\''">
+                <button id="up-page"
+                        th:if="(${currentPage}!=null) ? (${currentPage}>1) : false"
+                        th:onclick="upPage([[${currentPage - 1}]])">
                     上一页
                 </button>
-                <button th:if="(${currentPage}!=null) ? (${currentPage}<${totalPages}) : false"
-                        th:onclick="'window.location.href =' + '\'/news?pageNum='+ ${currentPage + 1} + '\''">
+                <button id="next-page"
+                        th:if="(${currentPage}!=null) ? (${currentPage}<${totalPages}) : false"
+                        th:onclick="nextPage([[${currentPage + 1}]])">
                     下一页
                 </button>
             </span>
             <span>
-                前往<input id="page-input" type="text" name="page-input" value="1" th:data="" />页
+                前往<input id="page-input" type="text" name="page-input" value="1" th:data="${totalPages}" />页
                 <button class="news-page-go">确定</button>
             </span>
         </div>

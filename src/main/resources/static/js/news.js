@@ -86,10 +86,41 @@ function showNotice(noticeID) {
     });
 }
 
-// 换页
+//模糊搜索
+$(document).ready(function () {
+    $("#newsSearch").click(function () {
+        var beginTime = $("#start-time").val()
+        var endTime = $("#end-time").val()
+        var content = $("#search-content").val()
+
+        //alert('/news?startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content)
+        window.location.href = '/news?startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content
+    })
+});
+
+function upPage(pageNum){
+    var beginTime = $("#start-time").val()
+    var endTime = $("#end-time").val()
+    var content = $("#search-content").val()
+    window.location.href = '/news?pageNum=' + pageNum + '&pageSize=' + 10 + '&startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content
+}
+
+function nextPage(pageNum){
+    var beginTime = $("#start-time").val()
+    var endTime = $("#end-time").val()
+    var content = $("#search-content").val()
+    window.location.href = '/news?pageNum=' + pageNum + '&pageSize=' + 10 + '&startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content
+}
+
+// 跳转页面
 $(document).ready(function () {
     $(".news-page-go").click(function () {
+        var beginTime = $("#start-time").val()
+        var endTime = $("#end-time").val()
+        var content = $("#search-content").val()
         var page = $("#page-input").val()
-        window.location.href = '/news?pageNum=' + page + '&pageSize=' + 5
+
+        //alert('/news?pageNum=' + page + '&pageSize=' + 10 + '&startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content)
+        window.location.href = '/news?pageNum=' + page + '&pageSize=' + 10 + '&startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content
     })
 });

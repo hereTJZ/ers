@@ -17,6 +17,7 @@ public class User {
     private int role;
     private String school;
     private String faculty;
+    private String professional;
     private int grade;
     private int classNum;
     private String subject;
@@ -30,15 +31,16 @@ public class User {
     public User() {
         this.id = 0;
         this.role = 0;
-        this.realName = "未知";
-        this.phone = "null";
-        this.email = "null";
-        this.gender = "未知";
-        this.school = "null";
-        this.faculty = "null";
+        this.realName = "";
+        this.phone = "";
+        this.email = "";
+        this.gender = "";
+        this.school = "";
+        this.faculty = "";
+        this.professional = "";
         this.grade = 0;
         this.classNum = 0;
-        this.subject = "null";
+        this.subject = "";
         this.imageAddress = "null";
     }
 
@@ -77,6 +79,20 @@ public class User {
             return false;
     }
 
+    public boolean isMale() {
+        if (this.gender.equals("男"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isFemale() {
+        if (this.gender.equals("女"))
+            return true;
+        else
+            return false;
+    }
+
     // equals()方法
     @Override
     public boolean equals(Object o) {
@@ -100,11 +116,12 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +
-                ", role=" + role +
+                ", role=" + role + '\'' +
                 ", school='" + school + '\'' +
+                ", professional=" + professional + '\'' +
                 ", faculty='" + faculty + '\'' +
-                ", grade=" + grade +
-                ", classNum=" + classNum +
+                ", grade=" + grade + '\'' +
+                ", classNum=" + classNum + '\'' +
                 ", subject='" + subject + '\'' +
                 ", imageAddress='" + imageAddress + '\'' +
                 ", registerTime='" + registerTime + '\'' +
@@ -224,5 +241,13 @@ public class User {
 
     public void setRegisterTime(Date registerTime) {
         this.registerTime = registerTime;
+    }
+
+    public String getProfessional() {
+        return professional;
+    }
+
+    public void setProfessional(String professional) {
+        this.professional = professional;
     }
 }

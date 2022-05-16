@@ -19,12 +19,16 @@
 .settingleft .setlogo p a {
     display: inline-block;
     color: #333;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .setting-tab {
     margin-top: 30px;
     margin-bottom: 30px;
+}
+
+.setting-tab input {
+    font-size: 16px;
 }
 
 .setting-tab button {
@@ -38,7 +42,7 @@
 }
 
 .setting-tab table tr td {
-    padding: 20px;
+    padding: 15px 20px;
 }
 
 .setting-tab table tr td input[type="text"] {
@@ -49,9 +53,18 @@
     width: 350px;
     border: #ccc 1px solid;
 }
+.setting-tab table tr td input[type="email"] {
+    height: 35px;
+    border-radius: 5px;
+    outline: none;
+    padding-left: 8px;
+    width: 350px;
+    border: #ccc 1px solid;
+}
 
 .setting-tab table tr td:nth-of-type(1) {
     text-align: end;
+    color: #888888;
 }
 
 .setting-tab table tr td:nth-of-type(2) {

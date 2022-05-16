@@ -7,4 +7,10 @@
         order by create_time desc -- asc相反为升序
         limit 5 -- 查询数量为5条
     </select>
+
+    <select id="getAllResource" resultType="Resource">
+        select id, title, subtitle, link, create_time
+        from resource
+        order by create_time desc -- asc相反为升序
+    </select>
 </mapper>

@@ -23,27 +23,31 @@ public class UserBizImpl implements IUserBiz {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    // 获取登录用户信息
     @Override
     public User login(String account, String password) {
         return userMapper.login(account, password);
     }
 
+    // 通过id找到用户
     @Override
     public User findUserById(int id) {
         return userMapper.findUserById(id);
     }
 
+    // 通过账号（手机号或邮箱）找到用户
     @Override
     public User findUserByAccount(String account) {
         return userMapper.findUserByAccount(account);
     }
 
+    // 发送注册验证码邮件
     @Override
     public void sendEmail(String targetEmail, String code) {
         // 简单文本邮件发送
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         try {
-            // html邮件发送
+            // 复杂html邮件发送
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom("smart_ERS@163.com" + "(验证码)");
@@ -69,9 +73,22 @@ public class UserBizImpl implements IUserBiz {
         }
     }
 
+    // 注册用户
     @Override
     public int register(String phone, String email, String password, String realName, int roleId, Date time) {
         return userMapper.register(phone, email, password, realName, roleId, time);
+    }
+
+    // 用户修改个人信息
+    @Override
+    public int resetUserInfo(User user) {
+        return 0;
+    }
+
+    // 通过id删除用户
+    @Override
+    public int deleteUserById(int id) {
+        return 0;
     }
 
 

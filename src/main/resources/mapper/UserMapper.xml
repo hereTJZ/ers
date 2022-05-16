@@ -35,8 +35,9 @@
                role,
                school,
                faculty,
+               professional,
                grade,
-               class,
+               class_num,
                subject,
                gender,
                image_address,
@@ -77,8 +78,9 @@
                role,
                school,
                faculty,
+               professional,
                grade,
-               class,
+               class_num,
                subject,
                gender,
                image_address,
@@ -95,8 +97,9 @@
                role,
                school,
                faculty,
+               professional,
                grade,
-               class,
+               class_num,
                subject,
                gender,
                image_address,
@@ -111,4 +114,24 @@
         <result column="" property=""/>
     </resultMap>
 
+    <update id="resetUserInfo" parameterType="User">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="realName != null">real_name = #{realName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="school != null">school = #{school},</if>
+            <if test="faculty != null">faculty = #{faculty},</if>
+            <if test="professional != null">professional = #{professional},</if>
+            <if test="grade != null">grade = #{grade},</if>t
+            <if test="classNum != null">class_num = #{classNum},</if>
+            <if test="subject != null">subject = #{subject}</if>
+        where id = #{id}
+        </trim>
+    </update>
+
+    <delete id="deleteUserById">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
 </mapper>

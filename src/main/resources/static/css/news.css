@@ -127,6 +127,13 @@
     color: #019901;
 }
 
+.cannot-find {
+    display: flex;
+    //居中
+    align-items: center;
+    justify-content: center;
+}
+
 /* 底部页码 */
 
 .news-page {

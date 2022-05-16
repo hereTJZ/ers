@@ -276,12 +276,15 @@ public class UserController {
             return result;
         }
 
-        // 设置用户信息
+        // 设置用户角色
         int roleId = 4;
+        // 获取当前java时间。    java.util.Date是所有时间类的父类，对应数据库应当转换成或直接使用Timestamp、java.sql.Date类
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Timestamp time = Timestamp.valueOf(dateFormat.format(date));//获取当前时间
+        // 用于格式化和解析日期
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp time = Timestamp.valueOf(dateFormat.format(date));
         userBiz.register(phone, email, password, realName, roleId, time);
+
         result.setData("注册时间：" + time + "😄");
         return result;
     }
@@ -321,5 +324,37 @@ public class UserController {
         return new ErsResult(200, "success", "成功登出");
     }
 
+    /**
+     * 用户设置个人信息
+     */
+    @RequestMapping(value = {"/resetUserInfo"}, method = RequestMethod.POST)
+    @ResponseBody
+    public ErsResult resetUserInfo(Model model,
+                                   HttpSession session,
+                                   @RequestParam("phone") String phone,
+                                   @RequestParam("email") String email,
+                                   @RequestParam("gender") String gender,
+                                   @RequestParam("school") String school,
+                                   @RequestParam("realName") String realName,
+                                   @RequestParam("professional") String professional,
+                                   @RequestParam("grade") int grade,
+                                   @RequestParam("classNum") int classNum,
+                                   @RequestParam("subject") String subject){
+
+        return new ErsResult();
+    }
+
+     /**
+     * 用户重置密码
+     */
+    @RequestMapping(value = {"/resetUserPassword"}, method = RequestMethod.POST)
+    @ResponseBody
+    public ErsResult resetUserPassword(Model model,
+                                   HttpSession session,
+                                   @RequestParam("oldPassword") String oldPassword,
+                                   @RequestParam("newPassword") String newPassword){
+
+        return new ErsResult();
+    }
 
 }

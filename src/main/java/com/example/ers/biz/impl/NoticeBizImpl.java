@@ -8,6 +8,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -54,15 +56,28 @@ public class NoticeBizImpl implements INoticeBiz {
     }
 
     /**
-     * 模糊搜索公告
+     * 模糊搜索公告，同时分页
      * @param content
      * @param beginTime
      * @param endTime
      * @return
      */
     @Override
-    public List<Notice> fuzzySearchNotice(String content, Date beginTime, Date endTime) {
-        return null;
+    public PageInfo<Notice> fuzzySearchNotice(String content, Date beginTime, Date endTime, int pageNum, int pageSize) {
+        // 如果要使用分页，先调用startPage方法
+        PageHelper.startPage(pageNum, pageSize);
+
+        // endTime查询包括当天的话，要在需求日期之上再加一天
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(endTime);
+        calendar.add(Calendar.DAY_OF_YEAR,1);
+        endTime = calendar.getTime();
+
+        // PageHelper设置完成，执行查询所有数据
+        List<Notice> notices = noticeMapper.fuzzySearchNotice(content, beginTime, endTime);
+        // 将所有的数据存放至分页的类中
+        PageInfo<Notice> pageInfo = new PageInfo<>(notices, pageSize);
+        return pageInfo;
     }
 
 

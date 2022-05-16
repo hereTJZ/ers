@@ -35,7 +35,14 @@
                 <div class="username">
                     <i style="font-size: 18px; font-weight: 600">
                         <span th:text="${identity}">老师</span>
-                        <span th:text="'(' + ${user?.getFaculty()} + ')'">(软件学院)</span>
+                        <span th:if="!${user?.isSocial()}"
+                              th:text="'(' + ${user?.getSchool()} + ${user?.getFaculty()} + ')'">
+                            (北京大学软件学院)
+                        </span>
+                        <span th:if="${user?.isSocial()}"
+                              th:text="'Welcome'">
+                            (welcome)
+                        </span>
                     </i>
                     <i th:utext="'<b>' + ${user?.getRealName()} + '</b>&nbsp;&nbsp;ID:' + ${user?.getId()}">张三
                         1212312345</i>
@@ -104,66 +111,100 @@
         <div class="resource-title">资源站点</div>
 
         <ul class="resource-list">
-            <li>
-                <a href="javascript:;" target="_blank"> 先知社区——安全技术社区</a>
-                <span>2022.03.10</span>
+            <li th:each="resource:${resourceList}">
+                <a
+                        class="resource-link"
+                        title="点击查看详情"
+                        th:href="@{${resource.getLink()}}"
+                        target="_blank"
+                        th:utext="${resource.getTitle()} + '——' + ${resource.getSubtitle()}">
+                    这里是第一条通知公告标题！
+                </a>
+                <span>
+                        <a
+                                target="_blank"
+                                style="color: #bdbcbc"
+                                th:href="@{${resource.getLink()}}">
+                            >>
+                        </a>
+                    </span>
             </li>
-            <li>
-                <a href="javascript:;" target="_blank"> whois查询——子域/IP信息查询 </a>
-                <span>2022.03.10</span>
-            </li>
-            <li>
-                <a href="javascript:;" target="_blank"> 攻防世界——在线靶场 </a>
-                <span>2022.03.10</span>
-            </li>
-            <li>
-                <a href="javascript:;" target="_blank"> 渗透测试中心——web安全在线学习 </a>
-                <span>2022.03.10</span>
-            </li>
-            <li>
-                <a href="javascript:;" target="_blank"> W3Cschool——门户博客论坛</a>
-                <span>2022.03.10</span>
-            </li>
-            <li>
-                <a href="javascript:;" target="_blank"> CTF在线工具——综合在线工具平台 </a>
-                <span>2022.03.10</span>
-            </li>
-            <li>
-                <a href="javascript:;" target="_blank"> 这里是第6条通知公告标题！！！！！！ </a>
-                <span>2022.03.10</span>
-            </li>
-            <li>
-                <a href="javascript:;" target="_blank"> 站长之家——综合在线工具平台 </a>
-                <span>2022.03.10</span>
-            </li>
-            <li>
-                <a href="javascript:;" target="_blank"> 黑客街——为网络安全爱好者提供网站导航 </a>
-                <span>2022.03.10</span>
-            </li>
-            <li>
-                <a href="javascript:;" target="_blank"> 360众测——安全众测服务平台 </a>
-                <span>2022.03.10</span>
-            </li>
-            <li>
-                <a href="javascript:;" target="_blank"> HackerOne——黑客驱动安全平台，帮助你在被利用之前发现并修复关键漏洞 </a>
-                <span>2022.03.10</span>
-            </li>
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> whois查询——子域/IP信息查询 </a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> 攻防世界——在线靶场 </a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> 渗透测试中心——web安全在线学习 </a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> W3Cschool——门户博客论坛</a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> CTF在线工具——综合在线工具平台 </a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> 这里是第6条通知公告标题！！！！！！ </a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> 站长之家——综合在线工具平台 </a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> 黑客街——为网络安全爱好者提供网站导航 </a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> 360众测——安全众测服务平台 </a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="javascript:;" target="_blank"> HackerOne——黑客驱动安全平台，帮助你在被利用之前发现并修复关键漏洞 </a>-->
+            <!--                <span>2022.03.10</span>-->
+            <!--            </li>-->
         </ul>
 
+        <!--        <div class="resource-page">-->
+        <!--            <span>第1/6页</span>-->
+        <!--            <span> <button>上一页</button> <button>下一页</button></span>-->
+        <!--            <span>-->
+        <!--                        前往<input type="text" name="" id="" value="1"/>页-->
+        <!--                        <button class="resource-page-go">确定</button>-->
+        <!--                    </span>-->
+        <!--        </div>-->
+        <!-- 页面控制 -->
         <div class="resource-page">
-            <span>第1/6页</span>
-            <span> <button>上一页</button> <button>下一页</button></span>
+            <span th:text="'第 ' + ${currentPage} + '/' + ${totalPages} + ' 页'">第1/6页</span>
             <span>
-                        前往<input type="text" name="" id="" value="1"/>页
-                        <button class="resource-page-go">确定</button>
-                    </span>
+                <button id="up-page"
+                        th:if="(${currentPage}!=null) ? (${currentPage}>1) : false"
+                        th:onclick="upPage([[${currentPage - 1}]])">
+                    上一页
+                </button>
+                <button id="next-page"
+                        th:if="(${currentPage}!=null) ? (${currentPage}<${totalPages}) : false"
+                        th:onclick="nextPage([[${currentPage + 1}]])">
+                    下一页
+                </button>
+            </span>
+            <span>
+                前往<input id="page-input" type="text" name="page-input" value="1" th:data="${totalPages}"/>页
+                <button class="resource-page-go">确定</button>
+            </span>
         </div>
     </div>
 </main>
 
 <!-- 底部 -->
 <footer></footer>
-<script src="js/newsModal.js"></script>
+
 </body>
 <script>
     // var i = 1;
@@ -173,6 +214,33 @@
     } else {
         $("#logo-img").prop("src", "img/earth.png");
     }
+
+    function upPage(pageNum) {
+        var beginTime = $("#start-time").val()
+        var endTime = $("#end-time").val()
+        var content = $("#search-content").val()
+        window.location.href = '/resource?pageNum=' + pageNum + '&pageSize=' + 10
+    }
+
+    function nextPage(pageNum) {
+        var beginTime = $("#start-time").val()
+        var endTime = $("#end-time").val()
+        var content = $("#search-content").val()
+        window.location.href = '/resource?pageNum=' + pageNum + '&pageSize=' + 10
+    }
+
+    // 跳转页面
+    $(document).ready(function () {
+        $(".resource-page-go").click(function () {
+            var beginTime = $("#start-time").val()
+            var endTime = $("#end-time").val()
+            var content = $("#search-content").val()
+            var page = $("#page-input").val()
+
+            //alert('/news?pageNum=' + page + '&pageSize=' + 10 + '&startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content)
+            window.location.href = '/news?pageNum=' + page + '&pageSize=' + 10
+        })
+    });
     // function show(id) {
     //     if (i % 2 != 0) {
     //         document.getElementById(id).style.display = "block";

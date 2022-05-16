@@ -41,7 +41,14 @@
                 <div class="username">
                     <i style="font-size: 18px; font-weight: 600">
                         <span th:text="${identity}">老师</span>
-                        <span th:text="'(' + ${user?.getFaculty()} + ')'">(软件学院)</span>
+                        <span th:if="!${user?.isSocial()}"
+                              th:text="'(' + ${user?.getSchool()} + ${user?.getFaculty()} + ')'">
+                            (北京大学软件学院)
+                        </span>
+                        <span th:if="${user?.isSocial()}"
+                              th:text="'Welcome'">
+                            (welcome)
+                        </span>
                     </i>
                     <i th:utext="'<b>' + ${user?.getRealName()} + '</b>&nbsp;&nbsp;ID:' + ${user?.getId()}">张三
                         1212312345</i>

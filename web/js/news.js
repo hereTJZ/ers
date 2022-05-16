@@ -16,3 +16,13 @@ window.onclick = function (event) {
         noticeModal.style.display = "none";
     }
 };
+
+$(document).ready(function () {
+    $("#newsSearch").click(function () {
+        var beginTime = document.querySelector("#start-time").value;
+        var endTime = $("#end-time").val();
+        var content = $("#search-content").val();
+        alert(beginTime);
+        // window.location.href = '/news?startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content
+    });
+});

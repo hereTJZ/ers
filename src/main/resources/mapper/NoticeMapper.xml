@@ -6,7 +6,7 @@
         select id, title, content, release_time, image_addresses
         from notice
         order by release_time desc -- asc相反为升序
-        limit 5 -- 查询数量为5条
+            limit 5 -- 查询数量为5条
     </select>
 
     <select id="getAllNotices" resultType="Notice">
@@ -19,5 +19,26 @@
         select id, title, content, release_time, image_addresses
         from notice
         where id = #{id}
+    </select>
+
+    <select id="fuzzySearchNotice" resultType="Notice">
+        select *
+        from notice
+        where 1=1
+        <!-- CONCAT()为字符拼接函数 -->
+        <if test="content != null and content != ''">
+            and (
+            title LIKE CONCAT('%', #{content}, '%')
+            or content LIKE CONCAT('%', #{content}, '%')
+            )
+        </if>
+        <if test="beginTime != null">
+            and release_time >= #{beginTime} -- 以该天的00:00为准
+        </if>
+        <!-- 注意：mybatis中 '<' 不能使用，需要使用 <![CDATA[ ]]> 转义。或者使用特殊转义字符：'&lt;'表示小于号，'&gt;'表示大于号，'&amp;'表示加号 -->
+        <if test="endTime != null">
+            and release_time <![CDATA[<]]> #{endTime} -- 查询包括当天的话，要在需求日期之上再加一天，去掉等于号
+        </if>
+        order by release_time desc -- asc相反为升序
     </select>
 </mapper>

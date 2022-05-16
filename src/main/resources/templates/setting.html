@@ -35,7 +35,14 @@
                 <div class="username">
                     <i style="font-size: 18px; font-weight: 600">
                         <span th:text="${identity}">老师</span>
-                        <span th:text="'(' + ${user?.getFaculty()} + ')'">(软件学院)</span>
+                        <span th:if="!${user?.isSocial()}"
+                              th:text="'(' + ${user?.getSchool()} + ${user?.getFaculty()} + ')'">
+                            (北京大学软件学院)
+                        </span>
+                        <span th:if="${user?.isSocial()}"
+                              th:text="'Welcome'">
+                            (welcome)
+                        </span>
                     </i>
                     <i th:utext="'<b>' + ${user?.getRealName()} + '</b>&nbsp;&nbsp;ID:' + ${user?.getId()}">张三
                         1212312345</i>
@@ -111,54 +118,88 @@
                 <table>
                     <tr>
                         <td>账号id：</td>
-                        <td>12123456</td>
+                        <td th:text="${user?.getId()}"></td>
                     </tr>
                     <tr>
                         <td>用户身份：</td>
-                        <td>教师</td>
+                        <td th:text="${identity}">教师</td>
                     </tr>
                     <tr>
                         <td>真实姓名：</td>
                         <td>
-                            <input type="text" name="" id="" value="张三"/>
+                            <span th:text="${user?.getRealName()}"></span>
+                            <input style="display:none" type="text" id="" th:value="${user?.getRealName()}"/>
                         </td>
                     </tr>
-
                     <tr>
                         <td>性别：</td>
                         <td>
-                            <input type="radio" name="gender" id="" value="男" checked=""/>
-                            男 &nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="gender" id="" value="女"/>
-                            女
+                            <span th:text="${user?.getGender()}"></span>
+                            <input style="display:none" type="radio" name="gender" id="" value="男" th:checked="${user?.isMale()}"/>
+                            <span id="male" style="display:none">男</span>
+                            <input style="display:none" type="radio" name="gender" id="" value="女" th:checked="${user?.isFemale()}"/>
+                            <span id="female" style="display:none">女</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr th:if="!${user?.isSocial()}">
+                        <td>学校：</td>
+                        <td>
+                            <span th:text="${user?.getSchool()}"></span>
+                            <input style="display:none" type="text" id="" th:value="${user?.getSchool()}"/>
+                        </td>
+                    </tr>
+                    <tr th:if="!${user?.isSocial()}">
                         <td>学院：</td>
                         <td>
-                            <input type="text" name="" id="" value="软件学院"/>
+                            <span th:text="${user?.getFaculty()}"></span>
+                            <input style="display:none" type="text" id="" th:value="${user?.getFaculty()}"/>
                         </td>
                     </tr>
-                    <tr>
-                        <td>专业班级：</td>
+                    <tr th:if="${user?.isStudent()}">
+                        <td>专业：</td>
                         <td>
-                            <input type="text" name="" id="" value="软件工程18级 X班"/>
+                            <span th:text="${user?.getProfessional()}"></span>
+                            <input style="display:none" type="text" id="" th:value="${user?.getProfessional()}"/>
+                        </td>
+                    </tr>
+                    <tr th:if="${user?.isTeacher()}">
+                        <td>教学科目：</td>
+                        <td>
+                            <span th:text="${user?.getSubject()}"></span>
+                            <input style="display:none" type="text" id="" th:value="${user?.getSubject()}"/>
+                        </td>
+                    </tr>
+                    <tr th:if="${user?.isStudent()}">
+                        <td>年级：</td>
+                        <td>
+                            <span th:text="${user?.getGrade()} + '级'"></span>
+                            <input style="display:none" type="text" id="" th:value="${user?.getGrade()}"/>
+                        </td>
+                    </tr>
+                    <tr th:if="${user?.isStudent()}">
+                        <td>班级：</td>
+                        <td>
+                            <span th:text="${user?.getClassNum()} + '班'"></span>
+                            <input style="display:none" type="text" name="" id="" th:value="${user?.getClassNum()}"/>
                         </td>
                     </tr>
                     <tr>
                         <td>手机号：</td>
                         <td>
-                            <input type="text" name="" id="" value="13145201314"/>
+                            <span th:text="${user?.getPhone()}"></span>
+                            <input style="display:none" type="text" name="" id="" th:value="${user?.getPhone()}"/>
                         </td>
                     </tr>
                     <tr>
                         <td>邮箱：</td>
                         <td>
-                            <input type="text" name="" id="" value="123456789@qq.com"/>
+                            <span th:text="${user?.getEmail()}"></span>
+                            <input style="display:none" type="email" name="" id="" th:value="${user?.getEmail()}"/>
                         </td>
                     </tr>
                 </table>
-                <button>保存</button>
+                <button id="edit">编辑</button>
+                <button id="save" style="display:none">保存</button>
             </div>
         </div>
         <div class="settingright">
@@ -178,7 +219,7 @@
 
 <!-- 底部 -->
 <footer></footer>
-<script src="js/news.js"></script>
+<!--<script src="js/news.js"></script>-->
 </body>
 <script>
     // var i = 1;
@@ -188,6 +229,26 @@
     } else {
         $("#logo-img").prop("src", "img/earth.png");
     }
+
+    // 启用编辑
+    $(document).ready(function () {
+        $("#edit").click(function () {
+            $("td span, #edit").css("display", "none");
+            $("td input, #save").css("display", "inline-block");
+            $("#male, #female").css("display", "inline");
+        })
+    });
+
+    // 保存信息
+    $(document).ready(function () {
+        $("#save").click(function () {
+
+            $("td span").css("display", "inline");
+            $("#edit").css("display", "inline-block");
+            $("td input, #male, #female, #save").css("display", "none");
+        })
+    });
+
     // function show(id) {
     //     if (i % 2 != 0) {
     //         document.getElementById(id).style.display = "block";

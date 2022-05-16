@@ -31,8 +31,14 @@
     justify-content: space-between;
 }
 
-.resource-list li a {
+.resource-list li .resource-link {
+    width: 1050px;
     color: #000;
+    display: block;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /*内容超出宽度时隐藏超出部分的内容*/
+    text-overflow: ellipsis; /*当对象内文本溢出时显示省略标记()；需与overflow:hidden;一起使用。*/
 }
 
 .resource-list li a:hover {
@@ -43,6 +49,13 @@
     /* 时间样式 */
     font-size: 16px;
     color: #9d9d9d;
+}
+
+.cannot-find {
+    display: flex;
+    //居中
+    align-items: center;
+    justify-content: center;
 }
 
 /* 底部页码 */
