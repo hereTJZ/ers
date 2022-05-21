@@ -43,7 +43,7 @@ public class UserController {
      * 联系我们页面
      */
     @RequestMapping(value = {"/contact"}, method = RequestMethod.GET)
-    public String getContactPage(HttpSession session, Model model){
+    public String getContactPage(HttpSession session, Model model) {
         // Object 类向下强制转型
         User user = (User) session.getAttribute("user");
         // 已登录的情况下
@@ -60,7 +60,7 @@ public class UserController {
      * 设置界面
      */
     @RequestMapping(value = {"/setting"}, method = RequestMethod.GET)
-    public String getSettingPage(HttpSession session, Model model){
+    public String getSettingPage(HttpSession session, Model model) {
         // Object 类向下强制转型
         User user = (User) session.getAttribute("user");
         // 已登录的情况下
@@ -77,7 +77,7 @@ public class UserController {
      * 修改密码界面
      */
     @RequestMapping(value = {"/resetPassword"}, method = RequestMethod.GET)
-    public String getResetPasswordPage(HttpSession session, Model model){
+    public String getResetPasswordPage(HttpSession session, Model model) {
         // Object 类向下强制转型
         User user = (User) session.getAttribute("user");
         // 已登录的情况下
@@ -101,18 +101,42 @@ public class UserController {
                                 @RequestParam("account") String account,
                                 @RequestParam("password") String password) {
         User userTemp = (User) session.getAttribute("user");
-        // 首先核验当前是否已经登录
+
+        // 首先核验当前客户端是否已经登录该账号
         if (userTemp != null) {
             if (userTemp.getPhone().equals(account) || userTemp.getEmail().equals(account)) {
                 return new ErsResult(400, "error", "当前用户已经登录");
             }
-            return new ErsResult(400, "error", "当前已有用户登录！");
+            return new ErsResult(400, "error", "当前客户端已有用户登录！");
         }
+
         User user = userBiz.login(account, password);
         // 用户登录成功
         if (user != null) {
+            // 监测此账号是否已经被登录
+            if (HttpSessionCollector.isUserActive(user.getId())) {
+                // 当前账号已在线
+                return new ErsResult(500, "error", "当前账号已在线");
+            }
+
+//            // 设置格式
+//            response.setHeader("Access-Control-Allow-Origin", "*");
+//            response.setHeader("Access-Control-Allow-Methods", "POST");
+//            response.setHeader("Access-Control-Allow-Headers","x-requested-with,content-type");
+//            response.setContentType("text/html;charset=utf-8");
+//            response.setCharacterEncoding("utf-8");
+//
+//            // 创建Cookie
+//            Cookie cookie = new Cookie("userId", "userId");
+//            // 有效期,秒为单位
+//            cookie.setMaxAge(3600);
+//            // 设置cookie
+//            response.addCookie(cookie);
+//            response.getWriter().print("cookie创建成功");
+
             // 打印登录用户
 //            System.out.println(user.toString());
+
             // 将用户信息放入session
             session.setAttribute("user", user);
             return new ErsResult(200, "success", user);
@@ -121,6 +145,55 @@ public class UserController {
             // 用户登录失败
             return new ErsResult(500, "error", "账号或密码错误");
         }
+    }
+
+    /**
+     * 登录状态核验--异步请求
+     */
+    @RequestMapping("/checkLogin")
+    @ResponseBody
+    public ErsResult checkLogin(HttpSession session) {
+//        // 获取客户端cookie
+//        request.setCharacterEncoding("utf-8");
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null) {
+//            for (Cookie c : cookies) {
+//                System.out.println(c.getName() + "--->" + c.getValue());
+//            }
+//        }
+//        System.out.println("执行登录状态核验~");
+        ErsResult result = new ErsResult(500, "error", "未登录");
+        // 向下强制转型
+        User user = (User) session.getAttribute("user");
+
+        // 如果session中存在user，则是已登录成功
+        if (user != null) {
+            result.setCode(200);
+            result.setMsg("当前为已登录状态");
+            result.setData(user);
+            // 控制台打印
+//            System.out.println(user.toString());
+            return result;
+        }
+        return result;
+    }
+
+    /**
+     * 账户退出登录--异步请求
+     */
+    @RequestMapping(value = {"/executeLogout"}, method = RequestMethod.GET)
+    @ResponseBody
+    public ErsResult logout(Model model,
+                            HttpSession session) {
+        ErsResult result = new ErsResult(500, "error", "未登录");
+        // 向下强制转型
+        User user = (User) session.getAttribute("user");
+        // 手动注销session，移除session中的用户信息
+        if (user != null) {
+            session.removeAttribute("user");
+            return new ErsResult(200, "success", "成功登出");
+        }
+        return result;
     }
 
     /**
@@ -290,41 +363,6 @@ public class UserController {
     }
 
     /**
-     * 登录状态核验--异步请求
-     */
-    @RequestMapping("/checkLogin")
-    @ResponseBody
-    public ErsResult checkLogin(HttpSession session) {
-//        System.out.println("执行登录状态核验~");
-        ErsResult result = new ErsResult(500, "error", "未登录");
-        // 向下强制转型
-        User user = (User) session.getAttribute("user");
-
-        // 如果session中存在user，则是已登录成功
-        if (user != null) {
-            result.setCode(200);
-            result.setMsg("当前为已登录状态");
-            result.setData(user);
-            // 控制台打印
-//            System.out.println(user.toString());
-            return result;
-        }
-        return result;
-    }
-
-    /**
-     * 账户退出登录--异步请求
-     */
-    @RequestMapping(value = {"/executeLogout"}, method = RequestMethod.GET)
-    @ResponseBody
-    public ErsResult logout(Model model,
-                            HttpSession session) {
-        // 手动注销session，移除session中的用户信息
-        session.removeAttribute("user");
-        return new ErsResult(200, "success", "成功登出");
-    }
-
-    /**
      * 用户设置个人信息
      */
     @RequestMapping(value = {"/resetUserInfo"}, method = RequestMethod.POST)
@@ -333,28 +371,210 @@ public class UserController {
                                    HttpSession session,
                                    @RequestParam("phone") String phone,
                                    @RequestParam("email") String email,
-                                   @RequestParam("gender") String gender,
-                                   @RequestParam("school") String school,
+                                   @RequestParam(value = "gender", defaultValue = "", required = false) String gender,
+                                   @RequestParam(value = "school", required = false) String school,
+                                   @RequestParam(value = "faculty", required = false) String faculty,
                                    @RequestParam("realName") String realName,
-                                   @RequestParam("professional") String professional,
-                                   @RequestParam("grade") int grade,
-                                   @RequestParam("classNum") int classNum,
-                                   @RequestParam("subject") String subject){
+                                   @RequestParam(value = "professional", required = false) String professional,
+                                   @RequestParam(value = "grade", required = false) String grade,
+                                   @RequestParam(value = "classNum", required = false) String classNum,
+                                   @RequestParam(value = "subject", required = false) String subject) {
 
-        return new ErsResult();
+        ErsResult result = new ErsResult(500, "error", "未登录");
+
+        // 向下强制转型
+        User user = (User) session.getAttribute("user");
+        if (user == null) return result;
+
+        //输入信息非空
+        if (phone.equals("")) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("当前未输入手机号");
+            return result;
+        }
+        if (email.equals("")) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("当前未输入邮箱");
+            return result;
+        }
+        if (gender.equals("")) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("当前选择性别");
+            return result;
+        }
+        if ((!user.isSocial()) && school.equals("")) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("当前未输入学校");
+            return result;
+        }
+        if ((!user.isSocial()) && faculty.equals("")) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("当前未输入学院");
+            return result;
+        }
+        if (realName.equals("")) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("当前未输入真实姓名");
+            return result;
+        }
+        if (user.isStudent() && professional.equals("")) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("当前未输入专业");
+            return result;
+        }
+        if (user.isTeacher() && subject.equals("")) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("当前未输入教学科目");
+            return result;
+        }
+
+        //输入信息合法性判断
+        if (!Util.isMobilePhone(phone)) {
+            result.setCode(500);
+            result.setMsg("error");
+            result.setData("请输入正确的手机号");
+            return result;
+        }
+        if (!Util.isEmail(email)) {
+            result.setCode(500);
+            result.setMsg("error");
+            result.setData("请输入正确的邮箱");
+            return result;
+        }
+        if (!Util.isRealName(realName)) {
+            result.setCode(500);
+            result.setMsg("error");
+            result.setData("请输入正确的中文名或英文名");
+            return result;
+        }
+        if (user.isStudent() && (!Util.isNumber(grade) || Integer.parseInt(grade) <= 0)) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("请输入正确的年级");
+            return result;
+        }
+        if (user.isStudent() && (!Util.isNumber(classNum) || Integer.parseInt(classNum) <= 0)) {
+            result.setCode(400);
+            result.setMsg("error");
+            result.setData("请输入正确的班级");
+            return result;
+        }
+
+        // 如果session中存在user，则是已登录成功
+
+        // 更新用户信息，这里不需要非空验证
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setGender(gender);
+        user.setSchool(school);
+        user.setFaculty(faculty);
+        user.setRealName(realName);
+        user.setProfessional(professional);
+        user.setGrade(Integer.parseInt(grade));
+        user.setClassNum(Integer.parseInt(classNum));
+        user.setSubject(subject);
+        userBiz.resetUserInfo(user);
+        session.setAttribute("user", user);
+
+        result.setCode(200);
+        result.setMsg("success");
+//            result.setData("修改个人信息成功😄");
+        result.setData(user);
+        return result;
+
     }
 
-     /**
+    /**
      * 用户重置密码
      */
     @RequestMapping(value = {"/resetUserPassword"}, method = RequestMethod.POST)
     @ResponseBody
     public ErsResult resetUserPassword(Model model,
-                                   HttpSession session,
-                                   @RequestParam("oldPassword") String oldPassword,
-                                   @RequestParam("newPassword") String newPassword){
+                                       HttpSession session,
+                                       @RequestParam("oldPassword") String oldPassword,
+                                       @RequestParam("newPassword") String newPassword) {
 
         return new ErsResult();
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

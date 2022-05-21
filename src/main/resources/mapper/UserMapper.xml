@@ -117,18 +117,19 @@
     <update id="resetUserInfo" parameterType="User">
         update user
         <trim prefix="set" suffixOverrides=",">
-            <if test="realName != null">real_name = #{realName},</if>
-            <if test="phone != null">phone = #{phone},</if>
-            <if test="email != null">email = #{email},</if>
-            <if test="gender != null">gender = #{gender},</if>
-            <if test="school != null">school = #{school},</if>
-            <if test="faculty != null">faculty = #{faculty},</if>
-            <if test="professional != null">professional = #{professional},</if>
-            <if test="grade != null">grade = #{grade},</if>t
-            <if test="classNum != null">class_num = #{classNum},</if>
-            <if test="subject != null">subject = #{subject}</if>
-        where id = #{id}
+            <if test="realName != null and realName != ''">real_name = #{realName},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="email != null and email != ''">email = #{email},</if>
+            <if test="gender != null and gender != ''">gender = #{gender},</if>
+            <if test="school != null and school != ''">school = #{school},</if>
+            <if test="faculty != null and faculty != ''">faculty = #{faculty},</if>
+            <if test="professional != null and professional != ''">professional = #{professional},</if>
+            <if test="grade != null and grade != ''">grade = #{grade},</if>
+            <if test="classNum != null and classNum != ''">class_num = #{classNum},</if>
+            <if test="subject != null and subject != ''">subject = #{subject},</if>
         </trim>
+        where id = #{id}
+
     </update>
 
     <delete id="deleteUserById">

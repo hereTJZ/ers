@@ -114,7 +114,9 @@
 
                 <p><a href="">修改头像</a></p>
             </div>
-            <div class="setting-tab">
+
+            <iframe name="targetIfr" style="display:none"></iframe>
+            <form class="setting-tab" target="targetIfr">
                 <table>
                     <tr>
                         <td>账号id：</td>
@@ -128,16 +130,18 @@
                         <td>真实姓名：</td>
                         <td>
                             <span th:text="${user?.getRealName()}"></span>
-                            <input style="display:none" type="text" id="" th:value="${user?.getRealName()}"/>
+                            <input style="display:none" type="text" name="realName" th:value="${user?.getRealName()}"/>
                         </td>
                     </tr>
                     <tr>
                         <td>性别：</td>
                         <td>
                             <span th:text="${user?.getGender()}"></span>
-                            <input style="display:none" type="radio" name="gender" id="" value="男" th:checked="${user?.isMale()}"/>
+                            <input style="display:none" type="radio" name="gender" value="男"
+                                   th:checked="${user?.isMale()}"/>
                             <span id="male" style="display:none">男</span>
-                            <input style="display:none" type="radio" name="gender" id="" value="女" th:checked="${user?.isFemale()}"/>
+                            <input style="display:none" type="radio" name="gender" value="女"
+                                   th:checked="${user?.isFemale()}"/>
                             <span id="female" style="display:none">女</span>
                         </td>
                     </tr>
@@ -145,62 +149,62 @@
                         <td>学校：</td>
                         <td>
                             <span th:text="${user?.getSchool()}"></span>
-                            <input style="display:none" type="text" id="" th:value="${user?.getSchool()}"/>
+                            <input style="display:none" type="text" name="school" th:value="${user?.getSchool()}"/>
                         </td>
                     </tr>
                     <tr th:if="!${user?.isSocial()}">
                         <td>学院：</td>
                         <td>
                             <span th:text="${user?.getFaculty()}"></span>
-                            <input style="display:none" type="text" id="" th:value="${user?.getFaculty()}"/>
+                            <input style="display:none" type="text" name="faculty" th:value="${user?.getFaculty()}"/>
                         </td>
                     </tr>
                     <tr th:if="${user?.isStudent()}">
                         <td>专业：</td>
                         <td>
                             <span th:text="${user?.getProfessional()}"></span>
-                            <input style="display:none" type="text" id="" th:value="${user?.getProfessional()}"/>
+                            <input style="display:none" type="text" name="professional" th:value="${user?.getProfessional()}"/>
                         </td>
                     </tr>
                     <tr th:if="${user?.isTeacher()}">
                         <td>教学科目：</td>
                         <td>
                             <span th:text="${user?.getSubject()}"></span>
-                            <input style="display:none" type="text" id="" th:value="${user?.getSubject()}"/>
+                            <input style="display:none" type="text" name="subject" th:value="${user?.getSubject()}"/>
                         </td>
                     </tr>
                     <tr th:if="${user?.isStudent()}">
                         <td>年级：</td>
                         <td>
                             <span th:text="${user?.getGrade()} + '级'"></span>
-                            <input style="display:none" type="text" id="" th:value="${user?.getGrade()}"/>
+                            <input style="display:none" type="text" name="grade" th:value="${user?.getGrade()}"/>
                         </td>
                     </tr>
                     <tr th:if="${user?.isStudent()}">
                         <td>班级：</td>
                         <td>
                             <span th:text="${user?.getClassNum()} + '班'"></span>
-                            <input style="display:none" type="text" name="" id="" th:value="${user?.getClassNum()}"/>
+                            <input style="display:none" type="text" name="classNum" th:value="${user?.getClassNum()}"/>
                         </td>
                     </tr>
                     <tr>
                         <td>手机号：</td>
                         <td>
                             <span th:text="${user?.getPhone()}"></span>
-                            <input style="display:none" type="text" name="" id="" th:value="${user?.getPhone()}"/>
+                            <input style="display:none" type="text" name="phone" th:value="${user?.getPhone()}"/>
                         </td>
                     </tr>
                     <tr>
                         <td>邮箱：</td>
                         <td>
                             <span th:text="${user?.getEmail()}"></span>
-                            <input style="display:none" type="email" name="" id="" th:value="${user?.getEmail()}"/>
+                            <input style="display:none" type="email" name="email" th:value="${user?.getEmail()}"/>
                         </td>
                     </tr>
                 </table>
-                <button id="edit">编辑</button>
-                <button id="save" style="display:none">保存</button>
-            </div>
+                <button id="edit" type="button">编辑</button>
+                <button id="save" type="button" style="display:none">保存</button>
+            </form>
         </div>
         <div class="settingright">
             <div class="contact-help">
@@ -242,10 +246,40 @@
     // 保存信息
     $(document).ready(function () {
         $("#save").click(function () {
+            $("#save").prop("disabled", true)
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",   //方法类型
+                dataType: "json",   //预期服务器返回的数据类型
+                url: "/resetUserInfo",    //执行的url请求
+                //提交至服务器的数据
+                data: $(".setting-tab").serialize(),
+                success: function (result) {    //result是服务器返回的封装数据
+                    console.log(result);//打印服务端返回的数据(调试用)
+                    if (result.code === 200) {
+                        $("td span").css("display", "inline");
+                        $("#edit").css("display", "inline-block");
+                        $("td input, #male, #female, #save").css("display", "none");
+                        alert(result.msg + "\n" + "修改个人信息成功😄");
+                        window.location.reload();
+                    }
+                    if (result.code === 400) {
+                        // 输入信息为空提示信息
+                        alert(result.msg + "\n" + result.data);
+                    }
+                    if (result.code === 500) {
+                        // 输入信息错误提示信息
+                        alert(result.msg + "\n" + result.data);
+                    }
+                },
+                // 登录请求失败
+                error: function () {
+                    alert("修改个人信息失败！");
+                }
+            });
 
-            $("td span").css("display", "inline");
-            $("#edit").css("display", "inline-block");
-            $("td input, #male, #female, #save").css("display", "none");
+            $("#save").prop("disabled", false);
+
         })
     });
 

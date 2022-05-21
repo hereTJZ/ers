@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>我的预约</title>
+    <link rel="stylesheet" href="../static/css/font.css" th:href="@{css/font.css}"/>
+    <link rel="stylesheet" href="../static/css/index.css" th:href="@{css/index.css}"/>
+    <link rel="stylesheet" href="../static/css/booking.css" th:href="@{css/booking.css}"/>
+    <script src="../static/js/jquery-3.6.0.min.js" th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <!--  首先进行登录状态核验   -->
+    <script src="../static/js/check-login.js" th:src="@{js/check-login.js}"></script>
+</head>
+
+<body>
+<!--  头部 -->
+<header>
+    <div class="head">
+        <div class="logo-img" onclick="window.location.href = '/home'">
+            <img id="logo-img" src="img/logo.png" alt="" width="139" height="70"/>
+        </div>
+        <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
+        <!-- 个人头像信息 -->
+        <div class="user" id="user">
+            <img class="userlogo" th:src="@{img/userlogo.png}" alt=""/>
+            <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
+            <span th:text="${user?.getRealName()}">张三</span>
+            <span>&nbsp;</span>
+            <span th:text="${identity}">老师</span>
+            <!-- 简介弹窗 -->
+            <div class="usertab" id="usertab">
+                <!-- 信息 -->
+                <div class="username">
+                    <i style="font-size: 18px; font-weight: 600">
+                        <span th:text="${identity}">老师</span>
+                        <span th:if="!${user?.isSocial()}"
+                              th:text="'(' + ${user?.getSchool()} + ${user?.getFaculty()} + ')'">
+                            (北京大学软件学院)
+                        </span>
+                        <span th:if="${user?.isSocial()}"
+                              th:text="'Welcome'">
+                            (welcome)
+                        </span>
+                    </i>
+                    <i th:utext="'<b>' + ${user?.getRealName()} + '</b>&nbsp;&nbsp;ID:' + ${user?.getId()}">张三
+                        1212312345</i>
+                    <i th:text="${user?.getEmail()}">12123123@mail.com</i>
+                </div>
+                <!-- 功能表 -->
+                <ul>
+                    <li class="bgccc" onclick="window.location.href = '/setting'">
+                        个人信息维护
+                    </li>
+                    <li onclick="window.location.href = '/resetPassword'">
+                        修改密码
+                    </li>
+                    <li onclick="window.location.href = '/help'">
+                        帮助
+                    </li>
+                    <li id="logout">
+                        退出登录
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 主体页面 -->
+<main>
+    <!-- 左边导航 -->
+    <nav>
+        <ul>
+            <li class="active">
+                <a href="home">首&nbsp;页 <i class="iconfont icon-zhuye"></i> </a>
+            </li>
+            <li>
+                <a href="news">新闻公告 <i class="iconfont icon-gonggao"></i> </a>
+            </li>
+            <li>
+                <a href="booking">预约实验<i class="iconfont icon-ico_yuyueguanli_jiedaiyuyue"></i></a>
+            </li>
+            <li>
+                <a href="resource">资源站点 <i class="iconfont icon-ziyuan"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="experiment">实验管理 <i class="iconfont icon-bianji"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="user">用户管理 <i class="iconfont icon-yonghu1"></i> </a>
+            </li>
+            <li th:if="${user?.isAdmin()}">
+                <a href="notice">公告管理 <i class="iconfont icon-gonggao"></i> </a>
+            </li>
+            <li>
+                <a href="setting">个人设置 <i class="iconfont icon-shezhi"></i> </a>
+            </li>
+            <li>
+                <a href="contact"
+                >联系我们
+                    <i class="iconfont icon-lianxishouhou"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 右边内容 -->
+    <div class="content">
+
+    </div>
+</main>
+
+<!-- 底部 -->
+<footer></footer>
+
+<!-- 弹窗 -->
+<div id="myModal" class="modal booking-modal" style="z-index: 9999;">
+
+    <!-- 弹窗内容 -->
+    <div class="modal-content" style="width: 45%;">
+        <!-- <span class="close">&times;</span> -->
+        <p> *实验标题
+            <input type="text" name="" id="" placeholder=" 请填写本次实验标题">
+        </p>
+        <p> *实验内容 <br><textarea type="text" class="big-input" name="" id=""
+                                placeholder=" 请填写本次实验具体内容"></textarea>
+        </p>
+        <p> *实验时间
+        <div class="booking-time">
+            <span>从</span>
+            <input type="date" name="" id="">
+            <span>到</span>
+            <input type="date" name="" id="">
+        </div>
+        </p>
+        <p> *参与人员
+            <input type="text" name="" id="" placeholder=" 请填写本次实验参与的其它成员">
+        </p>
+        <p> *指导老师
+            <input type="text" name="" id="" placeholder=" 请填写本次实验参与的指导老师">
+        </p>
+        <p> *相关知识<br><textarea type="text" class="big-input" name="" id=""
+                               placeholder=" 请填写本次实验涉及的相关知识"></textarea>
+        </p>
+
+        <div class="upload">
+            <button>上传附件</button>
+
+            <a href="">网络安全协议书.pdf</a>
+            <a href="">视频讲解.mp4</a>
+            <a href="">实验教程.ppt</a>
+        </div>
+        <p class="close-wrap">
+            <button class="color-button">提交</button>
+            <button class="color-button close">返回</button>
+        </p>
+    </div>
+</div>
+
+</body>
+
+<script src="../static/js/home.js" th:src="@{js/home.js}"></script>
+
+<script>
+    var date = new Date();
+    if (date.getDate() % 2 === 0) {
+        $("#logo-img").prop("src", "img/logo.png");
+    } else {
+        $("#logo-img").prop("src", "img/earth.png");
+    }
+
+
+</script>
+</html>

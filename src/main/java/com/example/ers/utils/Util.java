@@ -50,6 +50,7 @@ public class Util {
     private static final String REGEX_MOBILE_SIMPLE = "^[1]\\d{10}$";
     //复杂规则
     private static final String REGEX_MOBILE_COMPLICATED = "^1[3|5|8|7]\\d{9}$";//^代表開始，1是必须1开头，[3|5|8|7] 必须第二位是3或者5,8,7之间的一个，\d{9}任意九个个数
+
     /**
      * 验证手机号（精确）
      * 移动：134(0-8)、135、136、137、138、139、147、150、151、152、157、158、159、178、182、183、184、187、188
@@ -59,38 +60,60 @@ public class Util {
      * 虚拟运营商：170
      */
     private static final String REGEX_MOBILE_EXACT = "^((13[0-9])|(14[5,7])|(15[0-3,5-8])|(17[0,3,5-8])|(18[0-9])|(147))\\d{8}$";
+
     /**
      * 验证座机号,正确格式：xxxxx-xxxxxxxxxxxxx/
      */
     private static final String REGEX_TEL = "^0\\d{2,3}[- ]?\\d{7,8}";
+
     /**
      * 验证邮箱
      */
     private static final String REGEX_EMAIL = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+
     /**
      * 验证url
      */
     private static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w-.%&=]*)?";
+
+    /**
+     * 验证数字
+     */
+    private static final String REGEX_NUMBER = "\\d+";
+
     /**
      * 验证汉字
      */
     private static final String REGEX_CHZ = "^[\\u4e00-\\u9fa5]+$";
+
     /**
      * 验证真实姓名，中文名或英文名
      */
     private static final String REGEX_REAL_NAME = "^[a-zA-Z\\s]+$|^[\\u4e00-\\u9fa5]+$";
+
     /**
      * 验证用户名,取值范围为a-z,A-Z,0-9,_,汉字，不能以"_"结尾,用户名必须是6-20位
      */
     private static final String REGEX_USERNAME = "^[\\w\\u4e00-\\u9fa5]{6,20}(?<!_)$";
+
     /**
      * 验证密码,取值范围为a-z,A-Z,0-9,_,-,@,#,$,%,^,&,*,必须是6-20位
      */
     private static final String REGEX_PASSWORD = "^[\\w!@#%&\\-\\$\\^\\*\\u4e00-\\u9fa5]{6,20}$";
+
     /**
      * 验证IP地址
      */
     private static final String REGEX_IP = "((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)";
+
+    /**
+     * 是否是数字
+     */
+    public static boolean isNumber(String s) {
+        Pattern pattern = Pattern.compile(REGEX_NUMBER);
+        Matcher matcher = pattern.matcher(s);
+        return matcher.matches();
+    }
 
     /**
      * 是否是手机号
@@ -109,6 +132,7 @@ public class Util {
         Matcher matcher = pattern.matcher(s);
         return matcher.matches();
     }
+
     /**
      * 是否是合法密码
      */
@@ -117,6 +141,7 @@ public class Util {
         Matcher matcher = pattern.matcher(s);
         return matcher.matches();
     }
+
     /**
      * 是否是合法真实姓名
      */
@@ -125,7 +150,6 @@ public class Util {
         Matcher matcher = pattern.matcher(s);
         return matcher.matches();
     }
-
 
     /**
      * 随机生成 n 位验证码

@@ -62,9 +62,7 @@ setInterval(draw, 1);
 function send_SMS() {
     var phone = $("#account").val();
     var email = $("#email").val();
-
     $("#send_button").prop("disabled", true).text("发送中...")
-
     //禁用发送按钮函数
     function disable_button() {
         // 定义一个变量存储时间的数字
@@ -100,7 +98,6 @@ function send_SMS() {
             }
         }, 1000)
     }
-
     //发送短信请求
     $.ajax({
         //几个参数需要注意一下

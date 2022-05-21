@@ -82,13 +82,13 @@ public class UserBizImpl implements IUserBiz {
     // 用户修改个人信息
     @Override
     public int resetUserInfo(User user) {
-        return 0;
+        return userMapper.resetUserInfo(user);
     }
 
     // 通过id删除用户
     @Override
     public int deleteUserById(int id) {
-        return 0;
+        return userMapper.deleteUserById(id);
     }
 
 
