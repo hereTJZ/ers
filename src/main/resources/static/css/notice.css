@@ -1,0 +1,289 @@
+/* 公告管理页面 */
+
+.notice-content {
+    box-sizing: border-box;
+    padding: 20px 60px 10px 50px;
+    flex: 1;
+}
+
+.notice-top {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+
+.notice-top .news-time {
+    margin: 0;
+}
+
+.notice-top .news-search {
+    position: relative;
+}
+
+.notice-top .news-search .icon-sousuo {
+    position: absolute;
+    left: 18px;
+    top: 10px;
+}
+
+.notice-top input {
+    margin: 0 10px;
+    font-size: 14px;
+    width: 150px;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid #999;
+}
+
+.notice-top .news-search input {
+    padding: 2px 0 3px 30px;
+    font-size: 14px;
+    border-radius: 20px;
+    outline: none;
+    width: 486px;
+    height: 28px;
+}
+
+.notice-top button {
+    width: 90px;
+    height: 36px;
+    line-height: 30px;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    background: #62d6d6;
+}
+
+#newsSearch {
+    border-radius: 18px;
+    width: 70px;
+    height: 36px;
+}
+#addNotice:hover,
+#newsSearch:hover {
+    /*有色按钮变色*/
+    background: #46cbcb;
+    cursor: pointer;
+}
+
+/* 表格 */
+
+.ex-top {
+    margin-top: 10px;
+}
+
+.ex-list {
+    width: auto;
+    overflow-y: auto;
+    height: 640px;
+    margin-top: 30px;
+}
+
+.table-notice {
+    width: 1300px;
+    box-sizing: border-box;
+    margin: 5px 0px 5px;
+    font-size: 0.95em;
+    text-align: center;
+    padding: 10px 20px;
+    border: 1px #ccc solid;
+    border-bottom: 1px solid #efefef;
+    border-collapse: collapse;
+    font-weight: 400;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.table-notice th,
+.table-notice td {
+    text-align: center;
+    padding: 12px 20px;
+    border: 1px #ccc solid;
+    border-bottom: 1px solid #efefef;
+    border-collapse: collapse;
+    font-weight: 400;
+    border-top: none;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.new-content {
+    display: block;
+    width: 500px;
+    color: #000;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /*内容超出宽度时隐藏超出部分的内容*/
+    text-overflow: ellipsis; /*当对象内文本溢出时显示省略标记()；需与overflow:hidden;一起使用。*/
+}
+.new-title {
+    display: block;
+    width: 300px;
+    color: #000;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+    overflow: hidden; /*内容超出宽度时隐藏超出部分的内容*/
+    text-overflow: ellipsis; /*当对象内文本溢出时显示省略标记()；需与overflow:hidden;一起使用。*/
+}
+.new-time {
+    margin: 5px 0px;
+    display: block;
+    width: 146px;
+}
+
+.table-notice th {
+    background-color: #e7fff3;
+    color: #000000;
+    border-top-color: transparent;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.table-notice tr th:nth-child(n + 1),
+.table-notice tr td:nth-child(n + 1) {
+    border-right: none;
+}
+
+.table-notice tr:last-of-type,
+.table-notice tr:last-of-type td {
+    /*border-bottom: none;*/
+}
+
+.table-notice {
+    border-left: none;
+}
+
+.table-notice tr td:nth-child(1),
+.table-notice tr th:nth-child(1) {
+    width: 300px;
+    border-left: none;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 不换行 */
+}
+
+.table-notice tr:nth-child(even) {
+    /* background-color: #f1f1f1; */
+    border-top-color: transparent;
+}
+
+.table-notice tr td a {
+    margin: 0px 10px;
+    color: #126ffc;
+}
+
+.cannot-find {
+    display: flex;
+    //居中
+    align-items: center;
+    justify-content: center;
+}
+
+/* 底部页码 */
+
+.news-page {
+    float: right;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 50px;
+    margin-top: 20px;
+}
+
+.news-page span {
+    margin-left: 120px;
+}
+
+.news-page span button {
+    background: #fff;
+    border: #aaa 1px solid;
+    padding: 3px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.news-page span input {
+    width: 15px;
+    padding: 5px 0 5px 10px;
+    margin: 0 10px;
+}
+
+.news-page span .news-page-go {
+    padding: 3px 20px;
+    border-radius: 5px;
+}
+
+/* 弹窗 (background) */
+
+.modal {
+    display: none;
+    /* 默认隐藏 */
+    position: fixed;
+    /* 固定定位 */
+    z-index: 1;
+    /* 设置在顶层 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* 弹窗内容 */
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px 40px;
+    border: 1px solid #888;
+    width: 38%;
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+#myModal .modal-content p {
+    /*保留换行符*/
+    white-space: pre-line;
+}
+
+.modal-content textarea {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* 关闭弹窗 */
+
+.notice-btn {
+    text-align: center;
+}
+
+.show-close {
+    margin-left: 42%;
+}
+
+.close {
+    color: #fff;
+    margin-top: 10px;
+    background: #63d6d6;
+    border: none;
+    padding: 6px 30px;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.close:hover,
+.close:focus {
+    background: #4acccc;
+    cursor: pointer;
+}
+
+#myModal2 .modal-content input {
+    border-radius: 6px;
+    border: #999 1px solid;
+}

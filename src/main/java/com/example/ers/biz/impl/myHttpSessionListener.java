@@ -1,14 +1,16 @@
-package com.example.ers.controller;
+package com.example.ers.biz.impl;
 
 import com.example.ers.entity.User;
 
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpSessionCollector implements HttpSessionListener {
+@WebListener
+public class myHttpSessionListener implements HttpSessionListener {
 
     // 存储内存中活跃的session（static变量）
     private static final Map<String, HttpSession> sessions = new HashMap<String, HttpSession>();
@@ -35,8 +37,9 @@ public class HttpSessionCollector implements HttpSessionListener {
     public static boolean isUserActive(int userID) {
         for (String key : sessions.keySet()) {
             User userTemp = (User) sessions.get(key).getAttribute("user");
-            if (userTemp.getId() == userID) return true;
+            if (userTemp != null && userTemp.getId() == userID) return true;
         }
         return false;
     }
 }
+

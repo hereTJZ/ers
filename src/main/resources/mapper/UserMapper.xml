@@ -132,6 +132,38 @@
 
     </update>
 
+    <select id="getUsers" resultType="User">
+        select id,
+               real_name,
+               phone,
+               email,
+               role,
+               school,
+               faculty,
+               professional,
+               grade,
+               class_num,
+               subject,
+               gender,
+               image_address,
+               register_time
+        from user
+        where role = #{role}
+        <if test="content != null and content != ''">
+            and (
+            real_name LIKE CONCAT('%', #{content}, '%')
+            or phone LIKE CONCAT('%', #{content}, '%')
+            or email LIKE CONCAT('%', #{content}, '%')
+            or school LIKE CONCAT('%', #{content}, '%')
+            or faculty LIKE CONCAT('%', #{content}, '%')
+            or professional LIKE CONCAT('%', #{content}, '%')
+            or subject LIKE CONCAT('%', #{content}, '%')
+            or gender LIKE CONCAT('%', #{content}, '%')
+            )
+        </if>
+        order by id asc -- asc相反为升序
+    </select>
+
     <delete id="deleteUserById">
         DELETE FROM user WHERE id = #{id}
     </delete>

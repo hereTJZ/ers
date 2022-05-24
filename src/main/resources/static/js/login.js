@@ -194,19 +194,21 @@ $(document).ready(function () {
                     window.location.href = "/home"
                 } else if (result.code === 400) {
                     // 当前已登录，防止重登陆
+                    $("#login").text("登陆");
                     alert(result.msg + "\n" + result.data);
                     window.location.href = "/home"
                 } else if (result.code === 500) {
                     // 登录请求验证失败后提示信息
+                    $("#login").text("登陆");
                     alert(result.msg + "\n" + result.data);
                 }
             },
             // 登录请求失败
             error: function () {
+                $("#login").text("登陆");
                 alert("登录请求异常！");
             }
         })
-        $("#login").text("登陆");
         // $("#div1").load("demo_test.txt", function (responseTxt, statusTxt, xhr) {
         //     if (statusTxt == "success")
         //         alert("外部内容加载成功!");

@@ -2,20 +2,18 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>新闻公告</title>
+    <title>首页</title>
     <link rel="stylesheet" href="../static/css/font.css" th:href="@{css/font.css}"/>
     <link rel="stylesheet" href="../static/css/index.css" th:href="@{css/index.css}"/>
-    <link rel="stylesheet" href="../static/css/home.css" th:href="@{css/news.css}"/>
+    <link rel="stylesheet" href="../static/css/notice.css" th:href="@{css/notice.css}"/>
     <script src="../static/js/jquery-3.6.0.min.js" th:src="@{js/jquery-3.6.0.min.js}"></script>
     <!--  首先进行登录状态核验   -->
     <script src="../static/js/check-login.js" th:src="@{js/check-login.js}"></script>
 </head>
 
-
 <body>
-<!--  头部 -->
+<!-- 头部 -->
 <header>
     <div class="head">
         <div class="logo-img" onclick="window.location.href = '/home'">
@@ -76,7 +74,7 @@
             <li>
                 <a href="home">首&nbsp;页 <i class="iconfont icon-zhuye"></i> </a>
             </li>
-            <li class="active">
+            <li>
                 <a href="news">新闻公告 <i class="iconfont icon-gonggao"></i> </a>
             </li>
             <li>
@@ -91,7 +89,7 @@
             <li th:if="${user?.isAdmin()}">
                 <a href="user">用户管理 <i class="iconfont icon-yonghu1"></i> </a>
             </li>
-            <li th:if="${user?.isAdmin()}">
+            <li th:if="${user?.isAdmin()}" class="active">
                 <a href="notice">公告管理 <i class="iconfont icon-gonggao"></i> </a>
             </li>
             <li>
@@ -106,11 +104,12 @@
         </ul>
     </nav>
 
-    <!-- 右边新闻列表 -->
-    <div class="news-content">
-        <div class="news-h1">新闻公告</div>
-        <!-- 模糊搜索 -->
-        <div class="news-top">
+    <!-- 右边实验管理 -->
+    <div class="notice-content">
+
+        <!-- 搜索栏 -->
+        <div class="notice-top">
+            <button id="addNotice" class="addBtn" onclick="addNotice()">+新增公告</button>
             <div class="news-time">
                 <span>从</span>
                 <input type="date" name="" id="start-time" th:value="${startTime}"/>
@@ -123,94 +122,87 @@
             </div>
             <button id="newsSearch">搜索</button>
         </div>
-        <!-- 新闻内容列表 -->
-        <div class="news-list">
-            <ul>
-                <li th:each="notice:${noticeList}">
-                    <a
-                            title="点击查看详情"
-                            href="javascript:;"
-                            onclick="showNotice()"
-                            th:onclick="showNotice([[${notice.getId()}]]);"
-                            th:utext="${notice.getTitle()}">这里是第一条通知公告标题！
-                    </a>
-                    <span th:text="${#dates.format(notice.getReleaseTime(),'yyyy-MM-dd')}">2022.03.10</span>
-                </li>
 
+        <!-- 公告表格 -->
+        <div class="ex-list">
+            <table class="table-notice">
+                <tr>
+                    <th>公告名称</th>
+                    <th>公告内容</th>
+                    <th>发布时间</th>
+                    <th>操作</th>
+                </tr>
+                <tr th:each="notice:${noticeList}">
+                    <td>
+                        <span th:utext="${notice.getTitle()}" class="new-title">试验系统开放预约啦fsadjldshfkdbsafksdhkjfhdsafkdshajskdafhksahfksdhfsadfhdsafldsjaklfjdsakljfkasj</span>
+                    </td>
+                    <td>
+                        <span th:utext="${notice.getContent()}" class="new-content">欢迎欢迎前来预约实验，网络攻防在线预约系统正式开放使用啦！您只需...fasdkjsdhafkuf阿道夫集合框架挂号费框架的撒化肥跨境电商副科级更好的富士康结构化跨境电商风华高科方法福建省领导机构dsgdfgdsgfdgasdhf</span>
+                    </td>
+                    <td>
+                        <span th:text="${#dates.format(notice.getReleaseTime(),'yyyy-MM-dd')}" class="new-time">2022.03.10</span>
+                    </td>
+                    <td>
+                        <a title="点击查看公告详情"
+                           href="javascrpit:;"
+                           class="myBtn1"
+                           th:onclick="showNotice([[${notice.getId()}]]);">
+                            查看
+                        </a>
 
-                <!--                <li>-->
-                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第2条通知公告标题！！ </a>-->
-                <!--                    <span>2022.03.10</span>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第3条通知公告标题！！！ </a>-->
-                <!--                    <span>2022.03.10</span>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第4条通知公告标题！！！！ </a>-->
-                <!--                    <span>2022.03.10</span>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第5条通知公告标题！！！！！</a>-->
-                <!--                    <span>2022.03.10</span>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第6条通知公告标题！！！！！！ </a>-->
-                <!--                    <span>2022.03.10</span>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第6条通知公告标题！！！！！！ </a>-->
-                <!--                    <span>2022.03.10</span>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第6条通知公告标题！！！！！！ </a>-->
-                <!--                    <span>2022.03.10</span>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第6条通知公告标题！！！！！！ </a>-->
-                <!--                    <span>2022.03.10</span>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="javascript:;" onclick="showNotice('notice-modal')"> 这里是第10条通知公告标题！！！！！！ </a>-->
-                <!--                    <span>2022.03.10</span>-->
-                <!--                </li>-->
-            </ul>
+                        <a title="点击修改公告详情"
+                           href="javascrpit:;"
+                           class="addBtn1"
+                           th:onclick="editNotice([[${notice.getId()}]]);">
+                            编辑
+                        </a>
+
+                        <a title="删除该公告"
+                           href="javascrpit:;"
+                           th:onclick="deleteNotice([[${notice.getId()}]]);">
+                            删除
+                        </a>
+                    </td>
+                </tr>
+
+            </table>
+
             <div class="cannot-find" th:if="${noticeList?.size()==0}">
                 <img
                         style="display: block; height: 360px; width: auto"
-                        th:src="@{img/why.png}">
+                        th:src="@{img/cannotfind.png}">
                 <p style="color: #8b8b8b; margin-top: 180px; font-size: 16px">很抱歉，没有找到你想要的内容</p>
             </div>
-        </div>
 
-        <!-- 页面控制 -->
-        <div class="news-page">
-            <span th:text="'第 ' + ${currentPage} + '/' + ${totalPages} + ' 页'">第1/6页</span>
-            <span th:text="'共' + ${total} + '条'"></span>
-            <span>
-                <button id="up-page"
-                        th:if="(${currentPage}!=null) ? (${currentPage}>1) : false"
-                        th:onclick="upPage([[${currentPage - 1}]])">
-                    上一页
-                </button>
-                <button id="next-page"
-                        th:if="(${currentPage}!=null) ? (${currentPage}<${totalPages}) : false"
-                        th:onclick="nextPage([[${currentPage + 1}]])">
-                    下一页
-                </button>
-            </span>
-            <span>
-                前往<input id="page-input" type="text" name="page-input" value="1" th:data="${totalPages}" />页
-                <button class="news-page-go">确定</button>
-            </span>
-        </div>
+            <!-- 页面控制 -->
+            <div class="news-page">
+                <span th:text="'第 ' + ${currentPage} + '/' + ${totalPages} + ' 页'">第1/6页</span>
+                <span th:text="'共' + ${total} + '条'"></span>
+                <span>
+                    <button id="up-page"
+                            th:if="(${currentPage}!=null) ? (${currentPage}>1) : false"
+                            th:onclick="upPage([[${currentPage - 1}]])">
+                        上一页
+                    </button>
+                    <button id="next-page"
+                            th:if="(${currentPage}!=null) ? (${currentPage}<${totalPages}) : false"
+                            th:onclick="nextPage([[${currentPage + 1}]])">
+                        下一页
+                    </button>
+                </span>
+                <span>
+                    前往<input id="page-input" type="text" name="page-input" value="1" th:data="${totalPages}"/>页
+                    <button class="news-page-go">确定</button>
+                </span>
+            </div>
 
+        </div>
     </div>
 
-    <!-- 公告弹窗 -->
-    <div class="notice-modal">
+    <!-- 弹窗  查看公告-->
+    <div id="myModal" class="modal">
         <!-- 弹窗内容 -->
-        <div class="notice-modal-content">
+        <div class="modal-content">
             <!-- <span class="close">&times;</span> -->
             <p><b>*公告标题</b></p>
             <p id="notice-title">试验系统开放预约啦</p>
@@ -222,19 +214,54 @@
 
             <div><img src="../static/img/noimg.png" th:src="@{img/noimg.png}" alt=""/></div>
             <p id="release-Time" style="color: #a5a5a5"></p>
-
-            <button class="close-notice-modal">返回</button>
+            <button class="close show-close">返回</button>
         </div>
     </div>
+
+    <!-- 弹窗  编辑新增公告-->
+    <div id="myModal2" class="modal">
+        <!-- 弹窗内容 -->
+        <div class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <p><b>*公告标题</b></p>
+            <p>
+                <textarea type="text"
+                          style="width: 100%; height: 40px"
+                          placeholder="请填写公告标题"
+                          id="edit-title">
+                </textarea>
+            </p>
+
+            <p><b>*公告内容</b></p>
+            <p>
+                <textarea type="text"
+                          style="width: 100%; height: 360px; line-height: 1.2"
+                          placeholder="请填写公告内容"
+                          id="edit-content">
+                </textarea>
+            </p>
+
+            <div class="upload">
+                <button>上传图片</button>
+                <a href="">网络安全协议书.png</a>
+            </div>
+            <div class="notice-btn">
+                <button class="close" id="publish-notice">发布</button>
+                <button class="close2 close">返回</button>
+            </div>
+        </div>
+    </div>
+
 </main>
 
 <!-- 底部 -->
 <footer></footer>
-<script src="js/news.js"></script>
 </body>
+<script src="../static/js/notice.js" th:src="@{js/notice.js}"></script>
+
 <script>
     // var i = 1;
-
+    //
     // function show(id) {
     //     if (i % 2 != 0) {
     //         document.getElementById(id).style.display = "block";

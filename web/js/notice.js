@@ -95,9 +95,6 @@ close2.onclick = function () {
 // 获取弹窗
 var modal = document.getElementById("myModal");
 
-// 打开弹窗的按钮对象
-var btn = document.querySelector(".myBtn");
-
 // 获取 <span> 元素，用于关闭弹窗
 var span = document.querySelector(".close");
 

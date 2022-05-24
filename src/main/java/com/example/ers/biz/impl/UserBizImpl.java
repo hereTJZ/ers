@@ -2,7 +2,10 @@ package com.example.ers.biz.impl;
 
 import com.example.ers.biz.IUserBiz;
 import com.example.ers.dao.UserMapper;
+import com.example.ers.entity.Resource;
 import com.example.ers.entity.User;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,6 +17,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserBizImpl implements IUserBiz {
@@ -91,5 +95,14 @@ public class UserBizImpl implements IUserBiz {
         return userMapper.deleteUserById(id);
     }
 
+    // 获取用户信息
+    @Override
+    public PageInfo<User> getUserPage(int role, int pageNum, int pageSize, String content) {
+        PageHelper.startPage(pageNum, pageSize);
+        // 这里是执行查询所有数据
+        List<User> resourceList = userMapper.getUsers(role, content);
+        PageInfo<User> pageInfo = new PageInfo<>(resourceList, pageSize);
+        return pageInfo;
+    }
 
 }

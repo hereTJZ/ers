@@ -19,4 +19,7 @@ public interface NoticeMapper {
 
     // 模糊搜索公告
     List<Notice> fuzzySearchNotice(String content, Date beginTime, Date endTime);
+
+    // 添加公告
+    int addNotice(Notice notice);
 }

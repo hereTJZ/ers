@@ -1,9 +1,12 @@
 package com.example.ers.controller;
 
 import com.example.ers.biz.IUserBiz;
+import com.example.ers.biz.impl.myHttpSessionListener;
+import com.example.ers.entity.Notice;
 import com.example.ers.entity.User;
 import com.example.ers.utils.ErsResult;
 import com.example.ers.utils.Util;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -114,7 +118,7 @@ public class UserController {
         // 用户登录成功
         if (user != null) {
             // 监测此账号是否已经被登录
-            if (HttpSessionCollector.isUserActive(user.getId())) {
+            if (myHttpSessionListener.isUserActive(user.getId())) {
                 // 当前账号已在线
                 return new ErsResult(500, "error", "当前账号已在线");
             }
@@ -191,6 +195,7 @@ public class UserController {
         // 手动注销session，移除session中的用户信息
         if (user != null) {
             session.removeAttribute("user");
+            session.invalidate();
             return new ErsResult(200, "success", "成功登出");
         }
         return result;
@@ -505,6 +510,35 @@ public class UserController {
         return new ErsResult();
     }
 
+    /**
+     * 管理员获取用户信息--模糊搜索
+     */
+    @RequestMapping(value = {"/user"}, method = RequestMethod.GET)
+    @ResponseBody
+    public ErsResult getUserPage(HttpSession session,
+                                 Model model,
+                                 @RequestParam(defaultValue = "1", value = "pageNum", required = false) int pageNum,
+                                 @RequestParam(defaultValue = "10", value = "pageSize", required = false) int pageSize,
+                                 @RequestParam(defaultValue = "2", value = "role", required = false) int role,
+                                 @RequestParam(defaultValue = "", value = "content", required = false) String content) {
+        // Object 类向下强制转型
+        User user = (User) session.getAttribute("user");
+        // 已登录的情况下
+        if (user != null) {
+            //导航栏用户信息（通用）
+            model.addAttribute("user", user);
+            model.addAttribute("identity", Util.userIdentity(user.getRole()));
+
+            //分页信息
+            PageInfo<User> pageInfo = userBiz.getUserPage(role, pageNum, pageSize, content);
+            List<User> userList = pageInfo.getList();
+            model.addAttribute("userList", userList);
+            model.addAttribute("totalPages", pageInfo.getPages());
+            model.addAttribute("currentPage", pageInfo.getPageNum());
+            model.addAttribute("total", pageInfo.getTotal());
+        }
+        return new ErsResult();
+    }
 }
 
 

@@ -6,6 +6,7 @@ import com.example.ers.biz.IUserBiz;
 import com.example.ers.biz.impl.NoticeBizImpl;
 import com.example.ers.entity.Experiment;
 import com.example.ers.entity.Notice;
+import com.example.ers.entity.User;
 import com.example.ers.utils.Util;
 import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
@@ -82,8 +83,15 @@ public class test {
 
     @Test
     void PageHelper() {
-        PageInfo pageInfo = noticeBiz.getNewsPage(1, 10);
-        System.out.println(pageInfo.getTotal());
+//        PageInfo pageInfo = noticeBiz.getNewsPage(1, 10);
+//        System.out.println(pageInfo.getTotal());
+
+        //分页信息
+        PageInfo<User> pageInfo1 = userBiz.getUserPage(3, 2, 3, "仪");
+        List<User> userList = pageInfo1.getList();
+        for (User user:userList) {
+            System.out.println(user);
+        }
     }
 
     @Test

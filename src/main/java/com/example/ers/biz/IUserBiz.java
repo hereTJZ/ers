@@ -1,9 +1,12 @@
 package com.example.ers.biz;
 
+import com.example.ers.entity.Resource;
 import com.example.ers.entity.User;
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 
 public interface IUserBiz {
 
@@ -24,6 +27,9 @@ public interface IUserBiz {
 
     // 用户修改个人信息
     int resetUserInfo(User user);
+
+    // 获取用户信息
+    PageInfo<User> getUserPage(int role, int pageNum, int pageSize, String content);
 
     // 通过id删除用户
     int deleteUserById(int id);

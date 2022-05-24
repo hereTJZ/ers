@@ -80,5 +80,13 @@ public class NoticeBizImpl implements INoticeBiz {
         return pageInfo;
     }
 
+    /**
+     * 添加公告
+     */
+    @Override
+    public int addNotice(Notice notice) {
+        return noticeMapper.addNotice(notice);
+    }
+
 
 }

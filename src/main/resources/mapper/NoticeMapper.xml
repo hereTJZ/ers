@@ -41,4 +41,23 @@
         </if>
         order by release_time desc -- asc相反为升序
     </select>
+
+    <insert id="addNotice" parameterType="Notice">
+        insert into notice(
+            title
+            , content
+            , release_time
+            , image_addresses
+        )
+        values (
+            #{title}
+            , #{content}
+            , #{releaseTime}
+            , #{imageAddresses}
+        )
+    </insert>
+
+    <delete id="deleteNoticeById">
+        DELETE FROM notice WHERE id = #{id}
+    </delete>
 </mapper>

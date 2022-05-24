@@ -1,8 +1,3 @@
-//显示通知弹窗
-// function showNotice() {
-//     document.getElementsByClassName("notice-modal")[0].style.display = "block";
-// }
-
 // 在用户点击按钮，关闭弹窗
 var noticeModal = document.getElementsByClassName("notice-modal")[0];
 var spanIndex = document.querySelector(".close-notice-modal");
@@ -49,12 +44,6 @@ $(document).ready(function () {
         } else {
             console.log("取消退出登录");//打印服务端返回的数据(调试用)
         }
-        // $("#div1").load("demo_test.txt", function (responseTxt, statusTxt, xhr) {
-        //     if (statusTxt == "success")
-        //         alert("外部内容加载成功!");
-        //     if (statusTxt == "error")
-        //         alert("Error: " + xhr.status + ": " + xhr.statusText);
-        // });
     });
 });
 
@@ -78,6 +67,9 @@ function showNotice(noticeID) {
                 $("#notice-title").text(result.data["title"]);
                 $("#notice-content").text(result.data["content"]);
                 $("#release-Time").text("发布于：" + result.data["releaseTime"]);
+            }
+            if (result.code === 500) {
+                alert(result.data);
             }
         },
         error: function () {

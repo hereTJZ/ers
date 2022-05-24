@@ -18,4 +18,7 @@ public interface INoticeBiz {
 
     // 模糊搜索公告
     PageInfo<Notice> fuzzySearchNotice(String content, Date beginTime, Date endTime, int pageNum, int pageSize);
+
+    // 添加公告
+    int addNotice(Notice notice);
 }

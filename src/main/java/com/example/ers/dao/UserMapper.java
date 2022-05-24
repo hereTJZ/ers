@@ -1,9 +1,11 @@
 package com.example.ers.dao;
 
+import com.example.ers.entity.Resource;
 import com.example.ers.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Date;
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -54,4 +56,9 @@ public interface UserMapper {
      * @return
      */
     int deleteUserById(int id);
+
+    /**
+     * 获取所有某身份用户
+     */
+    List<User> getUsers(int role, String content);
 }
