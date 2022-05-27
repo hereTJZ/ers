@@ -26,6 +26,8 @@ public class User {
     // 注册时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date registerTime;
+    private int dayNumber;
+    private int weekNumber;
 
     // 初始化用户
     public User() {
@@ -42,6 +44,8 @@ public class User {
         this.classNum = 0;
         this.subject = "";
         this.imageAddress = "null";
+        this.dayNumber = 0;
+        this.weekNumber = 0;
     }
 
     /**
@@ -125,6 +129,8 @@ public class User {
                 ", subject='" + subject + '\'' +
                 ", imageAddress='" + imageAddress + '\'' +
                 ", registerTime='" + registerTime + '\'' +
+                ", dayNumber='" + dayNumber + '\'' +
+                ", weekNumber='" + weekNumber + '\'' +
                 '}';
     }
 
@@ -249,5 +255,21 @@ public class User {
 
     public void setProfessional(String professional) {
         this.professional = professional;
+    }
+
+    public int getDayNumber() {
+        return dayNumber;
+    }
+
+    public void setDayNumber(int dayNumber) {
+        this.dayNumber = dayNumber;
+    }
+
+    public int getWeekNumber() {
+        return weekNumber;
+    }
+
+    public void setWeekNumber(int weekNumber) {
+        this.weekNumber = weekNumber;
     }
 }

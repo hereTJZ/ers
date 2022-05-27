@@ -1,10 +1,12 @@
 package com.example.ers.entity;
 
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.Objects;
 
+@Data
 public class Experiment {
     private int id;
     // 实验名称
@@ -34,9 +36,6 @@ public class Experiment {
     // 提交实验预约时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creatTime;
-
-    public Experiment() {
-    }
 
     // 是否延时
     public boolean isDelay(){

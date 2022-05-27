@@ -21,4 +21,10 @@ public interface INoticeBiz {
 
     // 添加公告
     int addNotice(Notice notice);
+
+     // 更新公告
+    int resetNoticeInfo(Notice notice);
+
+    // 删除公告
+    int deleteNoticeById(int id);
 }

@@ -47,6 +47,7 @@ function showNotice(noticeID) {
                 $("#notice-title").text(result.data["title"]);
                 $("#notice-content").text(result.data["content"]);
                 $("#release-Time").text("发布于：" + result.data["releaseTime"]);
+                $("#notice-img").prop("src",result.data["imageAddress"]);
             }
         },
         error: function () {

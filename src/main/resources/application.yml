@@ -26,12 +26,14 @@ spring:
     password: HJWMULRPJKPGMASF
 
 # 配置SpringMVC文件上传限制，默认1M。注意MB要大写，不然报错。SpringBoot版本不同，配置项不同
-multipart:
-  max-file-size: 50MB
-  max-request-size: 50MB
+  servlet:
+    multipart:
+      # 单个上传文件的大小限制
+      max-file-size: 50MB
+      # 所有请求文件的大小限制（总上传）
+      max-request-size: 100MB
 
-prop:
-  upload-folder: static/img/
+
 
 #配置tomcat服务器
 server:
@@ -52,12 +54,16 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true  #驼峰命名法自动转换
 
+
+
 #Mybatis分页工具
 pagehelper:
   helper-dialect: mysql
   reasonable: true
   support-methods-arguments: true
   page-size-zero: true
+
+
 
 #控制台看到执行的SQL语句
 logging:

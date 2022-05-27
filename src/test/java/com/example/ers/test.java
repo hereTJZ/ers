@@ -11,8 +11,11 @@ import com.example.ers.utils.Util;
 import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.system.ApplicationHome;
+import org.springframework.boot.test.autoconfigure.filter.TypeExcludeFilters;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -104,5 +107,15 @@ public class test {
         for (Notice notice:pageInfo.getList()) {
             System.out.println(notice);
         }
+    }
+
+    @Test
+    void getPath(){
+        // 动态获取jar包所在目录
+        ApplicationHome h = new ApplicationHome(getClass());
+        File jarFile = h.getSource();
+        // 在jar包所在目录下生成一个upload文件夹用来存储上传的图片
+        String dirPath = jarFile.getParentFile().toString()+"/upload/";
+        System.out.println(dirPath);
     }
 }

@@ -82,11 +82,32 @@ public class NoticeBizImpl implements INoticeBiz {
 
     /**
      * 添加公告
+     * @param notice
+     * @return
      */
     @Override
     public int addNotice(Notice notice) {
         return noticeMapper.addNotice(notice);
     }
 
+    /**
+     * 更新公告
+     * @param notice
+     * @return
+     */
+    @Override
+    public int resetNoticeInfo(Notice notice) {
+        return noticeMapper.resetNoticeInfo(notice);
+    }
+
+    /**
+     * 删除公告
+     * @param id
+     * @return
+     */
+    @Override
+    public int deleteNoticeById(int id) {
+        return noticeMapper.deleteNoticeById(id);
+    }
 
 }

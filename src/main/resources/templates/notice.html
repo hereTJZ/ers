@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>首页</title>
+    <title>公告管理</title>
     <link rel="stylesheet" href="../static/css/font.css" th:href="@{css/font.css}"/>
     <link rel="stylesheet" href="../static/css/index.css" th:href="@{css/index.css}"/>
     <link rel="stylesheet" href="../static/css/notice.css" th:href="@{css/notice.css}"/>
@@ -134,31 +134,28 @@
                 </tr>
                 <tr th:each="notice:${noticeList}">
                     <td>
-                        <span th:utext="${notice.getTitle()}" class="new-title">试验系统开放预约啦fsadjldshfkdbsafksdhkjfhdsafkdshajskdafhksahfksdhfsadfhdsafldsjaklfjdsakljfkasj</span>
+                        <span th:utext="${notice.getTitle()}" class="new-title">标题</span>
                     </td>
                     <td>
-                        <span th:utext="${notice.getContent()}" class="new-content">欢迎欢迎前来预约实验，网络攻防在线预约系统正式开放使用啦！您只需...fasdkjsdhafkuf阿道夫集合框架挂号费框架的撒化肥跨境电商副科级更好的富士康结构化跨境电商风华高科方法福建省领导机构dsgdfgdsgfdgasdhf</span>
+                        <span th:utext="${notice.getContent()}" class="new-content">内容</span>
                     </td>
                     <td>
-                        <span th:text="${#dates.format(notice.getReleaseTime(),'yyyy-MM-dd')}" class="new-time">2022.03.10</span>
+                        <span th:text="${#dates.format(notice.getReleaseTime(),'yyyy-MM-dd HH:mm')}" class="new-time">时间</span>
                     </td>
                     <td>
                         <a title="点击查看公告详情"
-                           href="javascrpit:;"
                            class="myBtn1"
                            th:onclick="showNotice([[${notice.getId()}]]);">
                             查看
                         </a>
 
                         <a title="点击修改公告详情"
-                           href="javascrpit:;"
                            class="addBtn1"
                            th:onclick="editNotice([[${notice.getId()}]]);">
                             编辑
                         </a>
 
                         <a title="删除该公告"
-                           href="javascrpit:;"
                            th:onclick="deleteNotice([[${notice.getId()}]]);">
                             删除
                         </a>
@@ -181,12 +178,12 @@
                 <span>
                     <button id="up-page"
                             th:if="(${currentPage}!=null) ? (${currentPage}>1) : false"
-                            th:onclick="upPage([[${currentPage - 1}]])">
+                            th:onclick="changePage([[${currentPage - 1}]])">
                         上一页
                     </button>
                     <button id="next-page"
                             th:if="(${currentPage}!=null) ? (${currentPage}<${totalPages}) : false"
-                            th:onclick="nextPage([[${currentPage + 1}]])">
+                            th:onclick="changePage([[${currentPage + 1}]])">
                         下一页
                     </button>
                 </span>
@@ -205,14 +202,16 @@
         <div class="modal-content">
             <!-- <span class="close">&times;</span> -->
             <p><b>*公告标题</b></p>
-            <p id="notice-title">试验系统开放预约啦</p>
+            <p id="notice-title">title</p>
             <p><b>*公告内容</b></p>
             <p id="notice-content">
-                3月31日，教育部召开2022年第5次全国教育系统疫情防控工作视频调度会议，深入贯彻习近平总书记关于新冠肺炎疫情防控重要指示批示精神，落实党中央、国务院决策部署，统筹推进教育系统疫情防控和教育改革发展，部署从严从实从细做好当前教育系统疫情防控工作，提高科学精准防控水平。<br/><br/>
-                会议强调，教育系统疫情防控工作要坚定不移坚持“外防输入、内防反弹”总策略，落实落细常态化疫情防控各项措施，确保校园一方净土，确保师生生命安全。要坚定不移坚持“动态清零”总方针，主动融入属地疫情防控全局，加快完善疫情防控应急预案，一旦出现疫情即刻启动应急机制，果断采取有效措施，确保尽早实现“动态清零”，确保教育教学平稳有序。
+                content
             </p>
 
-            <div><img src="../static/img/noimg.png" th:src="@{img/noimg.png}" alt=""/></div>
+            <div>
+                <img id="notice-img" style="width: 100%; margin: 10px 0px" src="img/noimg.png" alt=""/>
+            </div>
+
             <p id="release-Time" style="color: #a5a5a5"></p>
             <button class="close show-close">返回</button>
         </div>
@@ -226,8 +225,8 @@
             <p><b>*公告标题</b></p>
             <p>
                 <textarea type="text"
-                          style="width: 100%; height: 40px"
                           placeholder="请填写公告标题"
+                          name="title"
                           id="edit-title">
                 </textarea>
             </p>
@@ -235,21 +234,30 @@
             <p><b>*公告内容</b></p>
             <p>
                 <textarea type="text"
-                          style="width: 100%; height: 360px; line-height: 1.2"
                           placeholder="请填写公告内容"
+                          name="content"
                           id="edit-content">
                 </textarea>
             </p>
 
             <div class="upload">
-                <button>上传图片</button>
-                <a href="">网络安全协议书.png</a>
+                <input type="file"
+                       id="upload-file"
+                       name="picture"
+                       accept=".jpg, .jpeg, .png, .gif"
+                       style="border: hidden;"
+                       multiple
+                >
+                <div id="preview">
+                </div>
             </div>
+
             <div class="notice-btn">
                 <button class="close" id="publish-notice">发布</button>
                 <button class="close2 close">返回</button>
             </div>
         </div>
+        <iframe name="targetIfr" style="display:none"></iframe>
     </div>
 
 </main>

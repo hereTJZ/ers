@@ -138,6 +138,12 @@
     color: #126ffc;
 }
 
+.cannot-find {
+    display: flex;
+/ / 居中 align-items: center;
+    justify-content: center;
+}
+
 .tab-top span {
     display: inline-block;
     width: 100px;
@@ -149,7 +155,7 @@
     margin-bottom: 2px;
 }
 
-.tab-top span:nth-of-type(1) {
+.tab-top .active {
     color: #fff;
     background: #5591fc;
 }
@@ -157,23 +163,24 @@
 .tab-top span:hover {
     background: #5591fc;
     color: #fff;
+    cursor: pointer;
 }
 
 .news-page .allselect {
-    margin-right: 465px;
+    margin-right: 460px;
 }
 
 /* 底部页码 */
 
 .news-page {
-    float: right;
+    float: left;
     height: 30px;
     line-height: 30px;
-    margin-right: 50px;
+    margin-left: 10px;
 }
 
 .news-page span {
-    margin-left: 120px;
+    margin-left: 100px;
 }
 
 .news-page span button {
@@ -259,7 +266,7 @@
 
 /* 弹窗 */
 
-#myModal .modal-content p .UserID {
+#myModal .modal-content p .UserRole {
     width: 15px;
     display: inline-block;
     margin: 1px 10px;

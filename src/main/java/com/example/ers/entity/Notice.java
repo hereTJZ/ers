@@ -1,18 +1,22 @@
 package com.example.ers.entity;
 
+import lombok.Data;
+import net.sf.jsqlparser.schema.MultiPartName;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@Data
 public class Notice {
     private int id;
     private String title;
     private String content;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date releaseTime;
-    private List<String> imageAddresses;
+    private String imageAddress;
 
     @Override
     public String toString() {
@@ -21,7 +25,7 @@ public class Notice {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", releaseTime=" + releaseTime +
-                ", imageAddresses=" + imageAddresses +
+                ", imageAddress=" + imageAddress +
                 '}';
     }
 
@@ -73,11 +77,11 @@ public class Notice {
         this.releaseTime = releaseTime;
     }
 
-    public List<String> getImageAddresses() {
-        return imageAddresses;
+    public String getImageAddress() {
+        return imageAddress;
     }
 
-    public void setImageAddresses(List<String> imageAddresses) {
-        this.imageAddresses = imageAddresses;
+    public void setImageAddress(String imageAddresses) {
+        this.imageAddress = imageAddresses;
     }
 }

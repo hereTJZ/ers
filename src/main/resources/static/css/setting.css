@@ -18,7 +18,13 @@
 
 .settingleft .setlogo p a {
     display: inline-block;
-    color: #333;
+    color: #333333;
+    font-size: 14px;
+}
+
+.settingleft .setlogo p a:hover {
+    display: inline-block;
+    color: #06b2ce;
     font-size: 14px;
 }
 

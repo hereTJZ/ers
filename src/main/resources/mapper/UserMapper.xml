@@ -41,7 +41,9 @@
                subject,
                gender,
                image_address,
-               register_time
+               register_time,
+               day_number,
+               week_number
         from user
         where (phone = #{account} and password = #{password})
         or (email = #{account} and password = #{password})
@@ -84,7 +86,9 @@
                subject,
                gender,
                image_address,
-               register_time
+               register_time,
+               day_number,
+               week_number
         from user
         where id = #{id}
     </select>
@@ -103,7 +107,9 @@
                subject,
                gender,
                image_address,
-               register_time
+               register_time,
+               day_number,
+               week_number
         from user
         where (phone = #{account} or email = #{account})
     </select>
@@ -129,7 +135,6 @@
             <if test="subject != null and subject != ''">subject = #{subject},</if>
         </trim>
         where id = #{id}
-
     </update>
 
     <select id="getUsers" resultType="User">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>首页</title>
+    <title>用户管理</title>
     <link rel="stylesheet" href="../static/css/font.css" th:href="@{css/font.css}"/>
     <link rel="stylesheet" href="../static/css/index.css" th:href="@{css/index.css}"/>
     <link rel="stylesheet" href="../static/css/user.css" th:href="@{css/user.css}"/>
@@ -108,270 +108,152 @@
     <div class="user-content">
         <div class="booking-top">
             <div class="booking-top-left">
-                <button id="addOne" class="myBtn">+单个添加</button>
+                <button id="addOne" class="myBtn" onclick="openEdit()">+单个添加</button>
                 <button id="addByFile" class="myBtn">+批量导入</button>
                 <button id="deleteUser" class="myBtn">删 除</button>
             </div>
+            <!-- 模糊搜索 -->
             <div class="news-search">
-                <input type="text" placeholder="模糊搜索"/>
+                <input id="search-content" type="text" placeholder="模糊搜索" th:value="${searchContent}"/>
                 <i class="iconfont icon-sousuo"></i>
             </div>
-            <button id="newsSearch">搜索</button>
+            <button id="newsSearch" th:data-role="${role}">搜索</button>
         </div>
         <!-- 表格 -->
         <div class="tab">
             <div class="tab-top">
-                <span>教师</span>
-                <span>学生</span>
-                <span>社会人员</span>
+                <span th:classappend="${role}==2 ? 'active': ''" onclick="window.location.href = 'user?role=2'">教师</span>
+                <span th:classappend="${role}==3 ? 'active': ''" onclick="window.location.href = 'user?role=3'">学生</span>
+                <span th:classappend="${role}==4 ? 'active': ''" onclick="window.location.href = 'user?role=4'">社会人员</span>
             </div>
             <table class="table-user">
                 <tr>
-                    <th><input type="checkbox"/></th>
+                    <th><input type="checkbox" th:onclick="selectAll([[${userList?.size()}]])"/></th>
                     <th>id</th>
                     <th>姓名</th>
                     <th>手机号</th>
                     <th>邮箱</th>
                     <th>性别</th>
-                    <th>年龄</th>
-                    <th>学院</th>
-                    <th>专业班级</th>
-                    <th>教学科目</th>
+                    <th th:if="${role} != 4">学校</th>
+                    <th th:if="${role} != 4">学院</th>
+                    <th th:if="${role} == 3">专业班级</th>
+                    <th th:if="${role} == 2">教学科目</th>
+                    <th>注册时间</th>
                     <th>操作</th>
                 </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>胡卫兵</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>男</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>数据结构与算法</td>
+
+                <tr th:each="user:${userList}">
                     <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
+                        <input type="checkbox" th:value="${user.getId()}"/>
+                    </td>
+                    <td th:text="${user.getId()}">001</td>
+                    <td th:text="${user.getRealName()}">胡卫兵</td>
+                    <td th:text="${user.getPhone()}">12123456789</td>
+                    <td th:text="${user.getEmail()}">12123@qq.com</td>
+                    <td th:text="${user.getGender()}">男</td>
+                    <td th:if="${role} != 4" th:text="${user.getSchool()}">合肥工业大学</td>
+                    <td th:if="${role} != 4" th:text="${user.getFaculty()}">软件学院</td>
+                    <td th:if="${role} == 3" th:text="${user.getProfessional()} + ${user.getGrade()} + '级 '+ ${user.getClassNum()} + '班'">
+                        软件工程22级 1班
+                    </td>
+                    <td th:if="${role} == 2" th:text="${user.getSubject()}">数据结构与算法</td>
+                    <td th:text="${#dates.format(user.getRegisterTime(),'yyyy-MM-dd HH:mm:ss')}">2022-05-20 20:13:22
+                    </td>
+                    <td>
+                        <a href="javascript:;" th:onclick="editUser([[${user.getId()}]])">编辑</a>
                         <a href="">删除</a>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>王强</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>男</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>C++</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>李欢</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>男</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>Python</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>徐薇</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>女</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>工程导论</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>张三</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>男</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>Python</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>李芳芳</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>男</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>C++</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>汤彩凤</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>女</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>Java</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>胡安安</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>男</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>工程导论</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>徐小明</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>男</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>Java</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>王晓红</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>女</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>数据结构与算法</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"/></td>
-                    <td>001</td>
-                    <td>胡卫兵</td>
-                    <td>12123456789</td>
-                    <td>12123@qq.com</td>
-                    <td>男</td>
-                    <td>36</td>
-                    <td>软件学院</td>
-                    <td>软件工程22级 1班</td>
-                    <td>工程导论</td>
-                    <td>
-                        <a href="javascript:;" onclick="show2('myModal');">编辑</a>
-                        <a href="">删除</a>
-                    </td>
-                </tr>
+
             </table>
+            <div class="cannot-find" th:if="${userList?.size()==0}">
+                <img
+                        style="display: block; height: 360px; width: auto"
+                        th:src="@{img/helpness.png}">
+                <p style="color: #8b8b8b; margin-top: 180px; font-size: 16px">很抱歉，没有找到你想要的内容</p>
+            </div>
         </div>
+
+        <!-- 页面控制 -->
         <div class="news-page">
-            <button class="allselect">全选</button>
-            <span>第1/6页</span>
-            <span> <button>上一页</button> <button>下一页</button></span>
+            <button class="allselect" th:onclick="selectAll([[${userList?.size()}]])">全选</button>
+            <span th:text="'第 ' + ${currentPage} + '/' + ${totalPages} + ' 页'">第1/6页</span>
+            <span th:text="'共' + ${total} + '条'"></span>
             <span>
-                        前往<input type="text" name="" id="" value="1"/>页
-                        <button class="news-page-go">确定</button>
-                    </span>
+                    <button id="up-page"
+                            th:if="(${currentPage}!=null) ? (${currentPage}>1) : false"
+                            th:onclick="changePage([[${currentPage - 1}]])">
+                        上一页
+                    </button>
+                    <button id="next-page"
+                            th:if="(${currentPage}!=null) ? (${currentPage}<${totalPages}) : false"
+                            th:onclick="changePage([[${currentPage + 1}]])">
+                        下一页
+                    </button>
+                </span>
+            <span>
+                    前往<input id="page-input" type="text" name="page-input" value="1" th:data="${totalPages}"/>页
+                    <button class="news-page-go">确定</button>
+                </span>
         </div>
     </div>
 
     <!-- 弹窗 -->
     <div id="myModal" class="modal booking-modal" style="z-index: 888">
         <!-- 弹窗内容 -->
-        <div class="modal-content" style="width: 45%">
+        <form class="modal-content" style="width: 45%">
             <!-- <span class="close">&times;</span> -->
             <p>
                 *用户姓名
-                <input type="text" name="" id="" placeholder=" 请填写用户真实姓名"/>
+                <input type="text" name="realName" id="realName" placeholder=" 请填写用户真实姓名"/>
             </p>
             <p>
                 *用户身份 <br/>
-                <input class="UserID" name="UserID" type="radio" value="教师"/>
+                <input type="radio" class="UserRole" name="role" id="teacher" value="2" th:disabled="${role!=2}?true:false"/>
                 教师
-                <input class="UserID" name="UserID" type="radio" value="学生"/>
+                <input type="radio" class="UserRole" name="role" id="student" value="3" th:disabled="${role!=3}?true:false"/>
                 学生
-                <input class="UserID" name="UserID" type="radio" value="社会人员"/>
+                <input type="radio" class="UserRole" name="role" id="social" value="4" th:disabled="${role!=4}?true:false"/>
                 社会人员
             </p>
             <p>
                 *手机号（可用于登录）
-                <input type="text" name="" id="" placeholder=" 请填写手机号"/>
+                <input type="text" name="phone" id="phone" placeholder=" 请填写手机号"/>
             </p>
             <p>
                 *邮箱号 （可用于登录）
-                <input type="text" name="" id="" placeholder=" 请填写邮箱号"/>
+                <input type="text" name="email" id="email" placeholder=" 请填写邮箱号"/>
             </p>
-            <p>
+            <p th:if="${role} != 4">
                 学校
-                <input type="text" name="" id="" placeholder=" 请填写学校"/>
+                <input type="text" name="school" id="school" placeholder=" 请填写学校"/>
             </p>
-            <p>
+            <p th:if="${role} != 4">
                 学院
-                <input type="ar" name="" id="" placeholder=" 请填写学院"/>
+                <input type="text" name="faculty" id="faculty" placeholder=" 请填写学院"/>
             </p>
-            <p>
-                专业班级
-                <input type="ar" name="" id="" placeholder=" 请填写班级"/>
+            <p th:if="${role} == 2">
+                教学科目
+                <input type="text" name="subject" id="subject" placeholder=" 请填写班级号"/>
+            </p>
+            <p th:if="${role} == 3">
+                专业
+                <input type="text" name="professional" id="professional" placeholder=" 请填写班级"/>
+            </p>
+            <p th:if="${role} == 3" style="display: inline-block; ">
+                年级（例：18年入学填 18）
+                <input type="number" name="grade" id="grade" placeholder=" 请填写班级"/>
+            </p>
+            <p th:if="${role} == 3" style="display: inline-block; margin-left: 30px">
+                班级
+                <input type="number" name="classNum" id="classNum" placeholder=" 请填写班级号"/>
             </p>
 
             <p class="close-wrap">
                 <button>添加</button>
                 <button class="close">返回</button>
             </p>
-        </div>
+        </form>
     </div>
 </main>
 

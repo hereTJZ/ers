@@ -94,6 +94,43 @@ public class UserController {
         return "resetPassword";
     }
 
+    /**
+     * 管理员用户管理界面--模糊搜索
+     */
+    @RequestMapping(value = {"/user"}, method = RequestMethod.GET)
+    public String getUserPage(HttpSession session,
+                                 Model model,
+                                 @RequestParam(defaultValue = "1", value = "pageNum", required = false) int pageNum,
+                                 @RequestParam(defaultValue = "10", value = "pageSize", required = false) int pageSize,
+                                 @RequestParam(defaultValue = "2", value = "role", required = false) int role,
+                                 @RequestParam(defaultValue = "", value = "content", required = false) String content) {
+
+        if (role < 2 || role > 4){
+            return "用户身份错误！";
+        }
+
+        // Object 类向下强制转型
+        User user = (User) session.getAttribute("user");
+        // 已登录的情况下
+        if (user != null) {
+            //导航栏用户信息（通用）
+            model.addAttribute("user", user);
+            model.addAttribute("identity", Util.userIdentity(user.getRole()));
+
+            //分页信息
+            PageInfo<User> pageInfo = userBiz.getUserPage(role, pageNum, pageSize, content);
+            List<User> userList = pageInfo.getList();
+            model.addAttribute("role", role);
+            model.addAttribute("userList", userList);
+            model.addAttribute("totalPages", pageInfo.getPages());
+            model.addAttribute("currentPage", pageInfo.getPageNum());
+            model.addAttribute("total", pageInfo.getTotal());
+            //搜索区恢复
+            model.addAttribute("searchContent", content);
+        }
+        return "user";
+    }
+
 
     /**
      * 登录账户密码验证--异步请求
@@ -381,8 +418,8 @@ public class UserController {
                                    @RequestParam(value = "faculty", required = false) String faculty,
                                    @RequestParam("realName") String realName,
                                    @RequestParam(value = "professional", required = false) String professional,
-                                   @RequestParam(value = "grade", required = false) String grade,
-                                   @RequestParam(value = "classNum", required = false) String classNum,
+                                   @RequestParam(value = "grade", defaultValue = "", required = false) String grade,
+                                   @RequestParam(value = "classNum", defaultValue = "", required = false) String classNum,
                                    @RequestParam(value = "subject", required = false) String subject) {
 
         ErsResult result = new ErsResult(500, "error", "未登录");
@@ -483,8 +520,12 @@ public class UserController {
         user.setFaculty(faculty);
         user.setRealName(realName);
         user.setProfessional(professional);
-        user.setGrade(Integer.parseInt(grade));
-        user.setClassNum(Integer.parseInt(classNum));
+        if (!grade.equals("")) {
+            user.setGrade(Integer.parseInt(grade));
+        }
+        if (!classNum.equals("")){
+            user.setClassNum(Integer.parseInt(classNum));
+        }
         user.setSubject(subject);
         userBiz.resetUserInfo(user);
         session.setAttribute("user", user);
@@ -510,35 +551,7 @@ public class UserController {
         return new ErsResult();
     }
 
-    /**
-     * 管理员获取用户信息--模糊搜索
-     */
-    @RequestMapping(value = {"/user"}, method = RequestMethod.GET)
-    @ResponseBody
-    public ErsResult getUserPage(HttpSession session,
-                                 Model model,
-                                 @RequestParam(defaultValue = "1", value = "pageNum", required = false) int pageNum,
-                                 @RequestParam(defaultValue = "10", value = "pageSize", required = false) int pageSize,
-                                 @RequestParam(defaultValue = "2", value = "role", required = false) int role,
-                                 @RequestParam(defaultValue = "", value = "content", required = false) String content) {
-        // Object 类向下强制转型
-        User user = (User) session.getAttribute("user");
-        // 已登录的情况下
-        if (user != null) {
-            //导航栏用户信息（通用）
-            model.addAttribute("user", user);
-            model.addAttribute("identity", Util.userIdentity(user.getRole()));
 
-            //分页信息
-            PageInfo<User> pageInfo = userBiz.getUserPage(role, pageNum, pageSize, content);
-            List<User> userList = pageInfo.getList();
-            model.addAttribute("userList", userList);
-            model.addAttribute("totalPages", pageInfo.getPages());
-            model.addAttribute("currentPage", pageInfo.getPageNum());
-            model.addAttribute("total", pageInfo.getTotal());
-        }
-        return new ErsResult();
-    }
 }
 
 

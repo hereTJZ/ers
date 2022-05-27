@@ -109,8 +109,8 @@
     <!-- 设置管理 -->
     <div class="setting-content">
         <div class="settingleft">
-            <div class="setlogo">
-                <p><img src="img/2.png" alt="" width="120"/></p>
+            <div class="setlogo" th:onclick="changeLogo([[${user?.getId()}]])">
+                <p><img src="img/userlogo.png" alt="" width="120"/></p>
 
                 <p><a href="">修改头像</a></p>
             </div>
@@ -253,7 +253,7 @@
                 dataType: "json",   //预期服务器返回的数据类型
                 url: "/resetUserInfo",    //执行的url请求
                 //提交至服务器的数据
-                data: $(".setting-tab").serialize(),
+                data: $(".setting-tab").serialize(), //请求参数放在请求头中
                 success: function (result) {    //result是服务器返回的封装数据
                     console.log(result);//打印服务端返回的数据(调试用)
                     if (result.code === 200) {
@@ -283,6 +283,10 @@
         })
     });
 
+    function changeLogo(id){
+        var formdata = new FormData();
+        formdata.append("avatar", $("#upload-file")[0].files[0]);
+    }
     // function show(id) {
     //     if (i % 2 != 0) {
     //         document.getElementById(id).style.display = "block";

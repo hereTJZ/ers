@@ -62,6 +62,7 @@
     width: 70px;
     height: 36px;
 }
+
 #addNotice:hover,
 #newsSearch:hover {
     /*有色按钮变色*/
@@ -78,7 +79,7 @@
 .ex-list {
     width: auto;
     overflow-y: auto;
-    height: 640px;
+    height: 660px;
     margin-top: 30px;
 }
 
@@ -120,6 +121,7 @@
     overflow: hidden; /*内容超出宽度时隐藏超出部分的内容*/
     text-overflow: ellipsis; /*当对象内文本溢出时显示省略标记()；需与overflow:hidden;一起使用。*/
 }
+
 .new-title {
     display: block;
     width: 300px;
@@ -129,6 +131,7 @@
     overflow: hidden; /*内容超出宽度时隐藏超出部分的内容*/
     text-overflow: ellipsis; /*当对象内文本溢出时显示省略标记()；需与overflow:hidden;一起使用。*/
 }
+
 .new-time {
     margin: 5px 0px;
     display: block;
@@ -177,8 +180,7 @@
 
 .cannot-find {
     display: flex;
-    //居中
-    align-items: center;
+/ / 居中 align-items: center;
     justify-content: center;
 }
 
@@ -247,6 +249,7 @@
     margin-bottom: 20px;
     font-size: 14px;
 }
+
 #myModal .modal-content p {
     /*保留换行符*/
     white-space: pre-line;
@@ -255,6 +258,39 @@
 .modal-content textarea {
     padding: 10px;
     box-sizing: border-box;
+}
+
+#edit-title {
+    width: 100%;
+    height: 40px
+}
+
+#edit-content {
+    width: 100%;
+    height: 350px;
+    line-height: 1.2;
+    margin-bottom: -10px;
+}
+
+#preview {
+    margin-top: 8px;
+}
+
+#preview img {
+    height: 80px;
+    order: 1;
+}
+
+#preview ol {
+    /*display: none;*/
+    padding-left: 0;
+}
+
+#preview li,
+#preview p {
+    background: #ffffff;
+    margin-bottom: 10px;
+    list-style-type: none;
 }
 
 /* 关闭弹窗 */
