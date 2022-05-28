@@ -33,15 +33,10 @@ public interface UserMapper {
 
     /**
      * 注册用户
-     * @param phone
-     * @param email
-     * @param password
-     * @param realName
-     * @param role
-     * @param registerTime
+     * @param user
      * @return
      */
-    int register(String phone, String email, String password, String realName, int role, Date registerTime);
+    int register(User user);
 
     /**
      * 用户修改个人信息
@@ -61,4 +56,14 @@ public interface UserMapper {
      * 获取所有某身份用户
      */
     List<User> getUsers(int role, String content);
+
+    /**
+     * 修改用户密码
+     */
+    int resetUserPassword(User user);
+
+    /**
+     * 修改用户头像地址
+     */
+    int changeAvatarAddress(User user);
 }

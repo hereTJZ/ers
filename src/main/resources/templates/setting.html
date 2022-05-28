@@ -24,7 +24,7 @@
         <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
         <!-- 个人头像信息 -->
         <div class="user" id="user">
-            <img class="userlogo" th:src="@{img/userlogo.png}" alt=""/>
+            <img class="userlogo" th:src="@{${user?.getImageAddress()}}"  alt=""/>
             <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
             <span th:text="${user?.getRealName()}">张三</span>
             <span>&nbsp;</span>
@@ -110,9 +110,9 @@
     <div class="setting-content">
         <div class="settingleft">
             <div class="setlogo" th:onclick="changeLogo([[${user?.getId()}]])">
-                <p><img src="img/userlogo.png" alt="" width="120"/></p>
-
-                <p><a href="">修改头像</a></p>
+                <p><img src="img/userlogo.png" th:src="@{${user?.getImageAddress()}}" alt="" width="120"/></p>
+                <input id="logo" type="file" name="image" style="display:none">
+                <p><a>修改头像</a></p>
             </div>
 
             <iframe name="targetIfr" style="display:none"></iframe>
@@ -163,7 +163,8 @@
                         <td>专业：</td>
                         <td>
                             <span th:text="${user?.getProfessional()}"></span>
-                            <input style="display:none" type="text" name="professional" th:value="${user?.getProfessional()}"/>
+                            <input style="display:none" type="text" name="professional"
+                                   th:value="${user?.getProfessional()}"/>
                         </td>
                     </tr>
                     <tr th:if="${user?.isTeacher()}">
@@ -251,7 +252,7 @@
                 //几个参数需要注意一下
                 type: "POST",   //方法类型
                 dataType: "json",   //预期服务器返回的数据类型
-                url: "/resetUserInfo",    //执行的url请求
+                url: "/resetSelfInfo",    //执行的url请求
                 //提交至服务器的数据
                 data: $(".setting-tab").serialize(), //请求参数放在请求头中
                 success: function (result) {    //result是服务器返回的封装数据
@@ -283,17 +284,67 @@
         })
     });
 
-    function changeLogo(id){
+    const pickerOpts = {
+        types: [
+            {
+                description: 'Images',
+                accept: {
+                    'image/*': ['.png', '.gif', '.jpeg', '.jpg']
+                }
+            },
+        ],
+        excludeAcceptAllOption: true,
+        multiple: false
+    };
+
+    let fileHandle;
+
+    async function getFile(id) {
+        [fileHandle] = await window.showOpenFilePicker(pickerOpts);
+
+        // run code with our fileHandle
+        const fileData = await fileHandle.getFile();
         var formdata = new FormData();
-        formdata.append("avatar", $("#upload-file")[0].files[0]);
+        formdata.append("avatar", fileData);
+        // console.log(fileData)
+        $.ajax({
+            //几个参数需要注意一下
+            async: false,
+            type: "POST",   //方法类型
+            dataType: "json",   //预期服务器返回的数据类型
+            url: "/changeAvatar",    //执行登录的url请求
+            data: formdata,  // 参数放在了请求体中
+            cache: false,
+            contentType: false,  //发送给服务器的数据类型，对应dataType，false表示不要去设置Content-Type请求头
+            processData: false,  //不要将发送的数据处理为字符串，默认true，后端接收到的都是字符串
+            success: function (result) {    //result是服务器返回的封装数据
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.code === 200) {
+                    alert(result.msg + "\n" + result.data);
+                    // 登录请求验证成功后跳转首页面
+                    window.location.href = "/setting"
+                }
+                if (result.code === 400) {
+                    alert(result.msg + "\n" + result.data);
+                }
+                if (result.code === 401) {
+                    alert("保存图片异常！！");
+                    console.log(result.data)
+                }
+                if (result.code === 500) {
+                    alert(result.msg + "\n" + result.data);
+                    window.location.href = "/login"
+                }
+            },
+            error: function () {
+                alert("修改失败，请重试！")
+            }
+        });
     }
-    // function show(id) {
-    //     if (i % 2 != 0) {
-    //         document.getElementById(id).style.display = "block";
-    //     } else {
-    //         document.getElementById(id).style.display = "none";
-    //     }
-    //     i++;
-    // }
+
+    // 换头像
+    function changeLogo(id) {
+        getFile(id)
+    }
 </script>
 </html>

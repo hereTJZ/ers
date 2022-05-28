@@ -79,20 +79,14 @@ public class UserBizImpl implements IUserBiz {
 
     // 注册用户
     @Override
-    public int register(String phone, String email, String password, String realName, int roleId, Date time) {
-        return userMapper.register(phone, email, password, realName, roleId, time);
+    public int register(User user) {
+        return userMapper.register(user);
     }
 
     // 用户修改个人信息
     @Override
     public int resetUserInfo(User user) {
         return userMapper.resetUserInfo(user);
-    }
-
-    // 通过id删除用户
-    @Override
-    public int deleteUserById(int id) {
-        return userMapper.deleteUserById(id);
     }
 
     // 获取用户信息
@@ -103,6 +97,24 @@ public class UserBizImpl implements IUserBiz {
         List<User> resourceList = userMapper.getUsers(role, content);
         PageInfo<User> pageInfo = new PageInfo<>(resourceList, pageSize);
         return pageInfo;
+    }
+
+    // 通过id删除用户
+    @Override
+    public int deleteUserById(int id) {
+        return userMapper.deleteUserById(id);
+    }
+
+    // 修改用户密码
+    @Override
+    public int resetUserPassword(User user) {
+        return userMapper.resetUserPassword(user);
+    }
+
+    // 修改用户头像
+    @Override
+    public int changeAvatar(User user) {
+        return userMapper.changeAvatarAddress(user);
     }
 
 }

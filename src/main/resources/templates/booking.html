@@ -24,7 +24,7 @@
         <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
         <!-- 个人头像信息 -->
         <div class="user" id="user">
-            <img class="userlogo" th:src="@{img/userlogo.png}" alt=""/>
+            <img class="userlogo" th:src="@{${user?.getImageAddress()}}"  alt=""/>
             <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
             <span th:text="${user?.getRealName()}">张三</span>
             <span>&nbsp;</span>
@@ -262,30 +262,27 @@
                     <span>22:00</span>
                     <span>24:00</span>
                 </div>
-                <a href="detail.html" class="booking-list booking-list1" title="00:00~06:00">
-                    <span>网络攻防-木马实验sdfgrfdgdfbgdfadffhskhafhaffdddddassssssssssssssssss</span>
+                <a href="detail/1" class="booking-list booking-list1" title="00:00:00~06:00:00">
+                    <span>网络攻防-木马实验</span>
                 </a>
                 <a href="detail.html" class="booking-list booking-list2">
-                    <span>溢出实验</span>
+                    <span>DNS溢出实验</span>
                 </a>
                 <a href="detail.html" class="booking-list booking-list3">
-                    <span>溢出实验</span>
+                    <span>ARP溢出实验</span>
                 </a>
 
                 <a href="detail.html" class="booking-list booking-list4">
-                    <span>溢出实验</span>
+                    <span>木马灰鸽子攻击</span>
                 </a>
                 <a href="detail.html" class=" booking-list booking-list5">
-                    <span>溢出实验</span>
+                    <span>明文窃听</span>
                 </a>
                 <a href="detail.html" class=" booking-list booking-list6">
-                    <span>溢出实验</span>
+                    <span>PING扫描</span>
                 </a>
                 <a href="detail.html" class=" booking-list booking-list7">
-                    <span>溢出实验</span>
-                </a>
-                <a href="detail.html" class="booking-list booking-list8">
-                    <span>溢出实验</span>
+                    <span>TOMCAT管理用户弱口令攻击</span>
                 </a>
 
                 <!-- 时间轴 -->
@@ -309,44 +306,46 @@
     <div id="myModal" class="modal booking-modal" style="z-index: 9999;">
 
         <!-- 弹窗内容 -->
-        <div class="modal-content" style="width: 45%;">
+        <iframe name="targetIfr" style="display:none"></iframe>
+        <form class="modal-content" style="width: 45%;" target="targetIfr">
             <!-- <span class="close">&times;</span> -->
             <p> *实验标题
-                <input type="text" name="" id="" placeholder=" 请填写本次实验标题">
+                <input type="text" name="edit-title" id="edit-title" placeholder=" 请填写本次实验标题">
             </p>
-            <p> *实验内容 <br><textarea type="text" class="big-input" name="" id=""
-                                    placeholder=" 请填写本次实验具体内容"></textarea>
+            <p> *实验内容 <br>
+                <textarea type="text" class="big-input" name="edit-content" id="edit-content" placeholder=" 请填写本次实验具体内容"></textarea>
             </p>
             <p> *实验时间
             <div class="booking-time">
                 <span>从</span>
-                <input type="datetime-local" name="" id="">
+                <input type="datetime-local" name="start-time" id="start-time">
                 <span>到</span>
-                <input type="datetime-local" name="" id="">
+                <input type="datetime-local" name="end-time" id="end-time">
             </div>
             </p>
             <p> *参与人员
-                <input type="text" name="" id="" placeholder=" 请填写本次实验参与的其它成员">
+                <input type="text" name="participant" id="participant" placeholder=" 请填写本次实验参与的其它成员">
             </p>
             <p> *指导老师
-                <input type="text" name="" id="" placeholder=" 请填写本次实验参与的指导老师">
+                <input type="text" name="instructor" id="instructor" placeholder=" 请填写本次实验参与的指导老师">
             </p>
-            <p> *相关知识<br><textarea type="text" class="big-input" name="" id=""
+            <p> *相关知识<br><textarea type="text" class="big-input" name="related-knowledge" id="related-knowledge"
                                    placeholder=" 请填写本次实验涉及的相关知识"></textarea>
             </p>
 
-            <div class="upload">
-                <button>上传附件</button>
+            <div class="upload" id="upload">
+                <input type="file" name="files" id="files" multiple="multiple" title="支持多文件上传" style="width: 70px"/>
 
-                <a href="">网络安全协议书.pdf</a>
-                <a href="">视频讲解.mp4</a>
-                <a href="">实验教程.ppt</a>
+                <a title="上传的文件">网络安全协议书.pdf</a>
+                <a title="上传的文件">视频讲解.mp4</a>
+                <a title="上传的文件">实验教程.ppt</a>
             </div>
             <p class="close-wrap">
-                <button class="color-button">提交</button>
+                <button class="color-button" id="booking">提交</button>
                 <button class="color-button close">返回</button>
             </p>
-        </div>
+        </form>
+
     </div>
 
 </main>

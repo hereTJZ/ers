@@ -329,13 +329,11 @@ public class NoticeController {
             }
 
             // 封装notice
+            notice.setId(id);
             notice.setTitle(title);
             notice.setContent(content);
-            // 获取当前java时间
-            Date date = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Timestamp time = Timestamp.valueOf(dateFormat.format(date));
-            notice.setReleaseTime(time);
+
+            System.out.println(notice);
 
             // 存入数据库
             int resultNum = noticeBiz.resetNoticeInfo(notice);
@@ -358,6 +356,12 @@ public class NoticeController {
 
         // 已登录的情况下
         if (user != null) {
+
+            // 管理员身份
+            if(user.getRole() != 1){
+                return new ErsResult(500, "forbidden", "对不起，您不是管理员，没有权限！");
+            }
+
             int num = noticeBiz.deleteNoticeById(id);
             if (num == 1) {
                 return new ErsResult(200, "success", "删除公告成功！");
@@ -365,6 +369,6 @@ public class NoticeController {
                 return new ErsResult(400, "error", "删除失败！");
             }
         }
-        return new ErsResult(500, "error", "当前用户未登录！");
+        return new ErsResult(500, "forbidden", "当前用户未登录！");
     }
 }

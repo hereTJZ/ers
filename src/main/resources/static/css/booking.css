@@ -180,6 +180,14 @@
     top: 425px;
     left: 570px;
 }
+/*删*/
+.booking-list9 {
+    height: 150px;
+    background: rgba(57, 103, 255, 0.4);
+    /* 定位 */
+    top: 150px; /* 50 + 50X */
+    left: 1020px; /* 60 + 170X */
+}
 
 /* 日轴样式 */
 

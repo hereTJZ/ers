@@ -22,7 +22,7 @@
         <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
         <!-- 个人头像信息 -->
         <div class="user" id="user">
-            <img class="userlogo" th:src="@{img/userlogo.png}" alt=""/>
+            <img class="userlogo" th:src="@{${user?.getImageAddress()}}"  alt=""/>
             <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
             <span th:text="${user?.getRealName()}">张三</span>
             <span>&nbsp;</span>
@@ -220,6 +220,7 @@
     <!-- 弹窗  编辑新增公告-->
     <div id="myModal2" class="modal">
         <!-- 弹窗内容 -->
+        <iframe name="targetIfr" style="display:none"></iframe>
         <div class="modal-content">
             <!-- <span class="close">&times;</span> -->
             <p><b>*公告标题</b></p>
@@ -254,10 +255,11 @@
 
             <div class="notice-btn">
                 <button class="close" id="publish-notice">发布</button>
+                <button class="close" id="refresh-notice">更新</button>
                 <button class="close2 close">返回</button>
             </div>
         </div>
-        <iframe name="targetIfr" style="display:none"></iframe>
+
     </div>
 
 </main>

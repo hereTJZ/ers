@@ -24,7 +24,7 @@
         <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
         <!-- 个人头像信息 -->
         <div class="user" id="user">
-            <img class="userlogo" th:src="@{../img/userlogo.png}" alt=""/>
+            <img class="userlogo" th:src="@{${user?.getImageAddress()}}"  alt=""/>
             <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
             <span th:text="${user?.getRealName()}">张三</span>
             <span>&nbsp;</span>
@@ -127,8 +127,8 @@
                 当前状态：
                 <button th:text="${state}">进行中</button>
             </p>
-            <p th:utext="'<b>开始时间：</b>' + ${experiment?.getStartTime()}">开始时间：2022.03.12 10:30</p>
-            <p th:utext="'<b>结束时间：</b>' + ${experiment?.getEndTime()}">结束时间：2022.03.12 12:00</p>
+            <p th:utext="'<b>开始时间：</b>' + ${#dates.format(experiment?.getStartTime(),'yyyy-MM-dd HH:mm')}">开始时间：2022.03.12 10:30</p>
+            <p th:utext="'<b>结束时间：</b>' + ${#dates.format(experiment?.getEndTime(),'yyyy-MM-dd HH:mm')}">结束时间：2022.03.12 12:00</p>
             <p th:utext="'<b>是否延时：</b>' + (${experiment?.isDelay()}?'是':'否')">是否延时：否</p>
         </div>
         <h3>

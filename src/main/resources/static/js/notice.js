@@ -34,15 +34,6 @@ if (date.getDate() % 2 === 0) {
     $("#logo-img").prop("src", "img/earth.png");
 }
 
-
-// 新增公告
-function addNotice() {
-    // 清空默认内容
-    $("#edit-title").text('');
-    $("#edit-content").text('');
-    modal2.style.display = "block";
-}
-
 // 查看公告
 function showNotice(noticeID) {
     // 清空默认内容
@@ -74,11 +65,23 @@ function showNotice(noticeID) {
     });
 }
 
-// 修改公告
+// 新增公告
+function addNotice() {
+    // 清空默认内容
+    $("#edit-title").val('');
+    $("#edit-content").val('');
+    $("#refresh-notice").attr("style","display:none;");
+    $("#publish-notice").attr("style","display:inline-block;");
+    modal2.style.display = "block";
+}
+var notice_id = 0;
+// 修改公告-获取原公告内容
 function editNotice(noticeID) {
     // 清空默认内容
-    $("#edit-title").text('');
-    $("#edit-content").text('');
+    $("#edit-title").val('');
+    $("#edit-content").val('');
+    $("#publish-notice").attr("style","display:none;");
+    $("#refresh-notice").attr("style","display:inline-block;");
     $.ajax({
         //几个参数需要注意一下
         type: "GET",   //方法类型
@@ -88,8 +91,9 @@ function editNotice(noticeID) {
             // console.log(result);//打印服务端返回的数据(调试用)
             modal2.style.display = "block";
             if (result.code === 200) {
-                $("#edit-title").text(result.data["title"]);
-                $("#edit-content").text(result.data["content"]);
+                notice_id = result.data["id"];
+                $("#edit-title").val(result.data["title"]);
+                $("#edit-content").val(result.data["content"]);
             }
             if (result.code === 500) {
                 alert(result.data);
@@ -100,6 +104,52 @@ function editNotice(noticeID) {
         }
     });
 }
+
+// 更新公告
+$(document).ready(function () {
+    $("#refresh-notice").click(function () {
+        // Ajax上传文件，则需要使用 FormData 对象来作为数据
+        var formdata = new FormData();
+        formdata.append("id", notice_id);
+        formdata.append("title", $("#edit-title").val());
+        formdata.append("content", $("#edit-content").val());
+        formdata.append("picture", $("#upload-file")[0].files[0]);
+
+        $.ajax({
+            //几个参数需要注意一下
+            async: false,
+            type: "POST",   //方法类型
+            dataType: "json",   //预期服务器返回的数据类型
+            url: "/refreshNotice",    //执行登录的url请求
+            data: formdata,  // 参数放在了请求体中
+            cache: false,
+            contentType: false,  //发送给服务器的数据类型，对应dataType，false表示不要去设置Content-Type请求头
+            processData: false,  //不要将发送的数据处理为字符串，默认true，后端接收到的都是字符串
+            success: function (result) {    //result是服务器返回的封装数据
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.code === 200) {
+                    alert(result.msg + "\n" + result.data);
+                    // 登录请求验证成功后跳转首页面
+                    window.location.href = "/notice"
+                }
+                if (result.code === 400) {
+                    alert(result.msg + "\n" + result.data);
+                }
+                if (result.code === 401) {
+                    alert("保存图片异常！！");
+                    console.log(result.data)
+                }
+                if (result.code === 500) {
+                    alert(result.msg + "\n" + result.data);
+                    window.location.href = "/login"
+                }
+            },
+            error: function () {
+                alert("修改失败，请重试！")
+            }
+        });
+    })
+})
 
 var upload = document.querySelector('#upload-file');
 
@@ -215,28 +265,30 @@ function returnFileSize(number) {
 
 // 删除公告
 function deleteNotice(noticeID) {
-    $.ajax({
-        url: "/deleteNotice",
-        data: {"id": noticeID},
-        success: function (result) {    //result是服务器返回的封装数据
-            console.log(result);//打印服务端返回的数据(调试用)
-            if (result.code === 200) {
-                alert(result.msg + "\n" + result.data);
-                // 登录请求验证成功后跳转首页面
-                window.location.reload();
+    if (window.confirm("确认要删除该公告吗？")) {
+        $.ajax({
+            url: "/deleteNotice",
+            data: {"id": noticeID},
+            success: function (result) {    //result是服务器返回的封装数据
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.code === 200) {
+                    alert(result.msg + "\n" + result.data);
+                    // 登录请求验证成功后跳转首页面
+                    window.location.reload();
+                }
+                if (result.code === 400) {
+                    alert(result.msg + "\n" + result.data);
+                }
+                if (result.code === 500) {
+                    alert(result.msg + "\n" + result.data);
+                    window.location.href = "/login"
+                }
+            },
+            error: function () {
+                alert("删除失败，请重试！")
             }
-            if (result.code === 400) {
-                alert(result.msg + "\n" + result.data);
-            }
-            if (result.code === 500) {
-                alert(result.msg + "\n" + result.data);
-                window.location.href = "/login"
-            }
-        },
-        error: function () {
-            alert("删除失败，请重试！")
-        }
-    })
+        })
+    }
 }
 
 //模糊搜索

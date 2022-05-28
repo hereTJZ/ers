@@ -22,7 +22,7 @@
         <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
         <!-- 个人头像信息 -->
         <div class="user" id="user">
-            <img class="userlogo" th:src="@{img/userlogo.png}" alt=""/>
+            <img class="userlogo" th:src="@{${user?.getImageAddress()}}"  alt=""/>
             <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
             <span th:text="${user?.getRealName()}">张三</span>
             <span>&nbsp;</span>
@@ -160,8 +160,8 @@
                     <td th:text="${#dates.format(user.getRegisterTime(),'yyyy-MM-dd HH:mm:ss')}">2022-05-20 20:13:22
                     </td>
                     <td>
-                        <a href="javascript:;" th:onclick="editUser([[${user.getId()}]])">编辑</a>
-                        <a href="">删除</a>
+                        <a href="javascript:;" th:onclick="getUser([[${user.getId()}]])">编辑</a>
+                        <a href=""  th:onclick="deleteUser([[${user.getId()}]])">删除</a>
                     </td>
                 </tr>
 
@@ -199,13 +199,25 @@
     </div>
 
     <!-- 弹窗 -->
+    <iframe name="targetIfr" style="display:none"></iframe>
     <div id="myModal" class="modal booking-modal" style="z-index: 888">
         <!-- 弹窗内容 -->
-        <form class="modal-content" style="width: 45%">
+        <form id="myForm" class="modal-content" style="width: 45%" target="targetIfr">
             <!-- <span class="close">&times;</span> -->
+            <p id="id-input">
+                *id
+                <input type="text" name="id" id="id" placeholder=" 请设置用户id"/>
+            </p>
             <p>
                 *用户姓名
                 <input type="text" name="realName" id="realName" placeholder=" 请填写用户真实姓名"/>
+            </p>
+            <p>
+                *性别 <br/>
+                <input type="radio" class="UserRole" name="gender" id="male" value="男"/>
+                男
+                <input type="radio" class="UserRole" name="gender" id="female" value="女"/>
+                女
             </p>
             <p>
                 *用户身份 <br/>
@@ -234,15 +246,15 @@
             </p>
             <p th:if="${role} == 2">
                 教学科目
-                <input type="text" name="subject" id="subject" placeholder=" 请填写班级号"/>
+                <input type="text" name="subject" id="subject" placeholder=" 请填写教学科目"/>
             </p>
             <p th:if="${role} == 3">
                 专业
-                <input type="text" name="professional" id="professional" placeholder=" 请填写班级"/>
+                <input type="text" name="professional" id="professional" placeholder=" 请填写专业"/>
             </p>
             <p th:if="${role} == 3" style="display: inline-block; ">
                 年级（例：18年入学填 18）
-                <input type="number" name="grade" id="grade" placeholder=" 请填写班级"/>
+                <input type="number" name="grade" id="grade" placeholder=" 请填写年级"/>
             </p>
             <p th:if="${role} == 3" style="display: inline-block; margin-left: 30px">
                 班级
@@ -250,7 +262,8 @@
             </p>
 
             <p class="close-wrap">
-                <button>添加</button>
+                <button id="refresh-user" onclick="saveUser()">更新</button>
+                <button id="add-user" onclick="addUser()">添加</button>
                 <button class="close">返回</button>
             </p>
         </form>

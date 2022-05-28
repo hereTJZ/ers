@@ -23,7 +23,7 @@ public interface IUserBiz {
     void sendEmail(String targetEmail, String code);
 
     // 注册用户
-    int register(String phone, String email, String password, String realName, int roleId, Date time);
+    int register(User user);
 
     // 用户修改个人信息
     int resetUserInfo(User user);
@@ -33,4 +33,10 @@ public interface IUserBiz {
 
     // 通过id删除用户
     int deleteUserById(int id);
+
+    // 修改用户密码
+    int resetUserPassword(User user);
+
+    // 修改用户头像
+    int changeAvatar(User user);
 }

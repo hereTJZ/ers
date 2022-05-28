@@ -94,7 +94,7 @@ function isThisWeek(date1, date2) {
 function refreshTimeLine(date) {
     // var date = new Date();
     var todayMinutes = date.getHours() * 60 + date.getMinutes(); // 今日总分钟数
-    $(".line-wrap .line-3").css({ top: 42 + (todayMinutes / 1440) * 600 + "px" }); /* 42 + 50X，范围42~642*/
+    $(".line-wrap .line-3").css({top: 42 + (todayMinutes / 1440) * 600 + "px"}); /* 42 + 50X，范围42~642*/
     $("#line-3-time").html("&nbsp;" + formatstr(date.getHours()) + ":" + formatstr(date.getMinutes()));
 }
 
@@ -129,13 +129,13 @@ function date_time(date) {
             // js方式设置css样式
             document.getElementsByTagName("th")[weekday - 1].style = "background: #0099FF; color: #fff;";
             // jQuery方式设置css样式
-            $(".line-left").css({ left: 60 + 170 * (weekday - 1) + "px" }); /* 60 + 170X */
-            $(".line-right").css({ left: 228 + 170 * (weekday - 1) + "px" }); /* 228 + 170X */
+            $(".line-left").css({left: 60 + 170 * (weekday - 1) + "px"}); /* 60 + 170X */
+            $(".line-right").css({left: 228 + 170 * (weekday - 1) + "px"}); /* 228 + 170X */
         } else {
             // 周日
             document.getElementsByTagName("th")[6].style = "background: #0099FF; color: #fff;";
-            $(".line-left").css({ left: 60 + 170 * 6 + "px" }); /* 60 + 170X */
-            $(".line-right").css({ left: 228 + 170 * 6 + "px" }); /* 228 + 170X */
+            $(".line-left").css({left: 60 + 170 * 6 + "px"}); /* 60 + 170X */
+            $(".line-right").css({left: 228 + 170 * 6 + "px"}); /* 228 + 170X */
         }
 
         // 时间线-需时刻更新
@@ -163,9 +163,9 @@ date_time(time);
 // 1秒更新一次
 // 注意：myVar = setInterval(date_time(new Date()), 1000);
 // 上面的写法错误，setInterval内的函数参数不能带参数（代参函数有返回值），只能采用如下匿名函数的方法
-var myVar = setInterval(function () {
-    date_time(new Date());
-}, 1000);
+// var myVar = setInterval(function () {
+//     date_time(new Date());
+// }, 1000);
 
 // -----------------------------------------------------------------------------------------------------------------------------------
 
@@ -232,3 +232,102 @@ $(document).ready(function () {
         clickNum++;
     });
 });
+
+// -----------------------------------------------------------------------------------------------------------------------------------
+
+// 预约实验
+// $(document).ready(function () {
+//     $("#booking").click(function () {
+//
+//         // Ajax上传文件，则需要使用 FormData 对象来作为数据
+//         var formdata = new FormData();
+//         formdata.append("name", $("#edit-title").val());
+//         formdata.append("content", $("#edit-content").val());
+//         formdata.append("startTime", $("#start-time").val());
+//         formdata.append("endTime", $("#end-time").val());
+//         formdata.append("participant", $("#participant").val());
+//         formdata.append("instructor", $("#instructor").val());
+//         formdata.append("relatedKnowledge", $("#related-knowledge").val());
+//
+//         // $("#file")[0]将jquery对象转换为dom对象，使用jquery的方法.get(0)也可以
+//         var fileobjs = $("#files")[0].files;
+//         for (var i = 0; i < fileobjs.length; i++) {
+//             // append方法使用相同键追加元素，最后会被输出为MultipartFile数组
+//             formData.append("resource", fileobjs[i]);
+//         }
+//
+//         $.ajax({
+//             //几个参数需要注意一下
+//             async: false,
+//             type: "POST",   //方法类型
+//             dataType: "json",   //预期服务器返回的数据类型
+//             url: "/bookExperiment",    //执行登录的url请求
+//             data: formdata,  // 参数放在了请求体中
+//             cache: false,
+//             contentType: false,  //发送给服务器的数据类型，对应dataType，false表示不要去设置Content-Type请求头
+//             processData: false,  //不要将发送的数据处理为字符串，默认true，后端接收到的都是字符串
+//             success: function (result) {    //result是服务器返回的封装数据
+//                 console.log(result);//打印服务端返回的数据(调试用)
+//                 if (result.code === 200) {
+//                     alert(result.msg + "\n" + result.data);
+//                     // 登录请求验证成功后跳转首页面
+//                     window.location.href = "/booking"
+//                 }
+//                 if (result.code === 400) {
+//                     alert(result.msg + "\n" + result.data);
+//                 }
+//                 if (result.code === 401) {
+//                     alert("保存附件异常！！");
+//                     console.log(result.data)
+//                 }
+//                 if (result.code === 500) {
+//                     alert(result.msg + "\n" + result.data);
+//                     window.location.href = "/login"
+//                 }
+//             },
+//             error: function () {
+//                 alert("预约失败，请重试！")
+//             }
+//         });
+//     })
+// })
+
+
+// -------删
+$(".upload a").attr("style", "display:none;");
+const pickerOpts = {
+    types: [
+        {
+            description: 'Images',
+            accept: {
+                'image/*': ['.png', '.gif', '.jpeg', '.jpg']
+            }
+        },
+    ],
+    excludeAcceptAllOption: true,
+    multiple: true
+};
+let fileHandle;
+
+async function getFile(id) {
+    [fileHandle] = await window.showOpenFilePicker(pickerOpts);
+    // run code with our fileHandle
+    const fileData = await fileHandle.getFile();
+    $(".upload a").attr("style", "display:inline;");
+}
+
+$("#upload").click(function () {
+    getFile(1);
+})
+$("#booking").click(function () {
+    alert("实验预约成功，快前往周历查看吧！\uD83D\uDE04")
+
+    $(".table-booking").append("<a href=\"detail/8\" class=\"booking-list\" id=\"newBooking\" title=\"06:06:06~12:12:12\">\n" +
+        "                    <span>这是新增的实验123</span>\n" +
+        "                </a>")
+
+    $("#newBooking").addClass("booking-list9")
+
+    modal.style.display = "none";
+
+})

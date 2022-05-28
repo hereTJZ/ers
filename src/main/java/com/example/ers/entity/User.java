@@ -48,6 +48,50 @@ public class User {
         this.weekNumber = 0;
     }
 
+    public User(int id, String realName, String phone, String email, String gender, int role, String school, String faculty, String professional, int grade, int classNum, String subject) {
+        this.id = id;
+        this.realName = realName;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+        this.role = role;
+        this.school = school;
+        this.faculty = faculty;
+        this.professional = professional;
+        this.grade = grade;
+        this.classNum = classNum;
+        this.subject = subject;
+    }
+
+    public User(int id, String realName, String phone, String email, String gender, String school, String faculty, String subject) {
+        this.id = id;
+        this.realName = realName;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+        this.role = role;
+        this.school = school;
+        this.faculty = faculty;
+        this.subject = subject;
+    }
+
+    public User(int id, String realName, String phone, String email, String gender) {
+        this.id = id;
+        this.realName = realName;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+    }
+
+    public User(String realName, String password, String phone, String email, int role, Date registerTime) {
+        this.realName = realName;
+        this.password = password;
+        this.phone = phone;
+        this.email = email;
+        this.role = role;
+        this.registerTime = registerTime;
+    }
+
     /**
      * 身份判断
      */

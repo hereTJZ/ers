@@ -81,7 +81,7 @@ public class test {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp time = Timestamp.valueOf(dateFormat.format(date));//获取当前时间
         System.out.println("Timestamp:" + time);
-        userBiz.register("1232", "kjfahsdk", "fsad", "rewao", 1, date);
+//        userBiz.register("1232", "kjfahsdk", "fsad", "rewao", 1, date);
     }
 
     @Test

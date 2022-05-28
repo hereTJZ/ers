@@ -50,22 +50,36 @@
     </select>
 
     <!--  insert、update、delete：返回影响行数n。（n>=1為成功，n为0时实际为插入失败） -->
-    <insert id="register">
+    <insert id="register" parameterType="User">
         insert into user(
-            phone
+            role
+            , phone
             , email
             , password
-            , real_name
-            , role
             , register_time
+            <if test="realName != null and realName != ''">, real_name</if>
+            <if test="gender != null and gender != ''">, gender</if>
+            <if test="school != null and school != ''">, school</if>
+            <if test="faculty != null and faculty != ''">, faculty</if>
+            <if test="professional != null and professional != ''">, professional</if>
+            <if test="grade != 0">, grade</if>
+            <if test="classNum != 0">, class_num</if>
+            <if test="subject != null and subject != ''">, subject</if>
         )
         values (
-            #{phone}
+            #{role}
+            , #{phone}
             , #{email}
             , #{password}
-            , #{realName}
-            , #{role}
             , #{registerTime}
+            <if test="realName != null and realName != ''">, #{realName}</if>
+            <if test="gender != null and gender != ''">, #{gender}</if>
+            <if test="school != null and school != ''">, #{school}</if>
+            <if test="faculty != null and faculty != ''">, #{faculty}</if>
+            <if test="professional != null and professional != ''">, #{professional}</if>
+            <if test="grade != null and grade != 0">, #{grade}</if>
+            <if test="classNum != null and classNum != 0">, #{classNum}</if>
+            <if test="subject != null and subject != ''">, #{subject}</if>
         )
     </insert>
 
@@ -114,12 +128,6 @@
         where (phone = #{account} or email = #{account})
     </select>
 
-    <resultMap id="UserMap" type="User">
-        <result column="id" property="id"/>
-        <result column="" property=""/>
-        <result column="" property=""/>
-    </resultMap>
-
     <update id="resetUserInfo" parameterType="User">
         update user
         <trim prefix="set" suffixOverrides=",">
@@ -134,6 +142,12 @@
             <if test="classNum != null and classNum != ''">class_num = #{classNum},</if>
             <if test="subject != null and subject != ''">subject = #{subject},</if>
         </trim>
+        where id = #{id}
+    </update>
+
+    <update id="resetUserPassword" parameterType="User">
+        update user
+        set password = #{password}
         where id = #{id}
     </update>
 
@@ -172,4 +186,10 @@
     <delete id="deleteUserById">
         DELETE FROM user WHERE id = #{id}
     </delete>
+
+    <update id="changeAvatarAddress" parameterType="User">
+        update user
+        set image_address = #{imageAddress}
+        where id = #{id}
+    </update>
 </mapper>

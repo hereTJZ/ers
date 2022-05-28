@@ -22,7 +22,7 @@
         <div class="logo-title">网络攻防在线开放实验平台网络预约与自动授权系统</div>
         <!-- 个人头像信息 -->
         <div class="user" id="user">
-            <img class="userlogo" th:src="@{img/userlogo.png}" alt=""/>
+            <img class="userlogo" th:src="@{${user?.getImageAddress()}}"  alt=""/>
             <!--  user中要添加“？”，因为thymeleaf在获取对象时，需判断该对象不为空，才能用”.“调用属性  -->
             <span th:text="${user?.getRealName()}">张三</span>
             <span>&nbsp;</span>
@@ -69,7 +69,7 @@
 <!-- 主体页面 -->
 <main>
     <!-- 左边导航 -->
-        <nav>
+    <nav>
         <ul>
             <li>
                 <a href="home">首&nbsp;页 <i class="iconfont icon-zhuye"></i> </a>
@@ -110,12 +110,12 @@
             <!-- 功能栏 -->
             <div class="news-time">
                 <span>从</span>
-                <input type="datetime-local" name="" id=""/>
+                <input type="date" name="" id="start-time" th:value="${startTime}"/>
                 <span>到</span>
-                <input type="datetime-local" name="" id=""/>
+                <input type="date" name="" id="end-time" th:value="${endTime}"/>
             </div>
             <div class="news-search">
-                <input type="text" placeholder="模糊搜索"/>
+                <input id="search-content" type="text" placeholder="模糊搜索" th:value="${searchContent}"/>
                 <i class="iconfont icon-sousuo"></i>
             </div>
             <button id="newsSearch">搜索</button>
@@ -126,144 +126,59 @@
                 <tr>
                     <th>实验名称</th>
                     <th>当前状态</th>
+                    <th>预约者</th>
                     <th>实验人员</th>
                     <th>实验时间</th>
                     <th>预约时间</th>
                     <th>指导老师</th>
                     <th>操作</th>
                 </tr>
-                <tr>
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
+
+                <tr th:each="experiment:${experimentList}">
+                    <td th:text="${experiment.getName()}">网络攻防—木马实验</td>
+                    <td th:text="${experiment.getState()==0}?'已取消':
+                                    (${experiment.getState()==1}?'已预约':
+                                        (${experiment.getState()==2}?'进行中':
+                                            (${experiment.getState()==3}?'已完成':'超时')))">
+                        已预约
+                    </td>
+                    <td th:text="${experiment?.getGroupLeader()?.getRealName()}">小明</td>
+                    <td th:text="${experiment.getParticipant()}">张三 小明 李芳芳</td>
+                    <td th:text="${#dates.format(experiment.getStartTime(),'yyyy-MM-dd HH:mm')}+'~'+${#dates.format(experiment.getEndTime(),'yyyy-MM-dd HH:mm')}">2022.03.12
+                        08:30~2022.03.12 09:30
+                    </td>
+                    <td th:text="${#dates.format(experiment.getCreatTime(),'yyyy-MM-dd HH:mm')}">2022.03.10 08:30</td>
+                    <td th:text="${experiment.getUserId()}">张三</td>
+                    <td><a th:href="@{detail + '/' + ${experiment.getId()}}">查看</a> <a href="">删除</a></td>
                 </tr>
-                <tr style="color: #00cd00">
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
-                <tr style="color: #f72b2b">
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <td>网络攻防—木马实验</td>
-                    <td>已预约</td>
-                    <td>张三 小明 李芳芳</td>
-                    <td>2022.03.12 08:30~2022.03.12 09:30</td>
-                    <td>2022.03.10 08:30</td>
-                    <td>张三</td>
-                    <td><a href="detail.html">查看</a> <a href="">删除</a></td>
-                </tr>
+
             </table>
-            <!-- 页面切换 -->
+
+            <!-- 页面控制 -->
             <div class="news-page">
-                <span>第1/6页</span>
-                <span> <button>上一页</button> <button>下一页</button></span>
+                <span th:text="'第 ' + ${currentPage} + '/' + ${totalPages} + ' 页'">第1/6页</span>
+                <span th:text="'共' + ${total} + '条'"></span>
                 <span>
-                            前往<input type="text" name="" id="" value="1"/>页
-                            <button class="news-page-go">确定</button>
-                        </span>
+                    <button id="up-page"
+                            th:if="(${currentPage}!=null) ? (${currentPage}>1) : false"
+                            th:onclick="changePage([[${currentPage - 1}]])">
+                        上一页
+                    </button>
+                    <button id="next-page"
+                            th:if="(${currentPage}!=null) ? (${currentPage}<${totalPages}) : false"
+                            th:onclick="changePage([[${currentPage + 1}]])">
+                        下一页
+                    </button>
+                </span>
+                <span>
+                    前往<input id="page-input" type="text" name="page-input" value="1" th:data="${totalPages}"/>页
+                    <button class="news-page-go">确定</button>
+                </span>
             </div>
+
         </div>
     </div>
 
-    <!-- 弹窗 -->
-    <div id="myModal" class="modal">
-        <!-- 弹窗内容 -->
-        <div class="modal-content">
-            <!-- <span class="close">&times;</span> -->
-            <p><b>*公告标题</b></p>
-            <p>试验系统开放预约啦</p>
-            <p><b>*公告内容</b></p>
-            <p>
-                3月31日，教育部召开2022年第5次全国教育系统疫情防控工作视频调度会议，深入贯彻习近平总书记关于新冠肺炎疫情防控重要指示批示精神，落实党中央、国务院决策部署，统筹推进教育系统疫情防控和教育改革发展，部署从严从实从细做好当前教育系统疫情防控工作，提高科学精准防控水平。
-            </p>
-            <p>
-                会议强调，教育系统疫情防控工作要坚定不移坚持“外防输入、内防反弹”总策略，落实落细常态化疫情防控各项措施，确保校园一方净土，确保师生生命安全。要坚定不移坚持“动态清零”总方针，主动融入属地疫情防控全局，加快完善疫情防控应急预案，一旦出现疫情即刻启动应急机制，果断采取有效措施，确保尽早实现“动态清零”，确保教育教学平稳有序。
-            </p>
-
-            <div><img src="img/noimg.png" alt=""/></div>
-
-            <button class="close">返回</button>
-        </div>
-    </div>
 </main>
 
 <!-- 底部 -->
@@ -271,15 +186,39 @@
 <script src="js/newsModal.js"></script>
 </body>
 <script>
-    // var i = 1;
+    var date = new Date();
+    if (date.getDate() % 2 === 0) {
+        $("#logo-img").prop("src", "img/logo.png");
+    } else {
+        $("#logo-img").prop("src", "img/earth.png");
+    }
 
-    // function show(id) {
-    //     if (i % 2 != 0) {
-    //         document.getElementById(id).style.display = "block";
-    //     } else {
-    //         document.getElementById(id).style.display = "none";
-    //     }
-    //     i++;
-    // }
+    //模糊搜索
+    $(document).ready(function () {
+        $("#newsSearch").click(function () {
+            var beginTime = $("#start-time").val()
+            var endTime = $("#end-time").val()
+            var content = $("#search-content").val()
+
+            //alert('/news?startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content)
+            window.location.href = '/experiment?startTime=' + beginTime + '&endTime=' + endTime + '&content=' + content
+        })
+    });
+
+    // 页面跳转
+    function changePage(pageNum) {
+        var beginTime = $("#start-time").val()
+        var endTime = $("#end-time").val()
+        var content = $("#search-content").val()
+        window.location.href = '/experiment?pageNum=' + pageNum + '&pageSize=' + 10
+    }
+
+    // 跳转页面
+    $(document).ready(function () {
+        $(".news-page-go").click(function () {
+            var page = $("#page-input").val()
+            changePage(page)
+        })
+    });
 </script>
 </html>
