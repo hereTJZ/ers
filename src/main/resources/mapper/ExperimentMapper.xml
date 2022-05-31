@@ -6,7 +6,7 @@
         from experiment
         where (state = 2 or state = 3) -- 2：进行中  3：已完成
         order by start_time desc -- asc相反为升序
-        limit 5 -- 查询数量为5条
+            limit 5 -- 查询数量为5条
     </select>
 
     <select id="getExperimentById" resultType="Experiment">
@@ -22,8 +22,11 @@
         <!-- CONCAT()为字符拼接函数 -->
         <if test="content != null and content != ''">
             and (
-            title LIKE CONCAT('%', #{content}, '%')
+            name LIKE CONCAT('%', #{content}, '%')
             or content LIKE CONCAT('%', #{content}, '%')
+            or participant LIKE CONCAT('%', #{content}, '%')
+            or instructor LIKE CONCAT('%', #{content}, '%')
+            or related_knowledge LIKE CONCAT('%', #{content}, '%')
             )
         </if>
         <if test="beginTime != null">
